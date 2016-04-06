@@ -13,6 +13,7 @@
 		1F63A3B31CB22BDD006FA3F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F63A3B21CB22BDD006FA3F2 /* Assets.xcassets */; };
 		1F63A3B61CB22BDD006FA3F2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F63A3B41CB22BDD006FA3F2 /* LaunchScreen.storyboard */; };
 		1F63A3C11CB22BDD006FA3F2 /* LSystem01Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F63A3C01CB22BDD006FA3F2 /* LSystem01Tests.swift */; };
+		1F63A3CE1CB3B53E006FA3F2 /* NodeAbstraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F63A3CD1CB3B53E006FA3F2 /* NodeAbstraction.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		1F63A3BC1CB22BDD006FA3F2 /* LSystem01Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LSystem01Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F63A3C01CB22BDD006FA3F2 /* LSystem01Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSystem01Tests.swift; sourceTree = "<group>"; };
 		1F63A3C21CB22BDD006FA3F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1F63A3CD1CB3B53E006FA3F2 /* NodeAbstraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeAbstraction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 		1F63A39F1CB22BDC006FA3F2 = {
 			isa = PBXGroup;
 			children = (
+				1F63A3CD1CB3B53E006FA3F2 /* NodeAbstraction.swift */,
 				1F63A3AA1CB22BDC006FA3F2 /* LSystem01 */,
 				1F63A3BF1CB22BDD006FA3F2 /* LSystem01Tests */,
 				1F63A3A91CB22BDC006FA3F2 /* Products */,
@@ -197,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F63A3CE1CB3B53E006FA3F2 /* NodeAbstraction.swift in Sources */,
 				1F63A3AE1CB22BDD006FA3F2 /* ViewController.swift in Sources */,
 				1F63A3AC1CB22BDD006FA3F2 /* AppDelegate.swift in Sources */,
 			);
@@ -390,6 +394,7 @@
 				1F63A3C71CB22BDD006FA3F2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1F63A3C81CB22BDD006FA3F2 /* Build configuration list for PBXNativeTarget "LSystem01Tests" */ = {
 			isa = XCConfigurationList;
@@ -398,6 +403,7 @@
 				1F63A3CA1CB22BDD006FA3F2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
