@@ -14,6 +14,7 @@
 		1F63A3B61CB22BDD006FA3F2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F63A3B41CB22BDD006FA3F2 /* LaunchScreen.storyboard */; };
 		1F63A3C11CB22BDD006FA3F2 /* LSystem01Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F63A3C01CB22BDD006FA3F2 /* LSystem01Tests.swift */; };
 		1F63A3CE1CB3B53E006FA3F2 /* NodeAbstraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F63A3CD1CB3B53E006FA3F2 /* NodeAbstraction.swift */; };
+		1F6AA6021CB7A2DD0002579A /* IOSKnobControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AA6011CB7A2DD0002579A /* IOSKnobControl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,9 @@
 		1F63A3C01CB22BDD006FA3F2 /* LSystem01Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSystem01Tests.swift; sourceTree = "<group>"; };
 		1F63A3C21CB22BDD006FA3F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F63A3CD1CB3B53E006FA3F2 /* NodeAbstraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeAbstraction.swift; sourceTree = "<group>"; };
+		1F6AA5FF1CB7A2DD0002579A /* LSystem01-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LSystem01-Bridging-Header.h"; sourceTree = "<group>"; };
+		1F6AA6001CB7A2DD0002579A /* IOSKnobControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOSKnobControl.h; sourceTree = "<group>"; };
+		1F6AA6011CB7A2DD0002579A /* IOSKnobControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IOSKnobControl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,10 +86,13 @@
 			children = (
 				1F63A3AB1CB22BDD006FA3F2 /* AppDelegate.swift */,
 				1F63A3AD1CB22BDD006FA3F2 /* ViewController.swift */,
+				1F6AA6001CB7A2DD0002579A /* IOSKnobControl.h */,
+				1F6AA6011CB7A2DD0002579A /* IOSKnobControl.m */,
 				1F63A3AF1CB22BDD006FA3F2 /* Main.storyboard */,
 				1F63A3B21CB22BDD006FA3F2 /* Assets.xcassets */,
 				1F63A3B41CB22BDD006FA3F2 /* LaunchScreen.storyboard */,
 				1F63A3B71CB22BDD006FA3F2 /* Info.plist */,
+				1F6AA5FF1CB7A2DD0002579A /* LSystem01-Bridging-Header.h */,
 			);
 			path = LSystem01;
 			sourceTree = "<group>";
@@ -201,6 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F63A3CE1CB3B53E006FA3F2 /* NodeAbstraction.swift in Sources */,
+				1F6AA6021CB7A2DD0002579A /* IOSKnobControl.m in Sources */,
 				1F63A3AE1CB22BDD006FA3F2 /* ViewController.swift in Sources */,
 				1F63A3AC1CB22BDD006FA3F2 /* AppDelegate.swift in Sources */,
 			);
@@ -333,10 +341,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = LSystem01/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.crashingbooth.LSystem01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LSystem01/LSystem01-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -344,10 +355,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = LSystem01/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.crashingbooth.LSystem01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LSystem01/LSystem01-Bridging-Header.h";
 			};
 			name = Release;
 		};

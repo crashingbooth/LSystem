@@ -14,41 +14,33 @@ class ViewController: UIViewController {
     var maxAngle = CGFloat(M_PI)
     var minAng = CGFloat(0)
     var rootNode: Node?
-    var typeAView: ViewForNode!
-    var typeBView: ViewForNode!
+    var nodeViews = [ViewForNode]()
+    var nodeTypes:Int {
+       return listofNodeClasses.count
+    }
+    let listofNodeClasses: [Node.Type] = [TypeANode.self,TypeBNode.self, TypeCNode.self]
+    let listofColors = [UIColor.blueColor(), UIColor.purpleColor(),UIColor.redColor()]
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
- 
-        typeAView = ViewForNode(frame: view.bounds)
-        typeBView = ViewForNode(frame: view.bounds)
-        view.addSubview(typeAView)
-        view.addSubview(typeBView)
-        typeAView.fillColor = UIColor.blueColor().colorWithAlphaComponent(0.4)
-        typeAView.backgroundColor = UIColor.clearColor()
-        typeBView.backgroundColor = UIColor.clearColor()
-        typeBView.fillColor = UIColor.purpleColor().colorWithAlphaComponent(0.4)
-        TypeANode.view = typeAView
-        TypeBNode.view = typeBView
         
-      
+        
+        
+        makeViews()
+        
+        
         makeInitialNode()
         arrayOfNode[0].radius
-        for i in 0..<7 {
+        for _ in 0..<11 {
             regenerate()
             
         }
-//        let rotation = UIRotationGestureRecognizer(target: self, action: Selector("handleRot:"))
-//        view.addGestureRecognizer(rotation)
-//        let tap = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
-//       
-//        view.addGestureRecognizer(tap)
         
-        let pan = UIPanGestureRecognizer(target: self, action: Selector("handlePan:"))
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(ViewController.handlePan(_:)))
         
         view.addGestureRecognizer(pan)
-            }
-
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -56,13 +48,24 @@ class ViewController: UIViewController {
     
     func makeInitialNode() {
         let rootLocation = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
-        rootNode = TypeANode(segmentLength: 80 , parent: nil, rootLocation: rootLocation)
+        rootNode = TypeBNode(segmentLength: 100 , parent: nil, rootLocation: rootLocation)
         if let rootNode = rootNode {
 
         arrayOfNode.append(rootNode)
         }
         
         
+    }
+    
+    func makeViews() {
+        for i in 0..<nodeTypes {
+            let nodeView = ViewForNode(frame: view.bounds)
+            nodeViews.append(nodeView)
+            nodeView.backgroundColor = UIColor.clearColor()
+            view.addSubview(nodeView)
+            nodeView.fillColor = listofColors[i].colorWithAlphaComponent(0.4)
+            listofNodeClasses[i].view = nodeView
+        }
     }
     
     func regenerate() {
@@ -74,28 +77,11 @@ class ViewController: UIViewController {
                 newArrayOfNodes.append(newNode)
             }
         }
-        
-//
-//        for terminalNode in arrayOfNode {
-//            for newNode in terminalNode.spawn() {
-//                newArrayOfNodes.append(newNode)
-//               
-//            }
-//        }
+
         arrayOfNode = newArrayOfNodes
         
     }
     
-    func handleTap(sender: UITapGestureRecognizer) {
-        print ("tap")
-        let position :CGPoint =  sender.locationInView(view)
-        TypeANode.angle = position.x / view.bounds.width * CGFloat(M_PI)
-        print(TypeANode.angle)
-        rootNode?.recursiveReposition()
-        typeAView.setNeedsDisplay()
-        typeBView.setNeedsDisplay()
-        view.setNeedsDisplay()
-    }
     
     
     func handlePan(sender: UIPanGestureRecognizer) {
@@ -104,26 +90,20 @@ class ViewController: UIViewController {
         TypeANode.angle = position.x / view.bounds.width * CGFloat(M_PI)
         TypeBNode.angle = position.y / view.bounds.width * CGFloat(M_PI)
         print(TypeANode.angle)
-        typeAView.clearPaths()
-        typeBView.clearPaths()
+        for view in nodeViews {
+            view.clearPaths()
+        }
+        
+
         rootNode?.recursiveReposition()
-        typeAView.setNeedsDisplay()
-        typeBView.setNeedsDisplay()
-        view.setNeedsDisplay()
+        for view in nodeViews {
+            view.setNeedsDisplay()
+        }
+//        view.setNeedsDisplay()
     }
     
 
-    func handleRot(sender: UIRotationGestureRecognizer) {
-        print ("tap")
-        let position :CGPoint =  sender.locationInView(view)
-        TypeANode.angle = sender.rotation + CGFloat(M_PI / 2)
-        TypeBNode.angle = sender.rotation - CGFloat(M_PI / 2)
-        print(TypeANode.angle)
-        rootNode?.recursiveReposition()
-        typeAView.setNeedsDisplay()
-        typeBView.setNeedsDisplay()
-        view.setNeedsDisplay()
-    }
+
 
     
 

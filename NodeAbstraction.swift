@@ -133,8 +133,6 @@ extension Node {
         for (i, _) in children.enumerate() {
             children[i].recursiveReposition()
         }
-    
-//        print("new location \(location)")
       
         
     }
@@ -163,18 +161,9 @@ class TypeANode: Node {
     static var view: ViewForNode!
     
     var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
-        [TypeBNode.init, TypeANode.init]
+        [TypeCNode.init]
     required init() {}
     
-//    func spawn() -> [Node] {
-//        let first = TypeBNode(segmentLength: segmentLength *  reductionFactor, parent: self, rootLocation: nil)
-//        let second = TypeANode(segmentLength: segmentLength *  reductionFactor, parent: self,rootLocation: nil)
-//
-//        
-//        children.append(first)
-//        children.append(second)
-//        return [first, second]
-//    }
 }
 
 class TypeBNode: Node {
@@ -193,19 +182,32 @@ class TypeBNode: Node {
     static  var view: ViewForNode!
     
     var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
-        [TypeBNode.init, TypeANode.init]
+        [TypeCNode.init, TypeANode.init]
+    
+    required init() {}
+
+}
+
+class TypeCNode: Node {
+    var parent: Node?
+    var children = [Node]()
+    var rootLocation: CGPoint?
+    var orientation: CGFloat = 0
+    var location: CGPoint = CGPoint.zero
+    var nodeColor: UIColor = UIColor.purpleColor()
+    var dotPath: UIBezierPath?
+    var linePath: UIBezierPath?
+    
+    
+    static var angle: CGFloat = CGFloat(M_PI / 4)// class
+    var segmentLength: CGFloat = 0// class
+    static  var view: ViewForNode!
+    
+    var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
+        [TypeBNode.init]
     
     required init() {}
     
-//    func spawn() -> [Node] {
-//        let first = TypeANode(segmentLength: segmentLength *  reductionFactor,parent: self, rootLocation: nil)
-////        let second = TypeANode(segmentLength: segmentLength *  reductionFactor,parent: self,rootLocation: nil)
-//   
-//        
-//        children.append(first)
-////        children.append(second)
-//        return [first]
-//    }
 }
 
 
