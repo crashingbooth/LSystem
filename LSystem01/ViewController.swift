@@ -34,7 +34,7 @@ class ViewController: UIViewController {
       
         makeInitialNode()
         arrayOfNode[0].radius
-        for i in 0..<5 {
+        for i in 0..<7 {
             regenerate()
             
         }
@@ -56,7 +56,7 @@ class ViewController: UIViewController {
     
     func makeInitialNode() {
         let rootLocation = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
-        rootNode = TypeANode(segmentLength: 75 , parent: nil, rootLocation: rootLocation)
+        rootNode = TypeANode(segmentLength: 80 , parent: nil, rootLocation: rootLocation)
         if let rootNode = rootNode {
 
         arrayOfNode.append(rootNode)
@@ -104,6 +104,8 @@ class ViewController: UIViewController {
         TypeANode.angle = position.x / view.bounds.width * CGFloat(M_PI)
         TypeBNode.angle = position.y / view.bounds.width * CGFloat(M_PI)
         print(TypeANode.angle)
+        typeAView.clearPaths()
+        typeBView.clearPaths()
         rootNode?.recursiveReposition()
         typeAView.setNeedsDisplay()
         typeBView.setNeedsDisplay()

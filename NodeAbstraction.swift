@@ -28,6 +28,11 @@ class ViewForNode: UIView {
             path.stroke()
         }
     }
+    
+    func clearPaths() {
+        dotPaths = [UIBezierPath]()
+        linePaths = [UIBezierPath]()
+    }
 }
 
 protocol Node {
@@ -98,18 +103,8 @@ extension Node {
     
     mutating func makePaths() {
         let rect = CGRect(x: location.x - radius, y: location.y - radius, width: radius * 2, height: radius * 2)
-        let newDotPath = UIBezierPath(ovalInRect: rect)
-        
-        if let dotPath = dotPath {
-            if let index = Self.view.dotPaths.indexOf(dotPath) {
-                Self.view.dotPaths[index] = newDotPath
-            } else {
-                Self.view.dotPaths.append(newDotPath)
-            }
-        } else {
-            Self.view.dotPaths.append(newDotPath)
-        }
-        dotPath = newDotPath
+        dotPath = UIBezierPath(ovalInRect: rect)
+        Self.view.dotPaths.append(dotPath!)
         
         
 
@@ -117,18 +112,9 @@ extension Node {
             let edge = UIBezierPath()
             edge.moveToPoint(parent.location)
             edge.addLineToPoint(location)
-            if let linePath = linePath {
-                
-                if let index = Self.view.linePaths.indexOf(linePath) {
-                    Self.view.linePaths[index] = edge
-                    
-                } else {
-                    Self.view.linePaths.append(edge)
-                }
-            } else {
-                Self.view.linePaths.append(edge)
-            }
             linePath = edge
+            Self.view.linePaths.append(linePath!)
+            
         }
         
         
