@@ -24,16 +24,17 @@ class ViewController: UIViewController {
         typeBView = ViewForNode(frame: view.bounds)
         view.addSubview(typeAView)
         view.addSubview(typeBView)
-        typeAView.fillColor = UIColor.blueColor()
+        typeAView.fillColor = UIColor.blueColor().colorWithAlphaComponent(0.4)
         typeAView.backgroundColor = UIColor.clearColor()
         typeBView.backgroundColor = UIColor.clearColor()
-        typeBView.fillColor = UIColor.purpleColor()
+        typeBView.fillColor = UIColor.purpleColor().colorWithAlphaComponent(0.4)
         TypeANode.view = typeAView
         TypeBNode.view = typeBView
+        
       
         makeInitialNode()
         arrayOfNode[0].radius
-        for i in 0..<7 {
+        for i in 0..<5 {
             regenerate()
             
         }
@@ -55,7 +56,7 @@ class ViewController: UIViewController {
     
     func makeInitialNode() {
         let rootLocation = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
-        rootNode = TypeANode(parent: nil, rootLocation: rootLocation)
+        rootNode = TypeANode(segmentLength: 75 , parent: nil, rootLocation: rootLocation)
         if let rootNode = rootNode {
 
         arrayOfNode.append(rootNode)
@@ -67,12 +68,20 @@ class ViewController: UIViewController {
     func regenerate() {
         // erase old paths F
         var newArrayOfNodes = [Node]()
-        for terminalNode in arrayOfNode {
-            for newNode in terminalNode.spawn() {
+        
+        for (i,_) in arrayOfNode.enumerate() {
+            for newNode in arrayOfNode[i].spawn() {
                 newArrayOfNodes.append(newNode)
-               
             }
         }
+        
+//
+//        for terminalNode in arrayOfNode {
+//            for newNode in terminalNode.spawn() {
+//                newArrayOfNodes.append(newNode)
+//               
+//            }
+//        }
         arrayOfNode = newArrayOfNodes
         
     }
@@ -93,6 +102,7 @@ class ViewController: UIViewController {
         print ("tap")
         let position :CGPoint =  sender.translationInView(view)
         TypeANode.angle = position.x / view.bounds.width * CGFloat(M_PI)
+        TypeBNode.angle = position.y / view.bounds.width * CGFloat(M_PI)
         print(TypeANode.angle)
         rootNode?.recursiveReposition()
         typeAView.setNeedsDisplay()
@@ -104,7 +114,8 @@ class ViewController: UIViewController {
     func handleRot(sender: UIRotationGestureRecognizer) {
         print ("tap")
         let position :CGPoint =  sender.locationInView(view)
-        TypeANode.angle = sender.rotation
+        TypeANode.angle = sender.rotation + CGFloat(M_PI / 2)
+        TypeBNode.angle = sender.rotation - CGFloat(M_PI / 2)
         print(TypeANode.angle)
         rootNode?.recursiveReposition()
         typeAView.setNeedsDisplay()

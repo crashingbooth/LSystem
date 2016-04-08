@@ -8,6 +8,9 @@
 
 import UIKit
 
+
+//typealias NodeInitializer = (segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)
+
 class ViewForNode: UIView {
     var myNode: Node!
     var dotPaths = [UIBezierPath]()
@@ -19,7 +22,9 @@ class ViewForNode: UIView {
         for path in dotPaths {
             path.fill()
         }
+        UIColor.blackColor().colorWithAlphaComponent(0.4).setStroke()
         for path in linePaths {
+            path.lineWidth = 2
             path.stroke()
         }
     }
@@ -33,20 +38,26 @@ protocol Node {
     var location: CGPoint { get set }
     var nodeColor: UIColor { get set } // class
     static var angle: CGFloat { get set } // class
-    static var segmentLength: CGFloat { get set } // class
+    
     static var view: ViewForNode! { get set }
     var dotPath: UIBezierPath? { get set }
     var linePath: UIBezierPath? { get set }
+    var segmentLength: CGFloat { get set }
+    
+    var substitutesTo: [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] { get set }
     
     
-    func spawn() -> [Node]
+    
     init()
     
 }
 
 extension Node {
     var radius: CGFloat {
-        return CGFloat(2)
+        return CGFloat(4)
+    }
+    var reductionFactor: CGFloat {
+        return 0.85
     }
     
     func calcOrientation() -> CGFloat {
@@ -61,16 +72,16 @@ extension Node {
     func calcLocation() -> CGPoint {
         
         if let parent = parent {
-            let location = CGPoint(x: parent.location.x + Self.segmentLength * cos(self.orientation), y:  parent.location.y + Self.segmentLength * sin(self.orientation))
+            let location = CGPoint(x: parent.location.x + self.segmentLength * cos(self.orientation), y:  parent.location.y + self.segmentLength * sin(self.orientation))
             return location
         } else {
             return rootLocation!
         }
     }
     
-    init(parent: Node?, rootLocation: CGPoint?) {
+    init(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) {
         self.init()
-    
+        self.segmentLength = segmentLength
         if let parent = parent {
             self.parent = parent
             orientation = calcOrientation()
@@ -141,6 +152,13 @@ extension Node {
       
         
     }
+    
+    mutating func spawn() -> [Node] {
+        for node in substitutesTo {
+            children.append(node(segmentLength: segmentLength * reductionFactor, parent: self, rootLocation: nil))
+        }
+        return children
+    }
 }
 
 class TypeANode: Node {
@@ -152,21 +170,25 @@ class TypeANode: Node {
     var nodeColor: UIColor = UIColor.blueColor()
     var dotPath: UIBezierPath?
     var linePath: UIBezierPath?
+
    
-    static var angle: CGFloat = 0 // class
-    static var segmentLength: CGFloat = 35 // class
+    static var angle: CGFloat = CGFloat(M_PI / 4) // class
+    var segmentLength: CGFloat = 0
     static var view: ViewForNode!
+    
+    var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
+        [TypeBNode.init, TypeANode.init]
     required init() {}
     
-    func spawn() -> [Node] {
-        let first = TypeBNode(parent: self, rootLocation: nil)
-        let second = TypeANode(parent: self,rootLocation: nil)
-
-        
-        children.append(first)
-        children.append(second)
-        return [first, second]
-    }
+//    func spawn() -> [Node] {
+//        let first = TypeBNode(segmentLength: segmentLength *  reductionFactor, parent: self, rootLocation: nil)
+//        let second = TypeANode(segmentLength: segmentLength *  reductionFactor, parent: self,rootLocation: nil)
+//
+//        
+//        children.append(first)
+//        children.append(second)
+//        return [first, second]
+//    }
 }
 
 class TypeBNode: Node {
@@ -178,21 +200,28 @@ class TypeBNode: Node {
     var nodeColor: UIColor = UIColor.purpleColor()
     var dotPath: UIBezierPath?
     var linePath: UIBezierPath?
+ 
     
-    static var angle: CGFloat = 0 // class
-    static var segmentLength: CGFloat = 30 // class
+    static var angle: CGFloat = CGFloat(M_PI / 4)// class
+    var segmentLength: CGFloat = 0// class
     static  var view: ViewForNode!
+    
+    var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
+        [TypeBNode.init, TypeANode.init]
+    
     required init() {}
     
-    func spawn() -> [Node] {
-        let first = TypeBNode(parent: self, rootLocation: nil)
-        let second = TypeANode(parent: self,rootLocation: nil)
-   
-        
-        children.append(first)
-        children.append(second)
-        return [first, second]
-    }
+//    func spawn() -> [Node] {
+//        let first = TypeANode(segmentLength: segmentLength *  reductionFactor,parent: self, rootLocation: nil)
+////        let second = TypeANode(segmentLength: segmentLength *  reductionFactor,parent: self,rootLocation: nil)
+//   
+//        
+//        children.append(first)
+////        children.append(second)
+//        return [first]
+//    }
 }
+
+
 
 // in VC make repository Views and assign them (somehow) for TypeA and typeB, their addPaths func will add them
