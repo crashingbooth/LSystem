@@ -19,7 +19,8 @@ class ViewController: UIViewController {
     var nodeTypes:Int {
        return listofNodeClasses.count
     }
-    let listofNodeClasses: [Node.Type] = [TypeANode.self,TypeBNode.self, TypeCNode.self]
+//    let listofNodeClasses: [Node.Type] = [TypeANode.self,TypeBNode.self, TypeCNode.self]
+    let listofNodeClasses: [Node.Type] = [TypeANode.self,TypeBNode.self]
     let listofColors = [UIColor.blueColor(), UIColor.purpleColor(),UIColor.redColor()]
     
     override func viewDidLoad() {
@@ -29,7 +30,7 @@ class ViewController: UIViewController {
         makeInitialNode()
         makeKnobs()
         arrayOfNode[0].radius
-        for _ in 0..<9 {
+        for _ in 0..<13 {
             regenerate()
         }
         
@@ -71,11 +72,12 @@ class ViewController: UIViewController {
     }
     
     func makeKnobs() {
+        let maxKnob = CGFloat(130)
         var width = view.bounds.width / CGFloat(2 * nodeTypes - 1 )
         var buffer:CGFloat = 0
-        if width > 100 {
-            width = 100
-            buffer = (view.bounds.width - CGFloat(100 * (2 * nodeTypes - 1))) / 2
+        if width > maxKnob {
+            width = maxKnob
+            buffer = (view.bounds.width - maxKnob * CGFloat((2 * nodeTypes - 1))) / 2
         }
         for i in 0..<(2 * nodeTypes - 1) {
             if i % 2 == 0 {

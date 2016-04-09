@@ -13,25 +13,34 @@ import UIKit
 
 class ViewForNode: UIView {
     var myNode: Node!
-    var dotPaths = [UIBezierPath]()
-    var linePaths = [UIBezierPath]()
+
+    var dotLocations = [CGPoint]()
+    var lineLocations = [(CGPoint, CGPoint)]()
+    
     var fillColor: UIColor!
     
+
+    
     override func drawRect(rect: CGRect) {
-        fillColor.setFill()
-        for path in dotPaths {
-            path.fill()
+        let context = UIGraphicsGetCurrentContext()
+        CGContextSetFillColorWithColor(context, fillColor.CGColor)
+        for dot in dotLocations {
+            CGContextAddArc(context, dot.x, dot.y, 3, 0, 2 * CGFloat(M_PI), 1)
+             CGContextFillPath(context)
         }
-        UIColor.blackColor().colorWithAlphaComponent(0.4).setStroke()
-        for path in linePaths {
-            path.lineWidth = 2
-            path.stroke()
+        CGContextSetStrokeColorWithColor(context, UIColor.blackColor().colorWithAlphaComponent(0.4).CGColor)
+        
+        for line in lineLocations {
+            CGContextMoveToPoint(context, line.0.x, line.0.y)
+            CGContextAddLineToPoint(context, line.1.x, line.1.y)
+            CGContextStrokePath(context)
         }
+        
     }
     
     func clearPaths() {
-        dotPaths = [UIBezierPath]()
-        linePaths = [UIBezierPath]()
+        dotLocations = [CGPoint]()
+        lineLocations = [(CGPoint, CGPoint)]()
     }
 }
 
@@ -45,8 +54,6 @@ protocol Node {
     static var angle: CGFloat { get set } // class
     
     static var view: ViewForNode! { get set }
-    var dotPath: UIBezierPath? { get set }
-    var linePath: UIBezierPath? { get set }
     var segmentLength: CGFloat { get set }
     
     var substitutesTo: [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] { get set }
@@ -102,25 +109,19 @@ extension Node {
     }
     
     mutating func makePaths() {
-        let rect = CGRect(x: location.x - radius, y: location.y - radius, width: radius * 2, height: radius * 2)
-        dotPath = UIBezierPath(ovalInRect: rect)
-        Self.view.dotPaths.append(dotPath!)
-        
+//        let rect = CGRect(x: location.x - radius, y: location.y - radius, width: radius * 2, height: radius * 2)
+        Self.view.dotLocations.append(location)
         
 
         if let parent = parent {
-            let edge = UIBezierPath()
-            edge.moveToPoint(parent.location)
-            edge.addLineToPoint(location)
-            linePath = edge
-            Self.view.linePaths.append(linePath!)
+            Self.view.lineLocations.append((parent.location, location))
             
         }
         
         
     }
     
-    // redo!!!!
+
     mutating func recursiveReposition() {
 //        print("old location \(location)")
         if let rootLocation = rootLocation {
@@ -152,8 +153,6 @@ class TypeANode: Node {
     var orientation: CGFloat = 0
     var location: CGPoint = CGPoint.zero
     var nodeColor: UIColor = UIColor.blueColor()
-    var dotPath: UIBezierPath?
-    var linePath: UIBezierPath?
 
    
     static var angle: CGFloat = CGFloat(M_PI / 4) // class
@@ -161,7 +160,7 @@ class TypeANode: Node {
     static var view: ViewForNode!
     
     var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
-        [TypeCNode.init]
+        [TypeANode.init, TypeBNode.init]
     required init() {}
     
 }
@@ -173,8 +172,6 @@ class TypeBNode: Node {
     var orientation: CGFloat = 0
     var location: CGPoint = CGPoint.zero
     var nodeColor: UIColor = UIColor.purpleColor()
-    var dotPath: UIBezierPath?
-    var linePath: UIBezierPath?
  
     
     static var angle: CGFloat = CGFloat(M_PI / 4)// class
@@ -182,7 +179,7 @@ class TypeBNode: Node {
     static  var view: ViewForNode!
     
     var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
-        [TypeCNode.init, TypeANode.init]
+        [TypeANode.init]
     
     required init() {}
 
@@ -195,8 +192,7 @@ class TypeCNode: Node {
     var orientation: CGFloat = 0
     var location: CGPoint = CGPoint.zero
     var nodeColor: UIColor = UIColor.purpleColor()
-    var dotPath: UIBezierPath?
-    var linePath: UIBezierPath?
+
     
     
     static var angle: CGFloat = CGFloat(M_PI / 4)// class
