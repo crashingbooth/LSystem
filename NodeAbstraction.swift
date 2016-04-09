@@ -204,7 +204,7 @@ class TypeCNode: Node {
     static  var view: ViewForNode!
     
     var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
-        [TypeBNode.init]
+        [TypeBNode.init, TypeANode.init]
     
     required init() {}
     
