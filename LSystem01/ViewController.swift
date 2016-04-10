@@ -34,6 +34,10 @@ class ViewController: UIViewController {
             regenerate()
         }
         
+        let localTotals = listofNodeClasses.map({(inVal) -> Int in inVal.count})
+        let total = localTotals.reduce(0, combine: {(current: Int, next: Int) in current + next})
+        print(total)
+        
         let pan = UIPanGestureRecognizer(target: self, action: #selector(ViewController.handlePan(_:)))
         view.addGestureRecognizer(pan)
     }
@@ -118,11 +122,11 @@ class ViewController: UIViewController {
     
     
     func handlePan(sender: UIPanGestureRecognizer) {
-        print ("tap")
+
         let position :CGPoint =  sender.translationInView(view)
         TypeANode.angle = position.x / view.bounds.width * CGFloat(M_PI)
         TypeBNode.angle = position.y / view.bounds.width * CGFloat(M_PI)
-        print(TypeANode.angle)
+
         for view in nodeViews {
             view.clearPaths()
         }

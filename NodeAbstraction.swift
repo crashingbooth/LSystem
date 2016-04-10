@@ -52,6 +52,7 @@ protocol Node {
     var location: CGPoint { get set }
     var nodeColor: UIColor { get set } // class
     static var angle: CGFloat { get set } // class
+    static var count: Int { get set }
     
     static var view: ViewForNode! { get set }
     var segmentLength: CGFloat { get set }
@@ -94,6 +95,7 @@ extension Node {
     init(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) {
         self.init()
         self.segmentLength = segmentLength
+        Self.count += 1
         if let parent = parent {
             self.parent = parent
             orientation = calcOrientation()
@@ -153,6 +155,7 @@ class TypeANode: Node {
     var orientation: CGFloat = 0
     var location: CGPoint = CGPoint.zero
     var nodeColor: UIColor = UIColor.blueColor()
+    static var count = 0
 
    
     static var angle: CGFloat = CGFloat(M_PI / 4) // class
@@ -172,6 +175,7 @@ class TypeBNode: Node {
     var orientation: CGFloat = 0
     var location: CGPoint = CGPoint.zero
     var nodeColor: UIColor = UIColor.purpleColor()
+     static var count = 0
  
     
     static var angle: CGFloat = CGFloat(M_PI / 4)// class
@@ -192,7 +196,7 @@ class TypeCNode: Node {
     var orientation: CGFloat = 0
     var location: CGPoint = CGPoint.zero
     var nodeColor: UIColor = UIColor.purpleColor()
-
+    static var count = 0
     
     
     static var angle: CGFloat = CGFloat(M_PI / 4)// class
