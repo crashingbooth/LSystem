@@ -13,7 +13,7 @@ import UIKit
 
 class ViewForNode: UIView {
     var myNode: Node!
-
+    var dotRects = [CGRect]()
     var dotLocations = [CGPoint]()
     var lineLocations = [(CGPoint, CGPoint)]()
     
@@ -23,23 +23,26 @@ class ViewForNode: UIView {
     
     override func drawRect(rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()
-        CGContextSetFillColorWithColor(context, fillColor.CGColor)
-        for dot in dotLocations {
-            CGContextAddArc(context, dot.x, dot.y, 3, 0, 2 * CGFloat(M_PI), 1)
-             CGContextFillPath(context)
-        }
-        CGContextSetStrokeColorWithColor(context, UIColor.blackColor().colorWithAlphaComponent(0.4).CGColor)
+        CGContextSetStrokeColorWithColor(context, fillColor.CGColor)
+
+//        for dot in dotLocations {
+//            CGContextAddArc(context, dot.x, dot.y, 3, 0, 2 * CGFloat(M_PI), 1)
+//             CGContextFillPath(context)
+//        }
+        
+//        CGContextSetStrokeColorWithColor(context, UIColor.blackColor().colorWithAlphaComponent(0.4).CGColor)
         
         for line in lineLocations {
             CGContextMoveToPoint(context, line.0.x, line.0.y)
             CGContextAddLineToPoint(context, line.1.x, line.1.y)
+            CGContextSetLineWidth(context, 2.0)
             CGContextStrokePath(context)
         }
         
     }
     
     func clearPaths() {
-        dotLocations = [CGPoint]()
+//        dotLocations = [CGPoint]()
         lineLocations = [(CGPoint, CGPoint)]()
     }
 }
@@ -53,6 +56,8 @@ protocol Node {
     var nodeColor: UIColor { get set } // class
     static var angle: CGFloat { get set } // class
     static var count: Int { get set }
+    var nodeCounter: NodeCounter { get set}
+    
     
     static var view: ViewForNode! { get set }
     var segmentLength: CGFloat { get set }
@@ -96,6 +101,7 @@ extension Node {
         self.init()
         self.segmentLength = segmentLength
         Self.count += 1
+        nodeCounter.count += 1
         if let parent = parent {
             self.parent = parent
             orientation = calcOrientation()
@@ -112,7 +118,8 @@ extension Node {
     
     mutating func makePaths() {
 //        let rect = CGRect(x: location.x - radius, y: location.y - radius, width: radius * 2, height: radius * 2)
-        Self.view.dotLocations.append(location)
+//        Self.view.dotRects.append(rect)
+//        Self.view.dotLocations.append(location)
         
 
         if let parent = parent {
@@ -156,14 +163,15 @@ class TypeANode: Node {
     var location: CGPoint = CGPoint.zero
     var nodeColor: UIColor = UIColor.blueColor()
     static var count = 0
+    var nodeCounter = NodeCounter.sharedInstance
 
    
-    static var angle: CGFloat = CGFloat(M_PI / 4) // class
+    static var angle: CGFloat = CGFloat(7*(M_PI)/8) // class
     var segmentLength: CGFloat = 0
     static var view: ViewForNode!
     
     var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
-        [TypeANode.init, TypeBNode.init]
+        [TypeCNode.init, TypeBNode.init, TypeDNode.init]
     required init() {}
     
 }
@@ -176,14 +184,15 @@ class TypeBNode: Node {
     var location: CGPoint = CGPoint.zero
     var nodeColor: UIColor = UIColor.purpleColor()
      static var count = 0
+    var nodeCounter = NodeCounter.sharedInstance
  
     
-    static var angle: CGFloat = CGFloat(M_PI / 4)// class
+    static var angle: CGFloat = CGFloat(7*(M_PI)/8) // class
     var segmentLength: CGFloat = 0// class
     static  var view: ViewForNode!
     
     var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
-        [TypeANode.init]
+        [TypeDNode.init]
     
     required init() {}
 
@@ -197,17 +206,47 @@ class TypeCNode: Node {
     var location: CGPoint = CGPoint.zero
     var nodeColor: UIColor = UIColor.purpleColor()
     static var count = 0
+    var nodeCounter = NodeCounter.sharedInstance
     
     
-    static var angle: CGFloat = CGFloat(M_PI / 4)// class
+    static var angle: CGFloat = CGFloat(7*(M_PI)/8) // class
     var segmentLength: CGFloat = 0// class
     static  var view: ViewForNode!
     
     var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
-        [TypeBNode.init, TypeANode.init]
+        [TypeBNode.init]
     
     required init() {}
     
+}
+
+class TypeDNode: Node {
+    var parent: Node?
+    var children = [Node]()
+    var rootLocation: CGPoint?
+    var orientation: CGFloat = 0
+    var location: CGPoint = CGPoint.zero
+    var nodeColor: UIColor = UIColor.purpleColor()
+    static var count = 0
+    var nodeCounter = NodeCounter.sharedInstance
+    
+    
+    static var angle: CGFloat = CGFloat(7*(M_PI)/8) // class
+    var segmentLength: CGFloat = 0// class
+    static  var view: ViewForNode!
+    
+    var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
+        [TypeANode.init]
+    
+    required init() {}
+    
+}
+
+class NodeCounter {
+    static let sharedInstance = NodeCounter()
+    var count = 0
+    var limit = 6000
+    private init() {}
 }
 
 

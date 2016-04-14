@@ -19,9 +19,9 @@ class ViewController: UIViewController {
     var nodeTypes:Int {
        return listofNodeClasses.count
     }
-//    let listofNodeClasses: [Node.Type] = [TypeANode.self,TypeBNode.self, TypeCNode.self]
-    let listofNodeClasses: [Node.Type] = [TypeANode.self,TypeBNode.self]
-    let listofColors = [UIColor.blueColor(), UIColor.purpleColor(),UIColor.redColor()]
+    let listofNodeClasses: [Node.Type] = [TypeANode.self,TypeBNode.self, TypeCNode.self, TypeDNode.self]
+//    let listofNodeClasses: [Node.Type] = [TypeANode.self,TypeBNode.self]
+    let listofColors = [UIColor.blueColor(), UIColor.purpleColor(),UIColor.redColor(), UIColor.brownColor()]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +30,7 @@ class ViewController: UIViewController {
         makeInitialNode()
         makeKnobs()
         arrayOfNode[0].radius
-        for _ in 0..<13 {
+        for _ in 0..<25{
             regenerate()
         }
         
@@ -40,11 +40,12 @@ class ViewController: UIViewController {
         
         let pan = UIPanGestureRecognizer(target: self, action: #selector(ViewController.handlePan(_:)))
         view.addGestureRecognizer(pan)
+//        view.backgroundColor = UIColor.blackColor()
     }
     
      func makeInitialNode() {
         let rootLocation = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
-        rootNode = TypeBNode(segmentLength: 100 , parent: nil, rootLocation: rootLocation)
+        rootNode = TypeANode(segmentLength: 100 , parent: nil, rootLocation: rootLocation)
         if let rootNode = rootNode {
             arrayOfNode.append(rootNode)
         }
@@ -58,6 +59,9 @@ class ViewController: UIViewController {
         for (i,_) in arrayOfNode.enumerate() {
             for newNode in arrayOfNode[i].spawn() {
                 newArrayOfNodes.append(newNode)
+            }
+            if arrayOfNode[0].nodeCounter.count > arrayOfNode[0].nodeCounter.limit {
+                break
             }
         }
         arrayOfNode = newArrayOfNodes
