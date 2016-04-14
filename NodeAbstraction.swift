@@ -35,7 +35,7 @@ class ViewForNode: UIView {
         for line in lineLocations {
             CGContextMoveToPoint(context, line.0.x, line.0.y)
             CGContextAddLineToPoint(context, line.1.x, line.1.y)
-            CGContextSetLineWidth(context, 2.0)
+//            CGContextSetLineWidth(context, 2.0)
             CGContextStrokePath(context)
         }
         
@@ -120,7 +120,6 @@ extension Node {
 //        let rect = CGRect(x: location.x - radius, y: location.y - radius, width: radius * 2, height: radius * 2)
 //        Self.view.dotRects.append(rect)
 //        Self.view.dotLocations.append(location)
-        
 
         if let parent = parent {
             Self.view.lineLocations.append((parent.location, location))
@@ -171,7 +170,7 @@ class TypeANode: Node {
     static var view: ViewForNode!
     
     var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
-        [TypeCNode.init, TypeBNode.init, TypeDNode.init]
+        [TypeCNode.init, TypeBNode.init]
     required init() {}
     
 }
@@ -192,7 +191,7 @@ class TypeBNode: Node {
     static  var view: ViewForNode!
     
     var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
-        [TypeDNode.init]
+        [TypeANode.init]
     
     required init() {}
 
@@ -221,6 +220,28 @@ class TypeCNode: Node {
 }
 
 class TypeDNode: Node {
+    var parent: Node?
+    var children = [Node]()
+    var rootLocation: CGPoint?
+    var orientation: CGFloat = 0
+    var location: CGPoint = CGPoint.zero
+    var nodeColor: UIColor = UIColor.purpleColor()
+    static var count = 0
+    var nodeCounter = NodeCounter.sharedInstance
+    
+    
+    static var angle: CGFloat = CGFloat(7*(M_PI)/8) // class
+    var segmentLength: CGFloat = 0// class
+    static  var view: ViewForNode!
+    
+    var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
+        [TypeANode.init]
+    
+    required init() {}
+    
+}
+
+class TypeENode: Node {
     var parent: Node?
     var children = [Node]()
     var rootLocation: CGPoint?

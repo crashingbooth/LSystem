@@ -17,4 +17,11 @@ class Constants {
         UIColor.brownColor(),
         UIColor.magentaColor()
     ]
+    
+    static let allNodeClasses: [Node.Type] =
+        [TypeANode.self,
+         TypeBNode.self,
+         TypeCNode.self,
+         TypeDNode.self,
+         TypeENode.self]
 }

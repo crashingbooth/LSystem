@@ -19,14 +19,18 @@ class ViewController: UIViewController {
     var nodeTypes:Int {
        return listofNodeClasses.count
     }
-    let listofNodeClasses: [Node.Type] = [TypeANode.self,TypeBNode.self, TypeCNode.self, TypeDNode.self]
+    let listofNodeClasses: [Node.Type] = Array(Constants.allNodeClasses[0..<3])
+
 //    let listofNodeClasses: [Node.Type] = [TypeANode.self,TypeBNode.self]
-    let listofColors = [UIColor.blueColor(), UIColor.purpleColor(),UIColor.redColor(), UIColor.brownColor()]
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print(listofNodeClasses)
         assignNodeClasses()
+        
+        validateNodeViews()
+        
         makeInitialNode()
         makeKnobs()
         arrayOfNode[0].radius
@@ -53,6 +57,12 @@ class ViewController: UIViewController {
         
     }
     
+    func validateNodeViews() {
+        for nodeClass in listofNodeClasses{
+            print (nodeClass.view)
+        }
+    }
+    
     func regenerate() {
         var newArrayOfNodes = [Node]()
         
@@ -69,6 +79,7 @@ class ViewController: UIViewController {
     }
     
     func assignNodeClasses() {
+        print("nodeTypes: \(nodeTypes)")
         for i in 0..<nodeTypes {
             let nodeView = ViewForNode(frame: view.bounds)
             nodeViews.append(nodeView)
@@ -77,6 +88,7 @@ class ViewController: UIViewController {
             nodeView.fillColor = Constants.nodeColors[i].colorWithAlphaComponent(0.4)
             listofNodeClasses[i].view = nodeView
         }
+        print("nodeviews \(nodeViews.count)")
     }
     
     func makeKnobs() {
@@ -99,7 +111,7 @@ class ViewController: UIViewController {
                 knob.pointerLength = 10.0
                 knob.maximumValue = 0
                 knob.lineWidth = 5.0
-                knob.tintColor = listofColors[i/2].colorWithAlphaComponent(0.4)
+                knob.tintColor = Constants.nodeColors[i/2].colorWithAlphaComponent(0.4)
                 knob.addTarget(self, action: #selector(ViewController.knobPositionChanged(_:)), forControlEvents: .ValueChanged)
                 
                 knobs.append(knob)
