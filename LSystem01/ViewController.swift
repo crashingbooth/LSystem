@@ -74,7 +74,7 @@ class ViewController: UIViewController {
             nodeViews.append(nodeView)
             nodeView.backgroundColor = UIColor.clearColor()
             view.addSubview(nodeView)
-            nodeView.fillColor = listofColors[i].colorWithAlphaComponent(0.4)
+            nodeView.fillColor = Constants.nodeColors[i].colorWithAlphaComponent(0.4)
             listofNodeClasses[i].view = nodeView
         }
     }
