@@ -19,7 +19,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hOx-JA-TKM" customClass="NodeExtensionView" customModule="LSystem01" customModuleProvider="target">
                                 <rect key="frame" x="180" y="180" width="240" height="240"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.99876534939999995" green="0.97792994779999998" blue="0.85725165530000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="240" id="A1Z-x0-XlI"/>
                                     <constraint firstAttribute="height" constant="240" id="CIh-bK-Kxd"/>
