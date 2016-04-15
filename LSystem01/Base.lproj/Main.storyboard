@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -31,17 +32,33 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wwI-ko-582">
+                                <rect key="frame" x="560" y="20" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="9TN-Jd-35V"/>
+                                    <constraint firstAttribute="height" constant="40" id="cf6-Xr-vsT"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="cogwheel"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="wwI-ko-582" secondAttribute="trailing" constant="-20" id="QCR-i5-5lN"/>
                             <constraint firstItem="hOx-JA-TKM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="RUm-iX-piT"/>
+                            <constraint firstItem="wwI-ko-582" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="b3J-gp-wkc"/>
                             <constraint firstItem="hOx-JA-TKM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hiC-Y5-j37"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="nodeExtensionTest" destination="hOx-JA-TKM" id="sbX-XO-6dd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="270" y="397"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cogwheel" width="256" height="256"/>
+    </resources>
 </document>

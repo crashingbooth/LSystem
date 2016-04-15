@@ -10,9 +10,16 @@ import UIKit
 
 let PI = CGFloat(M_PI)
 @IBDesignable class NodeExtensionView: UIView {
+    var barWidth: CGFloat = 0
+    var barHeight: CGFloat = 0
+    var topNodeCenter = CGPoint.zero
+    var midNodeCenter = CGPoint.zero
+    var addNodeCenter = CGPoint.zero
+    var nodeRadius: CGFloat = 0
   
     var nodeColor: UIColor = Constants.nodeColors[0].colorWithAlphaComponent(0.5)
     var nodeExtensions: [Node.Type] = [TypeANode.self, TypeBNode.self, TypeCNode.self, TypeCNode.self, TypeCNode.self]
+    var childNodeViews = [ChildNodeView]()
     let anglesDict: [Int:[CGFloat]] = [
         1:[-PI / 2],
         2:[-PI / 3, -2 * PI / 3],
@@ -21,15 +28,32 @@ let PI = CGFloat(M_PI)
         5:[-PI / 6, -2 * PI / 6, -3 * PI / 6, -4 * PI / 6, -5 * PI / 6]
     ]
     
+    func getSizes() {
+        barWidth = bounds.width / 16
+        barHeight = (bounds.height / 8) * 3
+        topNodeCenter = CGPoint(x: bounds.width / 2, y: bounds.height / 8)
+        midNodeCenter = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
+        addNodeCenter = CGPoint(x: bounds.width / 2 + barHeight, y: bounds.height / 2 )
+        nodeRadius =  bounds.width / 15
+    }
     
-
+    func setUpExtensions() {
+        for (i, ext) in nodeExtensions.enumerate() {
+            let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, color: Constants.nodeColors[i].colorWithAlphaComponent(0.5))
+            addSubview(child)
+            childNodeViews.append(child)
+            if let angles = anglesDict[nodeExtensions.count] {
+                let myAngle = angles[i]
+                child.transform = CGAffineTransformMakeRotation(myAngle * -1)
+            }
+        }
+    }
+    
+    
+    
+    
     override func drawRect(rect: CGRect) {
-        let barWidth = bounds.width / 16
-        let barHeight = (bounds.height / 8) * 3
-        let topNodeCenter = CGPoint(x: bounds.width / 2, y: bounds.height / 8)
-        let midNodeCenter = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
-        let addNodeCenter = CGPoint(x: bounds.width / 2 + barHeight, y: bounds.height / 2 )
-        let nodeRadius =  bounds.width / 15
+       
         
         
         let context = UIGraphicsGetCurrentContext()
@@ -44,37 +68,63 @@ let PI = CGFloat(M_PI)
         nodeColor.setFill()
         edgePath.fill()
         
-        for exten in 0..<nodeExtensions.count {
-            // make paths, rotate, fill
-            let circleLayer = CAShapeLayer()
-            circleLayer.frame = bounds
-            circleLayer.path = UIBezierPath(arcCenter: addNodeCenter, radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true).CGPath
-            let edgeLayer = CAShapeLayer()
-            edgeLayer.frame = bounds
-            let edgeRect = CGRect(x: midNodeCenter.x, y: (bounds.height / 2) - (barWidth / 2), width: barHeight, height:  barWidth)
-//            edgeLayer.path = UIBezierPath(roundedRect: edgeRect, byRoundingCorners: .AllCorners , cornerRadii: CGSize(width: barWidth / 2, height: barWidth / 2)).CGPath
-//            edgeLayer.fillColor = Constants.nodeColors[1].CGColor
-            
-            let edgePath = UIBezierPath(roundedRect: edgeRect, cornerRadius: barWidth / 2)
-            edgeLayer.path = edgePath.CGPath
-            edgeLayer.fillColor = Constants.nodeColors[exten].colorWithAlphaComponent(0.5).CGColor
-         
-            
-            
-            circleLayer.fillColor = UIColor.blackColor().colorWithAlphaComponent(0.2).CGColor
-            self.layer.addSublayer(circleLayer)
-            self.layer.addSublayer(edgeLayer)
-            if let angles = anglesDict[nodeExtensions.count] {
-                let myAngle = angles[exten]
-                circleLayer.transform = CATransform3DMakeRotation(myAngle * -1, 0.0, 0.0, 1.0)
-                edgeLayer.transform = CATransform3DMakeRotation(myAngle * -1, 0.0, 0.0, 1.0)
-            }
+        
+    }
+
+}
+
+class ChildNodeView: UIView {
+    var color: UIColor = UIColor.cyanColor()
+    var barHeight: CGFloat = 0
+    var barWidth: CGFloat = 0
+    var nodeRadius: CGFloat = 0
+    var isConnected = true
+    var nodePath = UIBezierPath()
+    
+   
+    init(frame: CGRect, barHeight: CGFloat, barWidth: CGFloat, nodeRadius: CGFloat, color: UIColor) {
+        let rect = CGRect(x: 0, y: (frame.height / 2) - nodeRadius, width: frame.width, height: nodeRadius * 2 )
+        
+        super.init(frame: rect)
+        self.barHeight = barHeight
+        self.barWidth = barWidth
+        self.nodeRadius = nodeRadius
+        self.color = color
+        backgroundColor = UIColor.clearColor()
+        
+    }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func drawRect(rect: CGRect) {
+        // end node
+        constructPath()
+        UIColor.blackColor().colorWithAlphaComponent(0.2).setFill()
+        nodePath.fill()
+        
+        
+        // top node
+        if !isConnected {
+            let topNode = UIBezierPath(arcCenter: CGPoint(x: bounds.width / 2, y: bounds.height / 2), radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
+            topNode.fill()
         }
         
-        
+        // edge
+        let edgeRect = CGRect(x: bounds.width / 2, y: (bounds.height / 2) - (barWidth / 2), width: barHeight, height: barWidth)
+        let edgePath = UIBezierPath(roundedRect: edgeRect, cornerRadius: barWidth / 2)
+        color.setFill()
+        edgePath.fill()
+    }
+    
+    func constructPath() {
+        let nodeCenter = CGPoint(x: (bounds.width / 2) + barHeight, y: bounds.height / 2)
+        nodePath = UIBezierPath(arcCenter: nodeCenter, radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
     }
     
     
- 
-
 }

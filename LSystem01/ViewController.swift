@@ -23,6 +23,7 @@ class ViewController: UIViewController {
 
 //    let listofNodeClasses: [Node.Type] = [TypeANode.self,TypeBNode.self]
 
+    @IBOutlet weak var nodeExtensionTest: NodeExtensionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +46,12 @@ class ViewController: UIViewController {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(ViewController.handlePan(_:)))
         view.addGestureRecognizer(pan)
 //        view.backgroundColor = UIColor.blackColor()
+        
+        
+        nodeExtensionTest.getSizes()
+        nodeExtensionTest.setUpExtensions()
+        
+        
     }
     
      func makeInitialNode() {
