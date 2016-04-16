@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 class Constants {
+    static let reductionFactor: CGFloat = 0.85
+    
     static let nodeColors: [UIColor] = [
         UIColor.blueColor(),
         UIColor.purpleColor(),

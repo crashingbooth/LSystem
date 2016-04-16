@@ -12,9 +12,26 @@ enum NodeType {
     case typeA, typeB, typeC, typeD, typeE
 }
 class Settings {
-    var sharedInstance = Settings()
+    static var sharedInstance = Settings()
     var activeNodes = [NodeType]()
-    var nodeSubstitutions = [NodeType: [NodeType]]()
+    var nodeSubstitutions: [NodeType: [NodeType]] = [
+        .typeA : [.typeB],
+        .typeB :   [.typeA, .typeB],
+        .typeC : [ .typeA]
+    ]
+    
+    
     
     private init() {}
+    
+    
+    static let initDict: [NodeType:(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] = [
+        NodeType.typeA : TypeANode.init,
+        NodeType.typeB : TypeBNode.init,
+        NodeType.typeC : TypeCNode.init,
+        NodeType.typeD : TypeDNode.init,
+        NodeType.typeE : TypeENode.init
+    ]
+        
+    
 }

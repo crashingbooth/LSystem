@@ -13,74 +13,52 @@ import UIKit
 
 class ViewForNode: UIView {
     var myNode: Node!
-    var dotRects = [CGRect]()
-    var dotLocations = [CGPoint]()
     var lineLocations = [(CGPoint, CGPoint)]()
     
     var fillColor: UIColor!
-    
-
     
     override func drawRect(rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()
         CGContextSetStrokeColorWithColor(context, fillColor.CGColor)
 
-//        for dot in dotLocations {
-//            CGContextAddArc(context, dot.x, dot.y, 3, 0, 2 * CGFloat(M_PI), 1)
-//             CGContextFillPath(context)
-//        }
-        
-//        CGContextSetStrokeColorWithColor(context, UIColor.blackColor().colorWithAlphaComponent(0.4).CGColor)
         
         for line in lineLocations {
             CGContextMoveToPoint(context, line.0.x, line.0.y)
             CGContextAddLineToPoint(context, line.1.x, line.1.y)
-//            CGContextSetLineWidth(context, 2.0)
+
             CGContextStrokePath(context)
         }
         
     }
     
     func clearPaths() {
-//        dotLocations = [CGPoint]()
         lineLocations = [(CGPoint, CGPoint)]()
     }
 }
 
 protocol Node {
+    static var nodeType: NodeType { get }
+    static var angle: CGFloat { get set }
+    var nodeCounter: NodeCounter { get }
+    static var view: ViewForNode! { get set }
+    
     var parent: Node? { get set }
     var children: [Node] { get set }
     var rootLocation: CGPoint? { get set }
     var orientation: CGFloat { get set }
     var location: CGPoint { get set }
-    var nodeColor: UIColor { get set } // class
-    static var angle: CGFloat { get set } // class
-    static var count: Int { get set }
-    static var nodeType: NodeType { get }
-    var nodeCounter: NodeCounter { get set}
-    
-    
-    static var view: ViewForNode! { get set }
     var segmentLength: CGFloat { get set }
-    
-    var substitutesTo: [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] { get set }
-    
-    
     
     init()
     
 }
 
 extension Node {
-    var radius: CGFloat {
-        return CGFloat(4)
-    }
     var reductionFactor: CGFloat {
-        return 0.85
+        return Constants.reductionFactor
     }
     
     func calcOrientation() -> CGFloat {
-//        print(Self.angle)
         if let parent = parent {
             return Self.angle + parent.orientation
         } else {
@@ -101,7 +79,6 @@ extension Node {
     init(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) {
         self.init()
         self.segmentLength = segmentLength
-        Self.count += 1
         nodeCounter.count += 1
         if let parent = parent {
             self.parent = parent
@@ -118,153 +95,138 @@ extension Node {
     }
     
     mutating func makePaths() {
-//        let rect = CGRect(x: location.x - radius, y: location.y - radius, width: radius * 2, height: radius * 2)
-//        Self.view.dotRects.append(rect)
-//        Self.view.dotLocations.append(location)
-
         if let parent = parent {
             Self.view.lineLocations.append((parent.location, location))
-            
         }
-        
-        
     }
     
 
     mutating func recursiveReposition() {
-//        print("old location \(location)")
         if let rootLocation = rootLocation {
-            location = rootLocation // as before
+            location = rootLocation
         } else {
             orientation = calcOrientation()
             location = calcLocation()
         }
+        
         makePaths()
+        
         for (i, _) in children.enumerate() {
             children[i].recursiveReposition()
         }
-      
-        
     }
     
     mutating func spawn() -> [Node] {
-        for node in substitutesTo {
-            children.append(node(segmentLength: segmentLength * reductionFactor, parent: self, rootLocation: nil))
+    // called by regenerate function in VC
+        for node in Settings.sharedInstance.nodeSubstitutions[Self.nodeType]! {
+            if let nodeInit = Settings.initDict[node] {
+            children.append(nodeInit(segmentLength: segmentLength * reductionFactor, parent: self, rootLocation: nil))
+            }
         }
         return children
     }
+    
+    
+    
+    
 }
 
 class TypeANode: Node {
+    static let nodeType: NodeType = .typeA
+    
+    static var angle: CGFloat = CGFloat(7*(M_PI)/8)
+    let nodeCounter = NodeCounter.sharedInstance
+    
+    static var view: ViewForNode! // set in VC
+    
     var parent: Node?
     var children = [Node]()
     var rootLocation: CGPoint?
     var orientation: CGFloat = 0
     var location: CGPoint = CGPoint.zero
-    var nodeColor: UIColor = UIColor.blueColor()
-    static var count = 0
-    static var nodeType: NodeType = .typeA
-    var nodeCounter = NodeCounter.sharedInstance
-
-   
-    static var angle: CGFloat = CGFloat(7*(M_PI)/8) // class
     var segmentLength: CGFloat = 0
-    static var view: ViewForNode!
-    
-    var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
-        [TypeCNode.init, TypeBNode.init]
+
+
     required init() {}
     
 }
 
 class TypeBNode: Node {
+    static let nodeType: NodeType = .typeB
+    
+    static var angle: CGFloat = CGFloat(7*(M_PI)/8)
+    let nodeCounter = NodeCounter.sharedInstance
+    
+    static var view: ViewForNode! // set in VC
+    
     var parent: Node?
     var children = [Node]()
     var rootLocation: CGPoint?
     var orientation: CGFloat = 0
     var location: CGPoint = CGPoint.zero
-    var nodeColor: UIColor = UIColor.purpleColor()
-     static var count = 0
-    static var nodeType: NodeType = .typeB
-    var nodeCounter = NodeCounter.sharedInstance
- 
+    var segmentLength: CGFloat = 0
     
-    static var angle: CGFloat = CGFloat(7*(M_PI)/8) // class
-    var segmentLength: CGFloat = 0// class
-    static  var view: ViewForNode!
-    
-    var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
-        [TypeANode.init]
     
     required init() {}
 
 }
 
 class TypeCNode: Node {
+    static let nodeType: NodeType = .typeC
+    
+    static var angle: CGFloat = CGFloat(7*(M_PI)/8)
+    let nodeCounter = NodeCounter.sharedInstance
+    
+    static var view: ViewForNode! // set in VC
+    
     var parent: Node?
     var children = [Node]()
     var rootLocation: CGPoint?
     var orientation: CGFloat = 0
     var location: CGPoint = CGPoint.zero
-    var nodeColor: UIColor = UIColor.purpleColor()
-    static var count = 0
-    static var nodeType: NodeType = .typeC
-    var nodeCounter = NodeCounter.sharedInstance
+    var segmentLength: CGFloat = 0
     
-    
-    static var angle: CGFloat = CGFloat(7*(M_PI)/8) // class
-    var segmentLength: CGFloat = 0// class
-    static  var view: ViewForNode!
-    
-    var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
-        [TypeBNode.init]
     
     required init() {}
     
 }
 
 class TypeDNode: Node {
+    static let nodeType: NodeType = .typeD
+    
+    static var angle: CGFloat = CGFloat(7*(M_PI)/8)
+    let nodeCounter = NodeCounter.sharedInstance
+    
+    static var view: ViewForNode! // set in VC
+    
     var parent: Node?
     var children = [Node]()
     var rootLocation: CGPoint?
     var orientation: CGFloat = 0
     var location: CGPoint = CGPoint.zero
-    var nodeColor: UIColor = UIColor.purpleColor()
-    static var count = 0
-    static var nodeType: NodeType = .typeD
-    var nodeCounter = NodeCounter.sharedInstance
+    var segmentLength: CGFloat = 0
     
-    
-    static var angle: CGFloat = CGFloat(7*(M_PI)/8) // class
-    var segmentLength: CGFloat = 0// class
-    static  var view: ViewForNode!
-    
-    var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
-        [TypeANode.init]
     
     required init() {}
     
 }
 
 class TypeENode: Node {
+   static let nodeType: NodeType = .typeE
+    
+    static var angle: CGFloat = CGFloat(7*(M_PI)/8)
+    let nodeCounter = NodeCounter.sharedInstance
+    
+    static var view: ViewForNode! // set in VC
+    
     var parent: Node?
     var children = [Node]()
     var rootLocation: CGPoint?
     var orientation: CGFloat = 0
     var location: CGPoint = CGPoint.zero
-    var nodeColor: UIColor = UIColor.purpleColor()
-    static var count = 0
-    static var nodeType: NodeType = .typeE
-    var nodeCounter = NodeCounter.sharedInstance
-    
-    
-    static var angle: CGFloat = CGFloat(7*(M_PI)/8) // class
-    var segmentLength: CGFloat = 0// class
-    static  var view: ViewForNode!
-    
-    var substitutesTo : [(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] =
-        [TypeANode.init]
-    
+    var segmentLength: CGFloat = 0
+
+
     required init() {}
     
 }
@@ -277,5 +239,3 @@ class NodeCounter {
 }
 
 
-
-// in VC make repository Views and assign them (somehow) for TypeA and typeB, their addPaths func will add them

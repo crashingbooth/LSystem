@@ -34,14 +34,12 @@ class ViewController: UIViewController {
         
         makeInitialNode()
         makeKnobs()
-        arrayOfNode[0].radius
+//        arrayOfNode[0].radius
         for _ in 0..<25{
             regenerate()
         }
         
-        let localTotals = listofNodeClasses.map({(inVal) -> Int in inVal.count})
-        let total = localTotals.reduce(0, combine: {(current: Int, next: Int) in current + next})
-        print(total)
+
         
         let pan = UIPanGestureRecognizer(target: self, action: #selector(ViewController.handlePan(_:)))
         view.addGestureRecognizer(pan)
