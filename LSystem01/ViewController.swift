@@ -21,9 +21,9 @@ class ViewController: UIViewController {
     }
     let listofNodeClasses: [Node.Type] = Array(Constants.allNodeClasses[0..<3])
 
+    @IBOutlet weak var settingsButton: UIButton!
 //    let listofNodeClasses: [Node.Type] = [TypeANode.self,TypeBNode.self]
 
-    @IBOutlet weak var nodeExtensionTest: NodeExtensionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,10 +47,8 @@ class ViewController: UIViewController {
         view.addGestureRecognizer(pan)
 //        view.backgroundColor = UIColor.blackColor()
         
-        
-        nodeExtensionTest.getSizes()
-        nodeExtensionTest.setUpExtensions()
-        
+        settingsButton.removeFromSuperview()
+        nodeViews.last?.addSubview(settingsButton)
         
     }
     
@@ -159,6 +157,12 @@ class ViewController: UIViewController {
         for view in nodeViews {
             view.setNeedsDisplay()
         }
+    }
+    
+    
+    @IBAction func settingsButton(sender: AnyObject) {
+        print("pressed")
+        performSegueWithIdentifier("toSettings", sender: self)
     }
     
 

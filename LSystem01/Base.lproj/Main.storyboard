@@ -18,44 +18,73 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hOx-JA-TKM" customClass="NodeExtensionView" customModule="LSystem01" customModuleProvider="target">
-                                <rect key="frame" x="180" y="180" width="240" height="240"/>
-                                <color key="backgroundColor" red="0.99876534939999995" green="0.97792994779999998" blue="0.85725165530000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="240" id="A1Z-x0-XlI"/>
-                                    <constraint firstAttribute="height" constant="240" id="CIh-bK-Kxd"/>
-                                    <constraint firstAttribute="width" constant="240" id="u41-cd-KOB"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="A1Z-x0-XlI"/>
-                                    </mask>
-                                </variation>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wwI-ko-582">
-                                <rect key="frame" x="560" y="20" width="40" height="40"/>
+                                <rect key="frame" x="550" y="30" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="9TN-Jd-35V"/>
                                     <constraint firstAttribute="height" constant="40" id="cf6-Xr-vsT"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="cogwheel"/>
+                                <connections>
+                                    <action selector="settingsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="a1W-9z-qv1"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="wwI-ko-582" secondAttribute="trailing" constant="-20" id="QCR-i5-5lN"/>
-                            <constraint firstItem="hOx-JA-TKM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="RUm-iX-piT"/>
-                            <constraint firstItem="wwI-ko-582" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="b3J-gp-wkc"/>
-                            <constraint firstItem="hOx-JA-TKM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hiC-Y5-j37"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wwI-ko-582" secondAttribute="trailing" constant="-10" id="QCR-i5-5lN"/>
+                            <constraint firstItem="wwI-ko-582" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="b3J-gp-wkc"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="nodeExtensionTest" destination="hOx-JA-TKM" id="sbX-XO-6dd"/>
+                        <outlet property="settingsButton" destination="wwI-ko-582" id="UlW-rW-Vox"/>
+                        <segue destination="9dY-JG-M4f" kind="show" identifier="toSettings" id="sf0-Uf-u7f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="270" y="397"/>
+        </scene>
+        <!--Outer SettingsVC View Controller-->
+        <scene sceneID="lJp-jg-pFO">
+            <objects>
+                <viewController id="9dY-JG-M4f" customClass="OuterSettingsVCViewController" customModule="LSystem01" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0b7-Bn-n30"/>
+                        <viewControllerLayoutGuide type="bottom" id="3My-0l-orS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="joZ-an-IHh">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3fr-D1-9Zk" customClass="NodeExtensionView" customModule="LSystem01" customModuleProvider="target">
+                                <rect key="frame" x="180" y="180" width="240" height="240"/>
+                                <color key="backgroundColor" red="0.99876534939999995" green="0.97792994779999998" blue="0.85725165530000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="395-84-Fsd"/>
+                                    <constraint firstAttribute="height" constant="240" id="NQg-Nt-Exa"/>
+                                    <constraint firstAttribute="width" constant="240" id="bPD-od-VKq"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="395-84-Fsd"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="3fr-D1-9Zk" firstAttribute="centerY" secondItem="joZ-an-IHh" secondAttribute="centerY" id="Xpz-15-yVo"/>
+                            <constraint firstItem="3fr-D1-9Zk" firstAttribute="centerX" secondItem="joZ-an-IHh" secondAttribute="centerX" id="z7G-o7-ETL"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="nodeExtensionTest" destination="3fr-D1-9Zk" id="qNY-aA-AOO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qPP-7K-yKh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="941" y="397"/>
         </scene>
     </scenes>
     <resources>

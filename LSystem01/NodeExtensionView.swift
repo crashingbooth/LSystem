@@ -35,6 +35,17 @@ let PI = CGFloat(M_PI)
         midNodeCenter = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
         addNodeCenter = CGPoint(x: bounds.width / 2 + barHeight, y: bounds.height / 2 )
         nodeRadius =  bounds.width / 15
+        
+//        userInteractionEnabled = true
+//        let touch = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
+//        addGestureRecognizer(touch)
+        
+        
+    }
+    
+    func tapped(sender: UITapGestureRecognizer) {
+        print(" NEV toucjed")
+        
     }
     
     func setUpExtensions() {
@@ -46,6 +57,10 @@ let PI = CGFloat(M_PI)
                 let myAngle = angles[i]
                 child.transform = CGAffineTransformMakeRotation(myAngle * -1)
             }
+            let touch = UITapGestureRecognizer(target:
+                child, action: #selector(child.tapped(_:)))
+            child.addGestureRecognizer(touch)
+            userInteractionEnabled = true
         }
     }
     
@@ -53,15 +68,15 @@ let PI = CGFloat(M_PI)
     
     
     override func drawRect(rect: CGRect) {
-       
+
+
+        let topNodePath = UIBezierPath(arcCenter: topNodeCenter, radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
+        let midNodePath = UIBezierPath(arcCenter: midNodeCenter, radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
+        UIColor.blackColor().colorWithAlphaComponent(0.2).setFill()
+        topNodePath.fill()
+        midNodePath.fill()
         
-        
-        let context = UIGraphicsGetCurrentContext()
-        CGContextSetFillColorWithColor(context, UIColor.blackColor().colorWithAlphaComponent(0.2).CGColor)
-        CGContextAddArc(context, topNodeCenter.x, topNodeCenter.y, nodeRadius, 0, 2 * CGFloat(M_PI), 1)
-        CGContextFillPath(context)
-        CGContextAddArc(context, midNodeCenter.x, midNodeCenter.y, nodeRadius, 0, 2 * CGFloat(M_PI), 1)
-        CGContextFillPath(context)
+
         
         let edgeRect = CGRect(x: topNodeCenter.x - barWidth/2, y: topNodeCenter.y, width: barWidth, height:  barHeight)
         let edgePath = UIBezierPath(roundedRect: edgeRect, byRoundingCorners: .AllCorners, cornerRadii: CGSize(width: barWidth/2, height: barWidth/2))
@@ -91,6 +106,16 @@ class ChildNodeView: UIView {
         self.nodeRadius = nodeRadius
         self.color = color
         backgroundColor = UIColor.clearColor()
+//        
+//        let touch = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
+//        addGestureRecognizer(touch) 
+//        userInteractionEnabled = true
+        
+        
+    }
+    
+    func tapped(sender: UITapGestureRecognizer) {
+        print("Child toucjed")
         
     }
     override init(frame: CGRect) {
