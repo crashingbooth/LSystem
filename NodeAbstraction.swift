@@ -56,6 +56,7 @@ protocol Node {
     var nodeColor: UIColor { get set } // class
     static var angle: CGFloat { get set } // class
     static var count: Int { get set }
+    static var nodeType: NodeType { get }
     var nodeCounter: NodeCounter { get set}
     
     
@@ -162,6 +163,7 @@ class TypeANode: Node {
     var location: CGPoint = CGPoint.zero
     var nodeColor: UIColor = UIColor.blueColor()
     static var count = 0
+    static var nodeType: NodeType = .typeA
     var nodeCounter = NodeCounter.sharedInstance
 
    
@@ -183,6 +185,7 @@ class TypeBNode: Node {
     var location: CGPoint = CGPoint.zero
     var nodeColor: UIColor = UIColor.purpleColor()
      static var count = 0
+    static var nodeType: NodeType = .typeB
     var nodeCounter = NodeCounter.sharedInstance
  
     
@@ -205,6 +208,7 @@ class TypeCNode: Node {
     var location: CGPoint = CGPoint.zero
     var nodeColor: UIColor = UIColor.purpleColor()
     static var count = 0
+    static var nodeType: NodeType = .typeC
     var nodeCounter = NodeCounter.sharedInstance
     
     
@@ -227,6 +231,7 @@ class TypeDNode: Node {
     var location: CGPoint = CGPoint.zero
     var nodeColor: UIColor = UIColor.purpleColor()
     static var count = 0
+    static var nodeType: NodeType = .typeD
     var nodeCounter = NodeCounter.sharedInstance
     
     
@@ -249,6 +254,7 @@ class TypeENode: Node {
     var location: CGPoint = CGPoint.zero
     var nodeColor: UIColor = UIColor.purpleColor()
     static var count = 0
+    static var nodeType: NodeType = .typeE
     var nodeCounter = NodeCounter.sharedInstance
     
     

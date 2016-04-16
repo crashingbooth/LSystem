@@ -18,6 +18,7 @@
 		1F63A3C11CB22BDD006FA3F2 /* LSystem01Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F63A3C01CB22BDD006FA3F2 /* LSystem01Tests.swift */; };
 		1F63A3CE1CB3B53E006FA3F2 /* NodeAbstraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F63A3CD1CB3B53E006FA3F2 /* NodeAbstraction.swift */; };
 		1F6AA6041CB7B1D30002579A /* Knob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AA6031CB7B1D30002579A /* Knob.swift */; };
+		1F88B53D1CC22F5B00B20B73 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F88B53C1CC22F5B00B20B73 /* Settings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		1F63A3C21CB22BDD006FA3F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F63A3CD1CB3B53E006FA3F2 /* NodeAbstraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeAbstraction.swift; sourceTree = "<group>"; };
 		1F6AA6031CB7B1D30002579A /* Knob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Knob.swift; sourceTree = "<group>"; };
+		1F88B53C1CC22F5B00B20B73 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 				1F63A3AD1CB22BDD006FA3F2 /* ViewController.swift */,
 				1F5C806A1CC0E73B00122AD2 /* OuterSettingsVCViewController.swift */,
 				1F3935351CBF336A00057BB1 /* NodeExtensionView.swift */,
+				1F88B53C1CC22F5B00B20B73 /* Settings.swift */,
 				1F63A3AF1CB22BDD006FA3F2 /* Main.storyboard */,
 				1F63A3B21CB22BDD006FA3F2 /* Assets.xcassets */,
 				1F63A3B41CB22BDD006FA3F2 /* LaunchScreen.storyboard */,
@@ -214,6 +217,7 @@
 			files = (
 				1F3935341CBF31F500057BB1 /* Constants.swift in Sources */,
 				1F63A3CE1CB3B53E006FA3F2 /* NodeAbstraction.swift in Sources */,
+				1F88B53D1CC22F5B00B20B73 /* Settings.swift in Sources */,
 				1F63A3AE1CB22BDD006FA3F2 /* ViewController.swift in Sources */,
 				1F63A3AC1CB22BDD006FA3F2 /* AppDelegate.swift in Sources */,
 				1F5C806B1CC0E73B00122AD2 /* OuterSettingsVCViewController.swift in Sources */,
