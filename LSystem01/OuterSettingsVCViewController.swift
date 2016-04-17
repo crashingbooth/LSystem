@@ -10,47 +10,51 @@ import UIKit
 
 class OuterSettingsVCViewController: UIViewController {
 
-    @IBOutlet weak var nodeExtensionTest: NodeExtensionView!
+    @IBOutlet weak var nodeView0: NodeExtensionView!
+    @IBOutlet weak var nodeView1: NodeExtensionView!
+    @IBOutlet weak var nodeView2: NodeExtensionView!
+    @IBOutlet weak var nodeView3: NodeExtensionView!
+    @IBOutlet weak var nodeView4: NodeExtensionView!
+    var nodeViews: [NodeExtensionView]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.userInteractionEnabled = false
-        nodeExtensionTest.getSizes()
-        nodeExtensionTest.setUpExtensions()
-       
+    
+        nodeViews = [nodeView0,nodeView1,nodeView2,nodeView3,nodeView4]
+        for nodeView in nodeViews {
+            nodeView.getSizes()
+            nodeView.setUpExtensions()
+        }
+        
+        
+        if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.Unspecified) {
+           
+        } else {
+             print(" not regular horizontak")
+        }
+        print(self.view.traitCollection.horizontalSizeClass)
         
         view.userInteractionEnabled = true
-        
-//        for ext in nodeExtensionTest.childNodeViews {
-//            let touch = UITapGestureRecognizer(target: ChildNodeView.self, action: #selector(ext.tapped(_:)))
-//            nodeExtensionTest.addGestureRecognizer(touch)
-//        }
-       
 
-        // Do any additional setup after loading the view.
     }
     
     func tapped(sender: UITapGestureRecognizer) {
         print(" VC toucjed")
         
     }
+    
+    override func overrideTraitCollectionForChildViewController(childViewController: UIViewController) -> UITraitCollection {
+        print("called")
+        if view.bounds.width > view.bounds.height {
+            return UITraitCollection(verticalSizeClass: .Compact)
+        } else {
+            return UITraitCollection(verticalSizeClass: .Regular)
+        }
+    }
+    
+    
 
    
 
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

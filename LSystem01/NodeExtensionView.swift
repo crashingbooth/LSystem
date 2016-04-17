@@ -29,6 +29,7 @@ let PI = CGFloat(M_PI)
     ]
     
     func getSizes() {
+        backgroundColor = UIColor.clearColor()
         barWidth = bounds.width / 16
         barHeight = (bounds.height / 8) * 3
         topNodeCenter = CGPoint(x: bounds.width / 2, y: bounds.height / 8)
@@ -49,6 +50,10 @@ let PI = CGFloat(M_PI)
     }
     
     func setUpExtensions() {
+        for childNode in childNodeViews {
+            childNode.removeFromSuperview()
+        }
+        childNodeViews = [ChildNodeView]()
         for (i, ext) in nodeExtensions.enumerate() {
             let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, color: Constants.nodeColors[i].colorWithAlphaComponent(0.5))
             addSubview(child)

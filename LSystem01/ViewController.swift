@@ -161,6 +161,15 @@ class ViewController: UIViewController {
         performSegueWithIdentifier("toSettings", sender: self)
     }
     
+    override func overrideTraitCollectionForChildViewController(childViewController: UIViewController) -> UITraitCollection? {
+        print("called")
+        if view.bounds.width > view.bounds.height {
+            return UITraitCollection(verticalSizeClass: .Compact)
+        } else {
+            return UITraitCollection(verticalSizeClass: .Regular)
+        }
+    }
+    
 
 
 
