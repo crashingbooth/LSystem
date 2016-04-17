@@ -22,8 +22,6 @@ class ViewController: UIViewController {
     let listofNodeClasses: [Node.Type] = Array(Constants.allNodeClasses[0..<3])
 
     @IBOutlet weak var settingsButton: UIButton!
-//    let listofNodeClasses: [Node.Type] = [TypeANode.self,TypeBNode.self]
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +32,7 @@ class ViewController: UIViewController {
         
         makeInitialNode()
         makeKnobs()
-//        arrayOfNode[0].radius
+
         for _ in 0..<25{
             regenerate()
         }
@@ -43,8 +41,8 @@ class ViewController: UIViewController {
         
         let pan = UIPanGestureRecognizer(target: self, action: #selector(ViewController.handlePan(_:)))
         view.addGestureRecognizer(pan)
-//        view.backgroundColor = UIColor.blackColor()
-        
+
+        // TODO - find better way
         settingsButton.removeFromSuperview()
         nodeViews.last?.addSubview(settingsButton)
         
@@ -61,6 +59,7 @@ class ViewController: UIViewController {
     }
     
     func validateNodeViews() {
+        // for debugging, erase later
         for nodeClass in listofNodeClasses{
             print (nodeClass.view)
         }
@@ -73,6 +72,7 @@ class ViewController: UIViewController {
             for newNode in arrayOfNode[i].spawn() {
                 newArrayOfNodes.append(newNode)
             }
+            // limit number of nodes to ~6000
             if arrayOfNode[0].nodeCounter.count > arrayOfNode[0].nodeCounter.limit {
                 break
             }
@@ -82,7 +82,6 @@ class ViewController: UIViewController {
     }
     
     func assignNodeClasses() {
-        print("nodeTypes: \(nodeTypes)")
         for i in 0..<nodeTypes {
             let nodeView = ViewForNode(frame: view.bounds)
             nodeViews.append(nodeView)
@@ -91,7 +90,6 @@ class ViewController: UIViewController {
             nodeView.fillColor = Constants.nodeColors[i].colorWithAlphaComponent(0.4)
             listofNodeClasses[i].view = nodeView
         }
-        print("nodeviews \(nodeViews.count)")
     }
     
     func makeKnobs() {
