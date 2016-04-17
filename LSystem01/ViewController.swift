@@ -47,6 +47,9 @@ class ViewController: UIViewController {
         nodeViews.last?.addSubview(settingsButton)
         
     }
+    override func viewWillAppear(animated: Bool) {
+        navigationController?.navigationBarHidden = true
+    }
     
      func makeInitialNode() {
         let rootLocation = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
