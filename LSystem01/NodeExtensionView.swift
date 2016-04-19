@@ -16,9 +16,15 @@ let PI = CGFloat(M_PI)
     var midNodeCenter = CGPoint.zero
     var addNodeCenter = CGPoint.zero
     var nodeRadius: CGFloat = 0
+    var isActive = true
+    var nodeType: NodeType = .typeA
   
-    var nodeColor: UIColor = Constants.nodeColors[0].colorWithAlphaComponent(0.5)
-    var nodeExtensions: [Node.Type] = [TypeANode.self, TypeBNode.self, TypeCNode.self, TypeCNode.self, TypeCNode.self]
+
+    var nodeExtensions: [NodeType] = [.typeA, .typeB, .typeC, .typeD, .typeE] {
+        didSet {
+            setUpExtensions()
+        }
+    }
     var childNodeViews = [ChildNodeView]()
     let anglesDict: [Int:[CGFloat]] = [
         1:[-PI / 2],
@@ -55,16 +61,16 @@ let PI = CGFloat(M_PI)
         }
         childNodeViews = [ChildNodeView]()
         for (i, ext) in nodeExtensions.enumerate() {
-            let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, color: Constants.nodeColors[i].colorWithAlphaComponent(0.5))
+            let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, nodeType: ext)
             addSubview(child)
             childNodeViews.append(child)
             if let angles = anglesDict[nodeExtensions.count] {
                 let myAngle = angles[i]
                 child.transform = CGAffineTransformMakeRotation(myAngle * -1)
             }
-            let touch = UITapGestureRecognizer(target:
-                child, action: #selector(child.tapped(_:)))
-            child.addGestureRecognizer(touch)
+//            let touch = UITapGestureRecognizer(target:
+//                child, action: #selector(child.tapped(_:)))
+//            child.addGestureRecognizer(touch)
             userInteractionEnabled = true
         }
     }
@@ -73,7 +79,8 @@ let PI = CGFloat(M_PI)
     
     
     override func drawRect(rect: CGRect) {
-
+        print("nev drawRect for \(nodeType)")
+        
 
         let topNodePath = UIBezierPath(arcCenter: topNodeCenter, radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
         let midNodePath = UIBezierPath(arcCenter: midNodeCenter, radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
@@ -85,16 +92,33 @@ let PI = CGFloat(M_PI)
         
         let edgeRect = CGRect(x: topNodeCenter.x - barWidth/2, y: topNodeCenter.y, width: barWidth, height:  barHeight)
         let edgePath = UIBezierPath(roundedRect: edgeRect, byRoundingCorners: .AllCorners, cornerRadii: CGSize(width: barWidth/2, height: barWidth/2))
-        nodeColor.setFill()
+        if isActive {
+            Settings.colorDict[nodeType]!.setFill()
+        } else {
+            UIColor.blackColor().colorWithAlphaComponent(0.4).setFill()
+        }
         edgePath.fill()
         
         
+    }
+    
+    func validate(myNode: Int, activeNodes: Int) {
+        isActive = myNode < activeNodes
+        
+        if !isActive {
+            nodeExtensions = []
+        } else {
+            let validNodes = nodeExtensions.filter({$0.rawValue < activeNodes})
+            nodeExtensions = validNodes
+            
+        }
     }
 
 }
 
 class ChildNodeView: UIView {
     var color: UIColor = UIColor.cyanColor()
+    var nodeType: NodeType = .typeA
     var barHeight: CGFloat = 0
     var barWidth: CGFloat = 0
     var nodeRadius: CGFloat = 0
@@ -102,14 +126,14 @@ class ChildNodeView: UIView {
     var nodePath = UIBezierPath()
     
    
-    init(frame: CGRect, barHeight: CGFloat, barWidth: CGFloat, nodeRadius: CGFloat, color: UIColor) {
+    init(frame: CGRect, barHeight: CGFloat, barWidth: CGFloat, nodeRadius: CGFloat, nodeType: NodeType) {
         let rect = CGRect(x: 0, y: (frame.height / 2) - nodeRadius, width: frame.width, height: nodeRadius * 2 )
         
         super.init(frame: rect)
         self.barHeight = barHeight
         self.barWidth = barWidth
         self.nodeRadius = nodeRadius
-        self.color = color
+        self.nodeType = nodeType
         backgroundColor = UIColor.clearColor()
 //        
 //        let touch = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
@@ -147,7 +171,7 @@ class ChildNodeView: UIView {
         // edge
         let edgeRect = CGRect(x: bounds.width / 2, y: (bounds.height / 2) - (barWidth / 2), width: barHeight, height: barWidth)
         let edgePath = UIBezierPath(roundedRect: edgeRect, cornerRadius: barWidth / 2)
-        color.setFill()
+        Settings.colorDict[nodeType]!.setFill()
         edgePath.fill()
     }
     

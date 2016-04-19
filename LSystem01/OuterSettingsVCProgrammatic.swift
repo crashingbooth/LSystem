@@ -12,12 +12,16 @@ class OuterSettingsVCProgrammatic: UIViewController {
     var nodeExtensionViews = [NodeExtensionView]()
     var slider = UISlider()
     let numNodes: Float = 5
-    var activeNodes = 1
+    var nodeTypeInFocus: NodeType?
+    var activeNodes = 5 {
+        didSet { validateAllNodes() }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         createViews()
-       positionViews()
-
+        positionViews()
+        validateAllNodes()
         // Do any additional setup after loading the view.
     }
     
@@ -27,15 +31,22 @@ class OuterSettingsVCProgrammatic: UIViewController {
     
     func createViews() {
         for i in 0..<5 {
-            nodeExtensionViews.append(NodeExtensionView(frame: view.frame))
+            let newView = NodeExtensionView(frame: view.frame)
+            view.addSubview(newView)
+            newView.nodeType = NodeType(rawValue: i)!
+            print("in createViews: \(newView.nodeType)")
+            nodeExtensionViews.append(newView)
+            
+           
+            let tap = UITapGestureRecognizer(target: self, action: #selector(viewWasTouched(_:)))
+            newView.addGestureRecognizer(tap)
         }
         
-        for nev in nodeExtensionViews {
-            view.addSubview(nev)
-        }
+        
         view.addSubview(slider)
         slider.minimumValue = 1
         slider.maximumValue = 5
+        slider.value = Float(activeNodes)
         slider.addTarget(self, action: #selector(sliderChanged(_:)), forControlEvents: .ValueChanged)
     }
     
@@ -95,6 +106,50 @@ class OuterSettingsVCProgrammatic: UIViewController {
         print(activeNodes)
         sender.value = Float(roundedValue)
         
+    }
+    
+    func viewWasTouched(sender: UITapGestureRecognizer) {
+        
+        let source = sender.view as? NodeExtensionView
+        if let source = source {
+            nodeTypeInFocus = source.nodeType
+            print("in focus \(nodeTypeInFocus)")
+            performSegueWithIdentifier("toInnerSettings", sender: self)
+        } else {
+            nodeTypeInFocus = nil
+            // prepareForSegue will also check nodeTypeInFocus
+        }
+    
+        
+    }
+    
+    func validateAllNodes() {
+        for (i,nev) in nodeExtensionViews.enumerate() {
+            
+            nodeExtensionViews[i].validate(i,activeNodes: activeNodes)
+            
+            nev.setNeedsDisplay()
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let id = segue.identifier {
+            switch(id) {
+            case "toInnerSettings":
+                if let nodeTypeInFocus = nodeTypeInFocus {
+                    let isvc = segue.destinationViewController as! InnerSettingsViewController
+                    isvc.nodeType = nodeTypeInFocus
+                    print(isvc.nodeType)
+                    
+                    isvc.availableNodes = Array(NodeType.allNodeTypes[0..<activeNodes])
+                    isvc.currentExtensions =   Settings.sharedInstance.nodeSubstitutions[nodeTypeInFocus]!
+//                    isvc.createViews()
+                    
+                }
+            default:
+                break
+            }
+        }
     }
 
 

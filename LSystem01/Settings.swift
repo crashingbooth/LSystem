@@ -8,21 +8,26 @@
 
 import Foundation
 
-enum NodeType {
+enum NodeType: Int {
     case typeA, typeB, typeC, typeD, typeE
+    
+    static let allNodeTypes: [NodeType] = [typeA, typeB, typeC, typeD, typeE]
 }
 class Settings {
     static var sharedInstance = Settings()
     var activeNodes = [NodeType]()
     var nodeSubstitutions: [NodeType: [NodeType]] = [
         .typeA : [.typeB],
-        .typeB :   [.typeA, .typeB],
-        .typeC : [ .typeA]
+        .typeB : [.typeA, .typeB],
+        .typeC : [.typeA],
+        .typeD : [.typeD],
+        .typeE : [.typeE]
     ]
     
     
     
     private init() {}
+    
     
     
     static let initDict: [NodeType:(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)] = [
@@ -32,6 +37,17 @@ class Settings {
         NodeType.typeD : TypeDNode.init,
         NodeType.typeE : TypeENode.init
     ]
+    
+    static let colorDict: [NodeType:UIColor] = [
+        NodeType.typeA: UIColor.blueColor().colorWithAlphaComponent(0.5),
+        NodeType.typeB:    UIColor.purpleColor().colorWithAlphaComponent(0.5),
+        NodeType.typeC:    UIColor.redColor().colorWithAlphaComponent(0.5),
+        NodeType.typeD:    UIColor.brownColor().colorWithAlphaComponent(0.5),
+        NodeType.typeE:    UIColor.magentaColor().colorWithAlphaComponent(0.5)
+        ]
+    
+    
+    
         
     
 }
