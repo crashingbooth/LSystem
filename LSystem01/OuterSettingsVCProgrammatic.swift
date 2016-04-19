@@ -13,9 +13,9 @@ class OuterSettingsVCProgrammatic: UIViewController {
     var slider = UISlider()
     let numNodes: Float = 5
     var nodeTypeInFocus: NodeType?
-    var activeNodes = 5 {
-        didSet { validateAllNodes() }
-    }
+//    var activeNodes = 5 {
+//        didSet { validateAllNodes() }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +46,7 @@ class OuterSettingsVCProgrammatic: UIViewController {
         view.addSubview(slider)
         slider.minimumValue = 1
         slider.maximumValue = 5
-        slider.value = Float(activeNodes)
+        slider.value = Float(Settings.sharedInstance.highestActiveNode)
         slider.addTarget(self, action: #selector(sliderChanged(_:)), forControlEvents: .ValueChanged)
     }
     
@@ -101,10 +101,11 @@ class OuterSettingsVCProgrammatic: UIViewController {
     func sliderChanged(sender: UISlider) {
         
         let roundedValue = round(sender.value)
-        activeNodes = Int(roundedValue)
+        Settings.sharedInstance.highestActiveNode = Int(roundedValue)
         
-        print(activeNodes)
+
         sender.value = Float(roundedValue)
+        validateAllNodes()
         
     }
     
@@ -126,7 +127,7 @@ class OuterSettingsVCProgrammatic: UIViewController {
     func validateAllNodes() {
         for (i,nev) in nodeExtensionViews.enumerate() {
             
-            nodeExtensionViews[i].validate(i,activeNodes: activeNodes)
+            nodeExtensionViews[i].validate()
             
             nev.setNeedsDisplay()
         }
@@ -141,8 +142,7 @@ class OuterSettingsVCProgrammatic: UIViewController {
                     isvc.nodeType = nodeTypeInFocus
                     print(isvc.nodeType)
                     
-                    isvc.availableNodes = Array(NodeType.allNodeTypes[0..<activeNodes])
-                    isvc.currentExtensions =   Settings.sharedInstance.nodeSubstitutions[nodeTypeInFocus]!
+       
 //                    isvc.createViews()
                     
                 }

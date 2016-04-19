@@ -16,15 +16,12 @@ let PI = CGFloat(M_PI)
     var midNodeCenter = CGPoint.zero
     var addNodeCenter = CGPoint.zero
     var nodeRadius: CGFloat = 0
-    var isActive = true
+    var isActive: Bool {
+        return Settings.sharedInstance.highestActiveNode > nodeType.rawValue
+    }
     var nodeType: NodeType = .typeA
   
-
-    var nodeExtensions: [NodeType] = [.typeA, .typeB, .typeC, .typeD, .typeE] {
-        didSet {
-            setUpExtensions()
-        }
-    }
+    
     var childNodeViews = [ChildNodeView]()
     let anglesDict: [Int:[CGFloat]] = [
         1:[-PI / 2],
@@ -60,18 +57,20 @@ let PI = CGFloat(M_PI)
             childNode.removeFromSuperview()
         }
         childNodeViews = [ChildNodeView]()
-        for (i, ext) in nodeExtensions.enumerate() {
-            let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, nodeType: ext)
-            addSubview(child)
-            childNodeViews.append(child)
-            if let angles = anglesDict[nodeExtensions.count] {
-                let myAngle = angles[i]
-                child.transform = CGAffineTransformMakeRotation(myAngle * -1)
+        if let nodeExtensions = Settings.sharedInstance.nodeSubstitutions[nodeType] {
+            for (i, ext) in nodeExtensions.enumerate() {
+                let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, nodeType: ext)
+                addSubview(child)
+                childNodeViews.append(child)
+                if let angles = anglesDict[nodeExtensions.count] {
+                    let myAngle = angles[i]
+                    child.transform = CGAffineTransformMakeRotation(myAngle * -1)
+                }
+                //            let touch = UITapGestureRecognizer(target:
+                //                child, action: #selector(child.tapped(_:)))
+                //            child.addGestureRecognizer(touch)
+                userInteractionEnabled = true
             }
-//            let touch = UITapGestureRecognizer(target:
-//                child, action: #selector(child.tapped(_:)))
-//            child.addGestureRecognizer(touch)
-            userInteractionEnabled = true
         }
     }
     
@@ -92,6 +91,7 @@ let PI = CGFloat(M_PI)
         
         let edgeRect = CGRect(x: topNodeCenter.x - barWidth/2, y: topNodeCenter.y, width: barWidth, height:  barHeight)
         let edgePath = UIBezierPath(roundedRect: edgeRect, byRoundingCorners: .AllCorners, cornerRadii: CGSize(width: barWidth/2, height: barWidth/2))
+        
         if isActive {
             Settings.colorDict[nodeType]!.setFill()
         } else {
@@ -102,15 +102,16 @@ let PI = CGFloat(M_PI)
         
     }
     
-    func validate(myNode: Int, activeNodes: Int) {
-        isActive = myNode < activeNodes
+    func validate() {
         
-        if !isActive {
-            nodeExtensions = []
-        } else {
-            let validNodes = nodeExtensions.filter({$0.rawValue < activeNodes})
-            nodeExtensions = validNodes
-            
+        if var nodeExtensions = Settings.sharedInstance.nodeSubstitutions[nodeType] {
+            if !isActive {
+                nodeExtensions = []
+            } else {
+                nodeExtensions = nodeExtensions.filter({$0.rawValue < Settings.sharedInstance.highestActiveNode})
+            }
+             Settings.sharedInstance.nodeSubstitutions[nodeType] = nodeExtensions
+            setUpExtensions()
         }
     }
 

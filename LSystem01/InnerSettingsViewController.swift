@@ -11,8 +11,8 @@ import UIKit
 class InnerSettingsViewController: UIViewController {
     var rootNodeView : NodeExtensionView!
     var nodeType: NodeType!
-    var currentExtensions: [NodeType]!
-    var availableNodes: [NodeType]!
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         print("VDL called")
@@ -28,9 +28,7 @@ class InnerSettingsViewController: UIViewController {
         rootNodeView = NodeExtensionView(frame: view.frame)
         rootNodeView.nodeType = nodeType
         rootNodeView.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.2)
-        rootNodeView.nodeExtensions = currentExtensions
-        
-       
+
         view.addSubview(rootNodeView)
     }
     
