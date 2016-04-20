@@ -17,11 +17,11 @@ class Settings {
     static var sharedInstance = Settings()
     var highestActiveNode = 5 // controlled by slider in OuterSettings
     var nodeSubstitutions: [NodeType: [NodeType]] = [
-        .typeA : [.typeB],
+        .typeA : [.typeB, .typeC],
         .typeB : [.typeA, .typeB],
         .typeC : [.typeA],
         .typeD : [.typeD],
-        .typeE : [.typeE]
+        .typeE : [.typeE, .typeA, .typeC]
     ]
     
     

@@ -39,17 +39,27 @@ class InnerSettingsViewController: UIViewController {
     func positionViews() {
         print("positionViews")
         let navOffset =  (navigationController?.navigationBar.frame.height ?? 0) + 5
-        let height = view.bounds.height - navOffset
-        let width = view.bounds.width
+        var height = view.bounds.height - navOffset
+        var width = view.bounds.width
+        var padding: CGFloat = 0
         
         if view.bounds.width > view.bounds.height {
-            // landscape
-            rootNodeView.frame = CGRect(x: 0, y: navOffset, width: height, height: height)
+            // landscape 
+            if height > width / 2 {
+                padding = (height - width / 2) / 2
+                height = width / 2
+            }
+            rootNodeView.frame = CGRect(x: padding, y: navOffset + padding, width: height, height: height)
             
             
         } else {
             // portrait
-            rootNodeView.frame = CGRect(x: 0, y: navOffset, width: width, height: width)
+            if width > height / 2 {
+                padding = (width - height / 2) / 2
+                width = height / 2
+            }
+            
+            rootNodeView.frame = CGRect(x: padding, y: navOffset + padding, width: width, height: width)
         }
         
         rootNodeView.getSizes()

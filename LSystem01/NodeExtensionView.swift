@@ -32,7 +32,11 @@ let PI = CGFloat(M_PI)
     ]
     
     func getSizes() {
-        backgroundColor = UIColor.clearColor()
+        if isActive {
+             backgroundColor = UIColor.cyanColor().colorWithAlphaComponent(0.2)
+        } else {
+            backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
+        }
         barWidth = bounds.width / 16
         barHeight = (bounds.height / 8) * 3
         topNodeCenter = CGPoint(x: bounds.width / 2, y: bounds.height / 8)
@@ -95,6 +99,7 @@ let PI = CGFloat(M_PI)
         if isActive {
             Settings.colorDict[nodeType]!.setFill()
         } else {
+
             UIColor.blackColor().colorWithAlphaComponent(0.4).setFill()
         }
         edgePath.fill()
@@ -106,6 +111,7 @@ let PI = CGFloat(M_PI)
         
         if var nodeExtensions = Settings.sharedInstance.nodeSubstitutions[nodeType] {
             if !isActive {
+                    backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
                 nodeExtensions = []
             } else {
                 nodeExtensions = nodeExtensions.filter({$0.rawValue < Settings.sharedInstance.highestActiveNode})
@@ -113,6 +119,7 @@ let PI = CGFloat(M_PI)
              Settings.sharedInstance.nodeSubstitutions[nodeType] = nodeExtensions
             setUpExtensions()
         }
+        
     }
 
 }

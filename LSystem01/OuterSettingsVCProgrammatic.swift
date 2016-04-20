@@ -115,7 +115,11 @@ class OuterSettingsVCProgrammatic: UIViewController {
         if let source = source {
             nodeTypeInFocus = source.nodeType
             print("in focus \(nodeTypeInFocus)")
-            performSegueWithIdentifier("toInnerSettings", sender: self)
+            if nodeTypeInFocus?.rawValue < Settings.sharedInstance.highestActiveNode {
+                performSegueWithIdentifier("toInnerSettings", sender: self)
+            } else {
+                nodeTypeInFocus = nil 
+            }
         } else {
             nodeTypeInFocus = nil
             // prepareForSegue will also check nodeTypeInFocus
