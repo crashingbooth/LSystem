@@ -9,7 +9,8 @@
 import UIKit
 
 class InnerSettingsViewController: UIViewController {
-    var rootNodeView : NodeExtensionView!
+    var rootNodeView : NodeExtensionSelector!
+    var childSelector: ChildSelector!
     var nodeType: NodeType!
 
 
@@ -25,10 +26,22 @@ class InnerSettingsViewController: UIViewController {
         print(" createViews called")
  
         
-        rootNodeView = NodeExtensionView(frame: view.frame)
+        rootNodeView = NodeExtensionSelector(frame: view.frame)
         rootNodeView.nodeType = nodeType
+        rootNodeView.setUpOtherActiveNodes()
         rootNodeView.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.2)
-
+        
+       
+        childSelector = ChildSelector(frame: view.frame)
+        childSelector.delegate = rootNodeView
+        childSelector.getAndMakeChildViews()
+        
+        
+      
+        
+//        childSelector.addChildrenToSubview()
+        
+        view.addSubview(childSelector)
         view.addSubview(rootNodeView)
     }
     
@@ -49,7 +62,8 @@ class InnerSettingsViewController: UIViewController {
                 padding = (height - width / 2) / 2
                 height = width / 2
             }
-            rootNodeView.frame = CGRect(x: padding, y: navOffset + padding, width: height, height: height)
+            rootNodeView.frame = CGRect(x: 0, y: navOffset + padding, width: height, height: height)
+            childSelector.frame = CGRect(x: view.bounds.width / 2, y: navOffset, width: view.bounds.width / 2, height: view.bounds.height - navOffset)
             
             
         } else {
@@ -59,11 +73,19 @@ class InnerSettingsViewController: UIViewController {
                 width = height / 2
             }
             
-            rootNodeView.frame = CGRect(x: padding, y: navOffset + padding, width: width, height: width)
+            rootNodeView.frame = CGRect(x: padding, y: navOffset, width: width, height: width)
+            childSelector.frame = CGRect(x: 0, y: navOffset + width, width: view.bounds.width, height: view.bounds.height - navOffset - width)
         }
+        
+       
+    
         
         rootNodeView.getSizes()
         rootNodeView.setUpExtensions()
+        childSelector.backgroundColor = UIColor.magentaColor().colorWithAlphaComponent(0.05)
+        childSelector.positionViews()
+
+        
         view.setNeedsDisplay()
     }
     

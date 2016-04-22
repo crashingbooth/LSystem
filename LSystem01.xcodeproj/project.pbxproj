@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F16B8351CC78082003D5BB9 /* ChildSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F16B8341CC78082003D5BB9 /* ChildSelector.swift */; };
 		1F3935341CBF31F500057BB1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3935331CBF31F500057BB1 /* Constants.swift */; };
 		1F3935361CBF336A00057BB1 /* NodeExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3935351CBF336A00057BB1 /* NodeExtensionView.swift */; };
 		1F63A3AC1CB22BDD006FA3F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F63A3AB1CB22BDD006FA3F2 /* AppDelegate.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F16B8341CC78082003D5BB9 /* ChildSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildSelector.swift; sourceTree = "<group>"; };
 		1F3935331CBF31F500057BB1 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1F3935351CBF336A00057BB1 /* NodeExtensionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeExtensionView.swift; sourceTree = "<group>"; };
 		1F63A3A81CB22BDC006FA3F2 /* LSystem01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LSystem01.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +102,7 @@
 				1F690FBB1CC3921A007A8471 /* InnerSettingsViewController.swift */,
 				1F3935351CBF336A00057BB1 /* NodeExtensionView.swift */,
 				1F88B53C1CC22F5B00B20B73 /* Settings.swift */,
+				1F16B8341CC78082003D5BB9 /* ChildSelector.swift */,
 				1F63A3AF1CB22BDD006FA3F2 /* Main.storyboard */,
 				1F63A3B21CB22BDD006FA3F2 /* Assets.xcassets */,
 				1F63A3B41CB22BDD006FA3F2 /* LaunchScreen.storyboard */,
@@ -221,6 +224,7 @@
 				1F3935341CBF31F500057BB1 /* Constants.swift in Sources */,
 				1F63A3CE1CB3B53E006FA3F2 /* NodeAbstraction.swift in Sources */,
 				1F88B53D1CC22F5B00B20B73 /* Settings.swift in Sources */,
+				1F16B8351CC78082003D5BB9 /* ChildSelector.swift in Sources */,
 				1F690FBA1CC32B50007A8471 /* OuterSettingsVCProgrammatic.swift in Sources */,
 				1F63A3AE1CB22BDD006FA3F2 /* ViewController.swift in Sources */,
 				1F63A3AC1CB22BDD006FA3F2 /* AppDelegate.swift in Sources */,

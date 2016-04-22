@@ -37,9 +37,9 @@ let PI = CGFloat(M_PI)
         } else {
             backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         }
-        barWidth = bounds.width / 16
-        barHeight = (bounds.height / 8) * 3
-        topNodeCenter = CGPoint(x: bounds.width / 2, y: bounds.height / 8)
+        barWidth = bounds.width / 18
+        barHeight = (bounds.height / 16) * 5
+        topNodeCenter = CGPoint(x: bounds.width / 2, y: (bounds.height / 16) * 3)
         midNodeCenter = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
         addNodeCenter = CGPoint(x: bounds.width / 2 + barHeight, y: bounds.height / 2 )
         nodeRadius =  bounds.width / 15
@@ -123,6 +123,54 @@ let PI = CGFloat(M_PI)
     }
 
 }
+
+
+class NodeExtensionSelector: NodeExtensionView, ChildSelectorDelegate{
+    var potentialChildren = [ChildNodeView]()
+
+    var potentialNodesTypes: [NodeType] {
+        let activeNodes = Set(NodeType.allNodeTypes[0..<Settings.sharedInstance.highestActiveNode])
+        let currentNodes = Settings.sharedInstance.nodeSubstitutions[nodeType]!
+        let pot = activeNodes.intersect(currentNodes)
+        return Array(pot)
+    }
+
+    
+    func setUpOtherActiveNodes() {
+        for node in potentialNodesTypes {
+            let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, nodeType: node)
+            potentialChildren.append(child)
+            child.transform = CGAffineTransformMakeRotation(PI / 2)
+          print("in setUpOtherACtive \(nodeRadius))")
+        }
+    }
+    
+    //MARK:  - Delegate Methods
+    func getNodeRadius() -> CGFloat {
+        return nodeRadius
+    }
+    
+    func getViewLength() -> CGFloat {
+        return nodeRadius * 15
+    }
+    
+    func getBarHeight() -> CGFloat {
+        return barHeight
+    }
+    
+    func getBarWidth() -> CGFloat {
+        return barWidth
+    }
+    
+    func getAvailableNodesData() -> [NodeType] {
+        return potentialNodesTypes
+    }
+    
+    
+   
+}
+
+
 
 class ChildNodeView: UIView {
     var color: UIColor = UIColor.cyanColor()
