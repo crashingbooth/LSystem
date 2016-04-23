@@ -89,7 +89,7 @@ class ChildSelector: UIView {
                 view.barWidth = barWidth
                 view.barHeight = barHeight
                 view.nodeRadius = nodeRadius
-                view.transform = CGAffineTransformMakeRotation(PI/2)
+//                view.transform = CGAffineTransformMakeRotation(PI/2)
                 let rect = CGRect(x: xPadding * CGFloat(i + 1) + (viewWidth * CGFloat(i)), y:  yPadding + yOffset - (viewHeight / 2), width: viewWidth, height: viewHeight)
                  view.frame = rect
                

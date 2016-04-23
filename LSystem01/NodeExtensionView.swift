@@ -23,12 +23,20 @@ let PI = CGFloat(M_PI)
   
     
     var childNodeViews = [ChildNodeView]()
+//    let anglesDict: [Int:[CGFloat]] = [
+//        1:[-PI / 2],
+//        2:[-PI / 3, -2 * PI / 3],
+//        3:[-PI / 4, -PI / 2, -3 * PI / 4],
+//        4:[-PI / 5, -2 * PI / 5, -3 * PI / 5, -4 * PI / 5],
+//        5:[-PI / 6, -2 * PI / 6, -3 * PI / 6, -4 * PI / 6, -5 * PI / 6]
+//    ]
+    
     let anglesDict: [Int:[CGFloat]] = [
-        1:[-PI / 2],
-        2:[-PI / 3, -2 * PI / 3],
-        3:[-PI / 4, -PI / 2, -3 * PI / 4],
-        4:[-PI / 5, -2 * PI / 5, -3 * PI / 5, -4 * PI / 5],
-        5:[-PI / 6, -2 * PI / 6, -3 * PI / 6, -4 * PI / 6, -5 * PI / 6]
+        1: [0],
+        2: [-PI / 6, PI / 6],
+        3: [-PI / 4, 0, PI / 4],
+        4: [3 * -PI / 10, -PI / 10, PI / 10, 3 * PI / 10 ],
+        5: [-PI / 3, -PI / 6, 0, PI / 6, -PI / 3 ]
     ]
     
     func getSizes() {
@@ -68,7 +76,7 @@ let PI = CGFloat(M_PI)
                 childNodeViews.append(child)
                 if let angles = anglesDict[nodeExtensions.count] {
                     let myAngle = angles[i]
-                    child.transform = CGAffineTransformMakeRotation(myAngle * -1)
+                    child.transform = CGAffineTransformMakeRotation(myAngle)
                 }
                 //            let touch = UITapGestureRecognizer(target:
                 //                child, action: #selector(child.tapped(_:)))
@@ -186,7 +194,8 @@ class ChildNodeView: UIView {
     
    
     init(frame: CGRect, barHeight: CGFloat, barWidth: CGFloat, nodeRadius: CGFloat, nodeType: NodeType) {
-        let rect = CGRect(x: 0, y: (frame.height / 2) - nodeRadius, width: frame.width, height: nodeRadius * 2 )
+//        let rect = CGRect(x: 0, y: (frame.height / 2) - nodeRadius, width: frame.width, height: nodeRadius * 2 )
+         let rect = CGRect(x: (frame.width / 2) - nodeRadius, y: 0, width:  nodeRadius * 2, height: frame.height )
         
         super.init(frame: rect)
         self.barHeight = barHeight
@@ -230,14 +239,16 @@ class ChildNodeView: UIView {
         }
         
         // edge
-        let edgeRect = CGRect(x: bounds.width / 2, y: (bounds.height / 2) - (barWidth / 2), width: barHeight, height: barWidth)
+        
+        let edgeRect = CGRect(x: (bounds.width / 2) - (barWidth / 2), y: bounds.height / 2, width: barWidth, height: barHeight)
+//        let edgeRect = CGRect(x: bounds.width / 2, y: (bounds.height / 2) - (barWidth / 2), width: barHeight, height: barWidth)
         edgePath = UIBezierPath(roundedRect: edgeRect, cornerRadius: barWidth / 2)
         Settings.colorDict[nodeType]!.setFill()
         edgePath.fill()
     }
     
     func constructPath() {
-        let nodeCenter = CGPoint(x: (bounds.width / 2) + barHeight, y: bounds.height / 2)
+        let nodeCenter = CGPoint(x: (bounds.width / 2), y: (bounds.height / 2) + barHeight)
         nodePath = UIBezierPath(arcCenter: nodeCenter, radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
     }
     
