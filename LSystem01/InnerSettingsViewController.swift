@@ -23,23 +23,14 @@ class InnerSettingsViewController: UIViewController {
     }
     
     func createViews() {
-        print(" createViews called")
- 
-        
         rootNodeView = NodeExtensionSelector(frame: view.frame)
         rootNodeView.nodeType = nodeType
-        rootNodeView.setUpOtherActiveNodes()
         rootNodeView.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.2)
         
        
         childSelector = ChildSelector(frame: view.frame)
         childSelector.delegate = rootNodeView
         childSelector.getAndMakeChildViews()
-        
-        
-      
-        
-//        childSelector.addChildrenToSubview()
         
         view.addSubview(childSelector)
         view.addSubview(rootNodeView)
@@ -50,7 +41,6 @@ class InnerSettingsViewController: UIViewController {
     }
     
     func positionViews() {
-        print("positionViews")
         let navOffset =  (navigationController?.navigationBar.frame.height ?? 0) + 5
         var height = view.bounds.height - navOffset
         var width = view.bounds.width

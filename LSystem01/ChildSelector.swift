@@ -50,22 +50,35 @@ class ChildSelector: UIView {
         barHeight = delegate?.getBarHeight()
         barWidth = delegate?.getBarWidth()
         
+        for child in potentialChildren {
+            child.removeFromSuperview()
+        }
+   
         placeChildViews(bottomLevel, yOffset: halfWay)
         placeChildViews(topLevel, yOffset: 0)
+     
         
     }
+
+    
     func getAndMakeChildViews() {
+        userInteractionEnabled = true
+        
+        nodeRadius = delegate?.getNodeRadius()
+        barHeight = delegate?.getBarHeight()
+        barWidth = delegate?.getBarWidth()
         potentialChildren = [ChildNodeView]()
         let childNodeTypes = delegate?.getAvailableNodesData()
         for childType in childNodeTypes! {
-            let child = ChildNodeView()
+            let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, nodeType: childType)
             child.nodeType = childType
             child.backgroundColor = UIColor.clearColor()
-            
-            addSubview(child)
+            child.userInteractionEnabled = true
+//            addSubview(child)
             potentialChildren.append(child)
             
         }
+//        addRecognizers()
     }
     
     
@@ -89,25 +102,15 @@ class ChildSelector: UIView {
                 view.barWidth = barWidth
                 view.barHeight = barHeight
                 view.nodeRadius = nodeRadius
-//                view.transform = CGAffineTransformMakeRotation(PI/2)
+
                 let rect = CGRect(x: xPadding * CGFloat(i + 1) + (viewWidth * CGFloat(i)), y:  yPadding + yOffset - (viewHeight / 2), width: viewWidth, height: viewHeight)
                  view.frame = rect
                
-                print(view.frame)
+              addSubview(view)
             }
             
         }
     }
-    
-    /* 
-     Todo:
-     make layout frames for 1 - 5 nodes for portait and landscape
-     
-     make child views touchable and dragable (both in the parent and here)
-     
-     connect changes to settings 
- */
-
 }
 
 protocol ChildSelectorDelegate: class {

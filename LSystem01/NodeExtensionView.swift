@@ -23,13 +23,6 @@ let PI = CGFloat(M_PI)
   
     
     var childNodeViews = [ChildNodeView]()
-//    let anglesDict: [Int:[CGFloat]] = [
-//        1:[-PI / 2],
-//        2:[-PI / 3, -2 * PI / 3],
-//        3:[-PI / 4, -PI / 2, -3 * PI / 4],
-//        4:[-PI / 5, -2 * PI / 5, -3 * PI / 5, -4 * PI / 5],
-//        5:[-PI / 6, -2 * PI / 6, -3 * PI / 6, -4 * PI / 6, -5 * PI / 6]
-//    ]
     
     let anglesDict: [Int:[CGFloat]] = [
         1: [0],
@@ -51,12 +44,7 @@ let PI = CGFloat(M_PI)
         midNodeCenter = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
         addNodeCenter = CGPoint(x: bounds.width / 2 + barHeight, y: bounds.height / 2 )
         nodeRadius =  bounds.width / 15
-        
-//        userInteractionEnabled = true
-//        let touch = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
-//        addGestureRecognizer(touch)
-        
-        
+
     }
     
     func tapped(sender: UITapGestureRecognizer) {
@@ -78,9 +66,7 @@ let PI = CGFloat(M_PI)
                     let myAngle = angles[i]
                     child.transform = CGAffineTransformMakeRotation(myAngle)
                 }
-                //            let touch = UITapGestureRecognizer(target:
-                //                child, action: #selector(child.tapped(_:)))
-                //            child.addGestureRecognizer(touch)
+
                 userInteractionEnabled = true
             }
         }
@@ -145,15 +131,6 @@ class NodeExtensionSelector: NodeExtensionView, ChildSelectorDelegate{
     }
 
     
-    func setUpOtherActiveNodes() {
-        for node in potentialNodesTypes {
-            let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, nodeType: node)
-            potentialChildren.append(child)
-            child.transform = CGAffineTransformMakeRotation(PI / 2)
-          print("in setUpOtherACtive \(nodeRadius))")
-        }
-    }
-    
     //MARK:  - Delegate Methods
     func getNodeRadius() -> CGFloat {
         return nodeRadius
@@ -194,7 +171,6 @@ class ChildNodeView: UIView {
     
    
     init(frame: CGRect, barHeight: CGFloat, barWidth: CGFloat, nodeRadius: CGFloat, nodeType: NodeType) {
-//        let rect = CGRect(x: 0, y: (frame.height / 2) - nodeRadius, width: frame.width, height: nodeRadius * 2 )
          let rect = CGRect(x: (frame.width / 2) - nodeRadius, y: 0, width:  nodeRadius * 2, height: frame.height )
         
         super.init(frame: rect)
@@ -213,7 +189,10 @@ class ChildNodeView: UIView {
     
     func tapped(sender: UITapGestureRecognizer) {
         if edgePath.containsPoint(sender.locationInView(self)) || nodePath.containsPoint(sender.locationInView(self)) {
-                print("Child toucjed")
+                print("touch inside")
+        } else {
+            print("touched outside")
+            
         }
         
     }
@@ -241,7 +220,6 @@ class ChildNodeView: UIView {
         // edge
         
         let edgeRect = CGRect(x: (bounds.width / 2) - (barWidth / 2), y: bounds.height / 2, width: barWidth, height: barHeight)
-//        let edgeRect = CGRect(x: bounds.width / 2, y: (bounds.height / 2) - (barWidth / 2), width: barHeight, height: barWidth)
         edgePath = UIBezierPath(roundedRect: edgeRect, cornerRadius: barWidth / 2)
         Settings.colorDict[nodeType]!.setFill()
         edgePath.fill()
