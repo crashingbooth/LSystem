@@ -34,13 +34,6 @@ class ChildSelector: UIView {
         }
     }
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
     
     func positionViews() {
         let topLevel = layout[0]
@@ -74,11 +67,9 @@ class ChildSelector: UIView {
             child.nodeType = childType
             child.backgroundColor = UIColor.clearColor()
             child.userInteractionEnabled = true
-//            addSubview(child)
             potentialChildren.append(child)
             
         }
-//        addRecognizers()
     }
     
     
@@ -104,7 +95,7 @@ class ChildSelector: UIView {
                 view.nodeRadius = nodeRadius
 
                 let rect = CGRect(x: xPadding * CGFloat(i + 1) + (viewWidth * CGFloat(i)), y:  yPadding + yOffset - (viewHeight / 2), width: viewWidth, height: viewHeight)
-                 view.frame = rect
+                view.resetPosition(rect)
                
               addSubview(view)
             }

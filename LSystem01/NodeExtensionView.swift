@@ -166,6 +166,8 @@ class ChildNodeView: UIView {
     var barWidth: CGFloat = 0
     var nodeRadius: CGFloat = 0
     var isConnected = true
+    var isSelected = false
+    var priorPoint = CGPointZero
     var nodePath = UIBezierPath()
     var edgePath = UIBezierPath()
     
@@ -178,22 +180,42 @@ class ChildNodeView: UIView {
         self.barWidth = barWidth
         self.nodeRadius = nodeRadius
         self.nodeType = nodeType
+        self.priorPoint = center
         backgroundColor = UIColor.clearColor()
         
-        let touch = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
+        let touch = UILongPressGestureRecognizer(target: self, action: #selector(tapped(_:)))
         addGestureRecognizer(touch) 
         userInteractionEnabled = true
         
         
     }
     
-    func tapped(sender: UITapGestureRecognizer) {
+    func tapped(sender: UILongPressGestureRecognizer) {
+        var point = sender.locationInView(superview)
+        switch (sender.state) {
+        case .Began:
         if edgePath.containsPoint(sender.locationInView(self)) || nodePath.containsPoint(sender.locationInView(self)) {
                 print("touch inside")
-        } else {
-            print("touched outside")
+            isSelected = true
             
         }
+            
+        case .Changed:
+            if isSelected {
+                var cent = center
+             
+                cent.x += point.x - priorPoint.x
+                cent.y += point.y - priorPoint.y
+                center = cent
+                
+            }
+        case .Ended:
+            isSelected = false
+            print("ended")
+        default:
+            break
+        }
+        priorPoint = point
         
     }
     override init(frame: CGRect) {
@@ -228,6 +250,11 @@ class ChildNodeView: UIView {
     func constructPath() {
         let nodeCenter = CGPoint(x: (bounds.width / 2), y: (bounds.height / 2) + barHeight)
         nodePath = UIBezierPath(arcCenter: nodeCenter, radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
+    }
+    
+    func resetPosition(frame: CGRect) {
+        self.frame = frame
+        priorPoint = center
     }
     
     
