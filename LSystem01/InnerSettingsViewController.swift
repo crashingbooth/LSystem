@@ -19,7 +19,12 @@ class InnerSettingsViewController: UIViewController {
         print("VDL called")
         view.backgroundColor = UIColor.whiteColor()
         createViews()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(InnerSettingsViewController.cleanUpViews), name: Constants.cleanUpNeeded, object: nil)
         // Do any additional setup after loading the view.
+    }
+    
+    func cleanUpViews() {
+        positionViews()
     }
     
     func createViews() {

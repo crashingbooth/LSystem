@@ -59,7 +59,7 @@ let PI = CGFloat(M_PI)
         childNodeViews = [ChildNodeView]()
         if let nodeExtensions = Settings.sharedInstance.nodeSubstitutions[nodeType] {
             for (i, ext) in nodeExtensions.enumerate() {
-                let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, nodeType: ext)
+                let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, nodeType: ext, parentNodeType: nodeType)
                 addSubview(child)
                 childNodeViews.append(child)
                 if let angles = anglesDict[nodeExtensions.count] {
@@ -162,17 +162,19 @@ class NodeExtensionSelector: NodeExtensionView, ChildSelectorDelegate{
 class ChildNodeView: UIView {
     var color: UIColor = UIColor.cyanColor()
     var nodeType: NodeType = .typeA
+    var parentNodeType: NodeType = .typeA
     var barHeight: CGFloat = 0
     var barWidth: CGFloat = 0
     var nodeRadius: CGFloat = 0
-    var isConnected = true
+    var isConnected = true  // i.e. is attached to a NodeExtensionSelector
     var isSelected = false
     var priorPoint = CGPointZero
     var nodePath = UIBezierPath()
     var edgePath = UIBezierPath()
+  
     
    
-    init(frame: CGRect, barHeight: CGFloat, barWidth: CGFloat, nodeRadius: CGFloat, nodeType: NodeType) {
+    init(frame: CGRect, barHeight: CGFloat, barWidth: CGFloat, nodeRadius: CGFloat, nodeType: NodeType, parentNodeType: NodeType) {
          let rect = CGRect(x: (frame.width / 2) - nodeRadius, y: 0, width:  nodeRadius * 2, height: frame.height )
         
         super.init(frame: rect)
@@ -181,6 +183,7 @@ class ChildNodeView: UIView {
         self.nodeRadius = nodeRadius
         self.nodeType = nodeType
         self.priorPoint = center
+        self.parentNodeType = parentNodeType
         backgroundColor = UIColor.clearColor()
         
         let touch = UILongPressGestureRecognizer(target: self, action: #selector(tapped(_:)))
@@ -191,7 +194,7 @@ class ChildNodeView: UIView {
     }
     
     func tapped(sender: UILongPressGestureRecognizer) {
-        var point = sender.locationInView(superview)
+        let point = sender.locationInView(superview?.superview)
         switch (sender.state) {
         case .Began:
         if edgePath.containsPoint(sender.locationInView(self)) || nodePath.containsPoint(sender.locationInView(self)) {
@@ -211,6 +214,27 @@ class ChildNodeView: UIView {
             }
         case .Ended:
             isSelected = false
+            if let parentFrame = superview?.frame {
+                print("parentFrame")
+                print(parentFrame)
+                print(point)
+                if parentFrame.contains(point) {
+                    print("still in same view")
+                    
+                } else {
+                    print("no longer in view")
+                   
+                    if isConnected {
+                        var currentRule = Settings.sharedInstance.nodeSubstitutions[parentNodeType]!
+                        currentRule = currentRule.filter({$0 != nodeType})
+                        Settings.sharedInstance.nodeSubstitutions[parentNodeType]! = currentRule
+                        
+                    } else {
+                        Settings.sharedInstance.nodeSubstitutions[parentNodeType]!.append(nodeType)
+                    }
+                }
+                NSNotificationCenter.defaultCenter().postNotificationName(Constants.cleanUpNeeded, object: nil)
+            }
             print("ended")
         default:
             break
@@ -234,10 +258,10 @@ class ChildNodeView: UIView {
         
         
         // top node
-        if !isConnected {
-            let topNode = UIBezierPath(arcCenter: CGPoint(x: bounds.width / 2, y: bounds.height / 2), radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
-            topNode.fill()
-        }
+//        if !isConnected {
+//            let topNode = UIBezierPath(arcCenter: CGPoint(x: bounds.width / 2, y: bounds.height / 2), radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
+//            topNode.fill()
+//        }
         
         // edge
         
@@ -259,3 +283,4 @@ class ChildNodeView: UIView {
     
     
 }
+

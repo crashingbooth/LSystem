@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChildSelector: UIView {
+class ChildSelector: UIView{
     var parentType: NodeType = .typeA
     var potentialChildren = [ChildNodeView]()
     var barHeight: CGFloat!
@@ -63,8 +63,9 @@ class ChildSelector: UIView {
         potentialChildren = [ChildNodeView]()
         let childNodeTypes = delegate?.getAvailableNodesData()
         for childType in childNodeTypes! {
-            let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, nodeType: childType)
+            let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, nodeType: childType, parentNodeType: parentType)
             child.nodeType = childType
+            child.isConnected = false
             child.backgroundColor = UIColor.clearColor()
             child.userInteractionEnabled = true
             potentialChildren.append(child)
@@ -102,7 +103,11 @@ class ChildSelector: UIView {
             
         }
     }
+    
+
 }
+
+
 
 protocol ChildSelectorDelegate: class {
     func getNodeRadius() -> CGFloat

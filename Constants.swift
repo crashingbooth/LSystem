@@ -26,4 +26,6 @@ class Constants {
          TypeCNode.self,
          TypeDNode.self,
          TypeENode.self]
+    
+    static let cleanUpNeeded = "CleanUpNeeded"
 }
