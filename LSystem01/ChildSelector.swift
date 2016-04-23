@@ -50,20 +50,9 @@ class ChildSelector: UIView {
         barHeight = delegate?.getBarHeight()
         barWidth = delegate?.getBarWidth()
         
+        placeChildViews(bottomLevel, yOffset: halfWay)
+        placeChildViews(topLevel, yOffset: 0)
         
-        
-        
-//        if bounds.width > bounds.height {
-//            // landscape
-        print("top")
-            placeChildViews(topLevel, yOffset: 0)
-         print("bottom")
-            placeChildViews(bottomLevel, yOffset: halfWay)
-//            
-//        } else {
-//            // portrait
-//            
-//        }
     }
     func getAndMakeChildViews() {
         potentialChildren = [ChildNodeView]()
@@ -89,9 +78,11 @@ class ChildSelector: UIView {
         print(frame)
         
         if views.count > 0 {
-            // width?? view is rotated
-            let yPadding:CGFloat = 20
             let viewWidth = nodeRadius * 2
+            let viewHeight = nodeRadius * 15
+            let sectionHeight = bounds.height / 2
+            let yPadding = (sectionHeight - (viewHeight * 0.75 / 2)) / 2
+            
 
             let xPadding = (bounds.width - (viewWidth * CGFloat(views.count))) / CGFloat(views.count + 1)
             for (i,view) in views.enumerate() {
@@ -99,11 +90,8 @@ class ChildSelector: UIView {
                 view.barHeight = barHeight
                 view.nodeRadius = nodeRadius
                 view.transform = CGAffineTransformMakeRotation(PI/2)
-                let rect = CGRect(x: xPadding * CGFloat(i + 1), y:  yPadding + yOffset, width: viewWidth, height: viewWidth * 7.5)
+                let rect = CGRect(x: xPadding * CGFloat(i + 1) + (viewWidth * CGFloat(i)), y:  yPadding + yOffset - (viewHeight / 2), width: viewWidth, height: viewHeight)
                  view.frame = rect
-//             
-//                view.transform = CGAffineTransformMakeRotation(PI/2)
-                view.center = CGPoint(x: xPadding * CGFloat(i + 1) + xPadding * CGFloat(i) , y: yPadding + yOffset)
                
                 print(view.frame)
             }

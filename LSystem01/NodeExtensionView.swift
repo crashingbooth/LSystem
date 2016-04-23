@@ -131,7 +131,8 @@ class NodeExtensionSelector: NodeExtensionView, ChildSelectorDelegate{
     var potentialNodesTypes: [NodeType] {
         let activeNodes = Set(NodeType.allNodeTypes[0..<Settings.sharedInstance.highestActiveNode])
         let currentNodes = Settings.sharedInstance.nodeSubstitutions[nodeType]!
-        let pot = activeNodes.intersect(currentNodes)
+        let pot = activeNodes.subtract(currentNodes)
+        print("potNodes")
         return Array(pot)
     }
 
@@ -163,6 +164,7 @@ class NodeExtensionSelector: NodeExtensionView, ChildSelectorDelegate{
     }
     
     func getAvailableNodesData() -> [NodeType] {
+
         return potentialNodesTypes
     }
     
@@ -180,6 +182,7 @@ class ChildNodeView: UIView {
     var nodeRadius: CGFloat = 0
     var isConnected = true
     var nodePath = UIBezierPath()
+    var edgePath = UIBezierPath()
     
    
     init(frame: CGRect, barHeight: CGFloat, barWidth: CGFloat, nodeRadius: CGFloat, nodeType: NodeType) {
@@ -191,16 +194,18 @@ class ChildNodeView: UIView {
         self.nodeRadius = nodeRadius
         self.nodeType = nodeType
         backgroundColor = UIColor.clearColor()
-//        
-//        let touch = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
-//        addGestureRecognizer(touch) 
-//        userInteractionEnabled = true
+        
+        let touch = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
+        addGestureRecognizer(touch) 
+        userInteractionEnabled = true
         
         
     }
     
     func tapped(sender: UITapGestureRecognizer) {
-        print("Child toucjed")
+        if edgePath.containsPoint(sender.locationInView(self)) || nodePath.containsPoint(sender.locationInView(self)) {
+                print("Child toucjed")
+        }
         
     }
     override init(frame: CGRect) {
@@ -226,7 +231,7 @@ class ChildNodeView: UIView {
         
         // edge
         let edgeRect = CGRect(x: bounds.width / 2, y: (bounds.height / 2) - (barWidth / 2), width: barHeight, height: barWidth)
-        let edgePath = UIBezierPath(roundedRect: edgeRect, cornerRadius: barWidth / 2)
+        edgePath = UIBezierPath(roundedRect: edgeRect, cornerRadius: barWidth / 2)
         Settings.colorDict[nodeType]!.setFill()
         edgePath.fill()
     }
