@@ -45,7 +45,9 @@ class ViewController: UIViewController {
         nodeCount = 0
         for gen in 0..<25{
             print("generation \(gen)")
-            regenerate()
+            if nodeCount < 6000 && arrayOfNode[0].segmentLength > 2 {
+                regenerate()
+            }
         }
         
         
@@ -80,24 +82,15 @@ class ViewController: UIViewController {
     
     func regenerate() {
         var newArrayOfNodes = [Node]()
-//        print("arrayOfNode size: \(arrayOfNode.count)")
-        for (i,node) in arrayOfNode.enumerate() {
-
-//            print("node: \(arrayOfNode[i])")
+        for (i,_) in arrayOfNode.enumerate() {
             let spawn = arrayOfNode[i].spawn()
-//            print("spawn size: \(spawn.count)")
             for newNode in spawn {
                 newArrayOfNodes.append(newNode)
                 nodeCount += 1
-//                print("newArrayOfNode.count \(newArrayOfNodes)")
             }
             if nodeCount > 6000 {
                 break
             }
-            // limit number of nodes to ~6000
-//            if arrayOfNode[0].nodeCounter.count > arrayOfNode[0].nodeCounter.limit {
-//                break
-//            }
         }
         arrayOfNode = newArrayOfNodes
         print("end: arrayOfNode size: \(arrayOfNode.count)")

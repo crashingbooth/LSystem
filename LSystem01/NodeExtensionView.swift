@@ -47,10 +47,6 @@ let PI = CGFloat(M_PI)
 
     }
     
-    func tapped(sender: UITapGestureRecognizer) {
-        print(" NEV toucjed")
-        
-    }
     
     func setUpExtensions() {
         for childNode in childNodeViews {
@@ -59,7 +55,7 @@ let PI = CGFloat(M_PI)
         childNodeViews = [ChildNodeView]()
         if let nodeExtensions = Settings.sharedInstance.nodeSubstitutions[nodeType] {
             for (i, ext) in nodeExtensions.enumerate() {
-                let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, nodeType: ext, parentNodeType: nodeType)
+                let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, nodeType: ext, parentNodeType: nodeType, isMovable: true)
                 addSubview(child)
                 childNodeViews.append(child)
                 if let angles = anglesDict[nodeExtensions.count] {
@@ -168,13 +164,14 @@ class ChildNodeView: UIView {
     var nodeRadius: CGFloat = 0
     var isConnected = true  // i.e. is attached to a NodeExtensionSelector
     var isSelected = false
+    var isMovable = false
     var priorPoint = CGPointZero
     var nodePath = UIBezierPath()
     var edgePath = UIBezierPath()
   
     
    
-    init(frame: CGRect, barHeight: CGFloat, barWidth: CGFloat, nodeRadius: CGFloat, nodeType: NodeType, parentNodeType: NodeType) {
+    init(frame: CGRect, barHeight: CGFloat, barWidth: CGFloat, nodeRadius: CGFloat, nodeType: NodeType, parentNodeType: NodeType, isMovable: Bool) {
          let rect = CGRect(x: (frame.width / 2) - nodeRadius, y: 0, width:  nodeRadius * 2, height: frame.height )
         
         super.init(frame: rect)
@@ -184,13 +181,16 @@ class ChildNodeView: UIView {
         self.nodeType = nodeType
         self.priorPoint = center
         self.parentNodeType = parentNodeType
+        self.isMovable = isMovable
         backgroundColor = UIColor.clearColor()
         
-        let touch = UILongPressGestureRecognizer(target: self, action: #selector(tapped(_:)))
-        touch.minimumPressDuration = 0.1
-        addGestureRecognizer(touch) 
-        userInteractionEnabled = true
-        
+       
+        if isMovable {
+            let touch = UILongPressGestureRecognizer(target: self, action: #selector(tapped(_:)))
+            touch.minimumPressDuration = 0.1
+            addGestureRecognizer(touch)
+            userInteractionEnabled = true
+        }
         
     }
     

@@ -67,7 +67,7 @@ class ChildSelector: UIView{
         potentialChildren = [ChildNodeView]()
         let childNodeTypes = delegate?.getAvailableNodesData()
         for childType in childNodeTypes! {
-            let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, nodeType: childType, parentNodeType: parentType)
+            let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, nodeType: childType, parentNodeType: parentType, isMovable: true)
             child.nodeType = childType
             child.isConnected = false
             child.backgroundColor = UIColor.clearColor()
