@@ -18,7 +18,7 @@ class Settings {
     var highestActiveNode = 2 // controlled by slider in OuterSettings
     var nodeSubstitutions: [NodeType: Set<NodeType>] = [
         .typeA : [.typeB, .typeA],
-        .typeB : [.typeA, .typeB],
+        .typeB : [.typeB],
         .typeC : [],
         .typeD : [],
         .typeE : []

@@ -43,9 +43,9 @@ class ViewController: UIViewController {
         makeInitialNode()
         makeKnobs()
         nodeCount = 0
-        for gen in 0..<25{
+        for gen in 0..<40{
             print("generation \(gen)")
-            if nodeCount < 6000 && arrayOfNode[0].segmentLength > 2 {
+            if nodeCount < 6000 && arrayOfNode[0].segmentLength > 0.5 {
                 regenerate()
             }
         }
