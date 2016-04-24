@@ -29,7 +29,7 @@ let PI = CGFloat(M_PI)
         2: [-PI / 6, PI / 6],
         3: [-PI / 4, 0, PI / 4],
         4: [3 * -PI / 10, -PI / 10, PI / 10, 3 * PI / 10 ],
-        5: [-PI / 3, -PI / 6, 0, PI / 6, -PI / 3 ]
+        5: [-PI / 3, -PI / 6, 0, PI / 6, PI / 3 ]
     ]
     
     func getSizes() {
@@ -106,9 +106,10 @@ let PI = CGFloat(M_PI)
         if var nodeExtensions = Settings.sharedInstance.nodeSubstitutions[nodeType] {
             if !isActive {
                     backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
-                nodeExtensions = []
+                nodeExtensions = Set<NodeType>()
             } else {
-                nodeExtensions = nodeExtensions.filter({$0.rawValue < Settings.sharedInstance.highestActiveNode})
+                let newNodes = nodeExtensions.filter({$0.rawValue < Settings.sharedInstance.highestActiveNode})
+                nodeExtensions = Set(newNodes)
             }
              Settings.sharedInstance.nodeSubstitutions[nodeType] = nodeExtensions
             setUpExtensions()
@@ -126,7 +127,6 @@ class NodeExtensionSelector: NodeExtensionView, ChildSelectorDelegate{
         let activeNodes = Set(NodeType.allNodeTypes[0..<Settings.sharedInstance.highestActiveNode])
         let currentNodes = Settings.sharedInstance.nodeSubstitutions[nodeType]!
         let pot = activeNodes.subtract(currentNodes)
-        print("potNodes")
         return Array(pot)
     }
 
@@ -215,24 +215,21 @@ class ChildNodeView: UIView {
         case .Ended:
             isSelected = false
             if let parentFrame = superview?.frame {
-                print("parentFrame")
-                print(parentFrame)
-                print(point)
+        
                 if parentFrame.contains(point) {
                     print("still in same view")
                     
                 } else {
-                    print("no longer in view")
-                   
+                    print("Changed for \(nodeType)")
+                   print(Settings.sharedInstance.nodeSubstitutions[parentNodeType]!)
                     if isConnected {
-                        var currentRule = Settings.sharedInstance.nodeSubstitutions[parentNodeType]!
-                        currentRule = currentRule.filter({$0 != nodeType})
-                        Settings.sharedInstance.nodeSubstitutions[parentNodeType]! = currentRule
+                        Settings.sharedInstance.nodeSubstitutions[parentNodeType]!.remove(nodeType)
                         
                     } else {
-                        Settings.sharedInstance.nodeSubstitutions[parentNodeType]!.append(nodeType)
+                        Settings.sharedInstance.nodeSubstitutions[parentNodeType]!.insert(nodeType)
                     }
                 }
+                print(Settings.sharedInstance.nodeSubstitutions[parentNodeType]!)
                 NSNotificationCenter.defaultCenter().postNotificationName(Constants.cleanUpNeeded, object: nil)
             }
             print("ended")

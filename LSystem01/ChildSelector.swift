@@ -36,6 +36,12 @@ class ChildSelector: UIView{
 
     
     func positionViews() {
+        for child in potentialChildren {
+            child.removeFromSuperview()
+        }
+        
+        getAndMakeChildViews()
+        
         let topLevel = layout[0]
         let bottomLevel = layout[1]
         let halfWay = bounds.height / 2
@@ -43,9 +49,7 @@ class ChildSelector: UIView{
         barHeight = delegate?.getBarHeight()
         barWidth = delegate?.getBarWidth()
         
-        for child in potentialChildren {
-            child.removeFromSuperview()
-        }
+        
    
         placeChildViews(bottomLevel, yOffset: halfWay)
         placeChildViews(topLevel, yOffset: 0)
@@ -79,9 +83,7 @@ class ChildSelector: UIView{
     
     
     func placeChildViews(views: [ChildNodeView], yOffset: CGFloat) {
-        print("ViewFrame:")
-        print(frame)
-        
+    
         if views.count > 0 {
             let viewWidth = nodeRadius * 2
             let viewHeight = nodeRadius * 15

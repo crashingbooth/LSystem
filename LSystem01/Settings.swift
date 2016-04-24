@@ -16,7 +16,7 @@ enum NodeType: Int {
 class Settings {
     static var sharedInstance = Settings()
     var highestActiveNode = 5 // controlled by slider in OuterSettings
-    var nodeSubstitutions: [NodeType: [NodeType]] = [
+    var nodeSubstitutions: [NodeType: Set<NodeType>] = [
         .typeA : [.typeB, .typeC],
         .typeB : [.typeA, .typeB],
         .typeC : [.typeA],

@@ -25,6 +25,7 @@ class InnerSettingsViewController: UIViewController {
     
     func cleanUpViews() {
         positionViews()
+//        childSelector.refresh()
     }
     
     func createViews() {
