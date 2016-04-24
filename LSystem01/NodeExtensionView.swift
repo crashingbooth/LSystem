@@ -187,6 +187,7 @@ class ChildNodeView: UIView {
         backgroundColor = UIColor.clearColor()
         
         let touch = UILongPressGestureRecognizer(target: self, action: #selector(tapped(_:)))
+        touch.minimumPressDuration = 0.1
         addGestureRecognizer(touch) 
         userInteractionEnabled = true
         
@@ -220,7 +221,7 @@ class ChildNodeView: UIView {
                     print("still in same view")
                     
                 } else {
-                    print("Changed for \(nodeType)")
+                    print("Changed for node \(nodeType) in parent \(parentNodeType)")
                    print(Settings.sharedInstance.nodeSubstitutions[parentNodeType]!)
                     if isConnected {
                         Settings.sharedInstance.nodeSubstitutions[parentNodeType]!.remove(nodeType)
@@ -241,6 +242,7 @@ class ChildNodeView: UIView {
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
+        fatalError("should always be called with custom init")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -253,12 +255,7 @@ class ChildNodeView: UIView {
         UIColor.blackColor().colorWithAlphaComponent(0.2).setFill()
         nodePath.fill()
         
-        
-        // top node
-//        if !isConnected {
-//            let topNode = UIBezierPath(arcCenter: CGPoint(x: bounds.width / 2, y: bounds.height / 2), radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
-//            topNode.fill()
-//        }
+
         
         // edge
         

@@ -35,6 +35,7 @@ class InnerSettingsViewController: UIViewController {
         
        
         childSelector = ChildSelector(frame: view.frame)
+        childSelector.parentType = nodeType
         childSelector.delegate = rootNodeView
         childSelector.getAndMakeChildViews()
         

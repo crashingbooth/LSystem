@@ -19,39 +19,49 @@ class ViewController: UIViewController {
     var nodeTypes:Int {
        return listofNodeClasses.count
     }
-    let listofNodeClasses: [Node.Type] = Array(Constants.allNodeClasses[0..<3])
+    
+    var nodeCount = 0
+    var listofNodeClasses: [Node.Type] {
+        return  Array(Constants.allNodeClasses[0..<Settings.sharedInstance.highestActiveNode])
+    }
 
     @IBOutlet weak var settingsButton: UIButton!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        print(listofNodeClasses)
+       super.viewDidLoad()
+    }
+    override func viewWillAppear(animated: Bool) {
+        navigationController?.navigationBarHidden = true
+        setUp()
+    }
+    
+    func setUp() {
         assignNodeClasses()
         
         validateNodeViews()
         
         makeInitialNode()
         makeKnobs()
-
-        for _ in 0..<25{
+        nodeCount = 0
+        for gen in 0..<25{
+            print("generation \(gen)")
             regenerate()
         }
         
-
         
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(ViewController.handlePan(_:)))
-        view.addGestureRecognizer(pan)
-
+//        
+//        let pan = UIPanGestureRecognizer(target: self, action: #selector(ViewController.handlePan(_:)))
+//        view.addGestureRecognizer(pan)
+//        
         // TODO - find better way
         settingsButton.removeFromSuperview()
         nodeViews.last?.addSubview(settingsButton)
+
         
-    }
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
     }
     
      func makeInitialNode() {
+        arrayOfNode = [Node]()
         let rootLocation = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
         rootNode = TypeANode(segmentLength: 100 , parent: nil, rootLocation: rootLocation)
         if let rootNode = rootNode {
@@ -70,21 +80,37 @@ class ViewController: UIViewController {
     
     func regenerate() {
         var newArrayOfNodes = [Node]()
-        
-        for (i,_) in arrayOfNode.enumerate() {
-            for newNode in arrayOfNode[i].spawn() {
+//        print("arrayOfNode size: \(arrayOfNode.count)")
+        for (i,node) in arrayOfNode.enumerate() {
+
+//            print("node: \(arrayOfNode[i])")
+            let spawn = arrayOfNode[i].spawn()
+//            print("spawn size: \(spawn.count)")
+            for newNode in spawn {
                 newArrayOfNodes.append(newNode)
+                nodeCount += 1
+//                print("newArrayOfNode.count \(newArrayOfNodes)")
             }
-            // limit number of nodes to ~6000
-            if arrayOfNode[0].nodeCounter.count > arrayOfNode[0].nodeCounter.limit {
+            if nodeCount > 6000 {
                 break
             }
+            // limit number of nodes to ~6000
+//            if arrayOfNode[0].nodeCounter.count > arrayOfNode[0].nodeCounter.limit {
+//                break
+//            }
         }
         arrayOfNode = newArrayOfNodes
+        print("end: arrayOfNode size: \(arrayOfNode.count)")
         
     }
     
     func assignNodeClasses() {
+        if nodeViews.count > 0 {
+            for nodeView in nodeViews {
+                nodeView.removeFromSuperview()
+            }
+        }
+        nodeViews = [ViewForNode]()
         for i in 0..<nodeTypes {
             let nodeView = ViewForNode(frame: view.bounds)
             nodeViews.append(nodeView)
@@ -102,6 +128,12 @@ class ViewController: UIViewController {
         if width > maxKnob {
             width = maxKnob
             buffer = (view.bounds.width - maxKnob * CGFloat((2 * nodeTypes - 1))) / 2
+        }
+        if knobs.count > 0 {
+            for knob in knobs {
+                knob.removeFromSuperview()
+            }
+            knobs = [Knob]()
         }
         for i in 0..<(2 * nodeTypes - 1) {
             if i % 2 == 0 {

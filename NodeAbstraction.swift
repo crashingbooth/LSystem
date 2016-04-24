@@ -9,8 +9,6 @@
 import UIKit
 
 
-//typealias NodeInitializer = (segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) -> (Node)
-
 class ViewForNode: UIView {
     var myNode: Node!
     var lineLocations = [(CGPoint, CGPoint)]()
@@ -20,12 +18,10 @@ class ViewForNode: UIView {
     override func drawRect(rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()
         CGContextSetStrokeColorWithColor(context, fillColor.CGColor)
-
         
         for line in lineLocations {
             CGContextMoveToPoint(context, line.0.x, line.0.y)
             CGContextAddLineToPoint(context, line.1.x, line.1.y)
-
             CGContextStrokePath(context)
         }
         
@@ -39,7 +35,6 @@ class ViewForNode: UIView {
 protocol Node {
     static var nodeType: NodeType { get }
     static var angle: CGFloat { get set }
-    var nodeCounter: NodeCounter { get }
     static var view: ViewForNode! { get set }
     
     var parent: Node? { get set }
@@ -79,7 +74,6 @@ extension Node {
     init(segmentLength: CGFloat, parent: Node?, rootLocation: CGPoint?) {
         self.init()
         self.segmentLength = segmentLength
-        nodeCounter.count += 1
         if let parent = parent {
             self.parent = parent
             orientation = calcOrientation()
@@ -133,10 +127,7 @@ extension Node {
 
 class TypeANode: Node {
     static let nodeType: NodeType = .typeA
-    
     static var angle: CGFloat = CGFloat(7*(M_PI)/8)
-    let nodeCounter = NodeCounter.sharedInstance
-    
     static var view: ViewForNode! // set in VC
     
     var parent: Node?
@@ -153,10 +144,7 @@ class TypeANode: Node {
 
 class TypeBNode: Node {
     static let nodeType: NodeType = .typeB
-    
     static var angle: CGFloat = CGFloat(7*(M_PI)/8)
-    let nodeCounter = NodeCounter.sharedInstance
-    
     static var view: ViewForNode! // set in VC
     
     var parent: Node?
@@ -173,10 +161,7 @@ class TypeBNode: Node {
 
 class TypeCNode: Node {
     static let nodeType: NodeType = .typeC
-    
     static var angle: CGFloat = CGFloat(7*(M_PI)/8)
-    let nodeCounter = NodeCounter.sharedInstance
-    
     static var view: ViewForNode! // set in VC
     
     var parent: Node?
@@ -193,10 +178,7 @@ class TypeCNode: Node {
 
 class TypeDNode: Node {
     static let nodeType: NodeType = .typeD
-    
     static var angle: CGFloat = CGFloat(7*(M_PI)/8)
-    let nodeCounter = NodeCounter.sharedInstance
-    
     static var view: ViewForNode! // set in VC
     
     var parent: Node?
@@ -213,10 +195,7 @@ class TypeDNode: Node {
 
 class TypeENode: Node {
    static let nodeType: NodeType = .typeE
-    
     static var angle: CGFloat = CGFloat(7*(M_PI)/8)
-    let nodeCounter = NodeCounter.sharedInstance
-    
     static var view: ViewForNode! // set in VC
     
     var parent: Node?
@@ -231,11 +210,6 @@ class TypeENode: Node {
     
 }
 
-class NodeCounter {
-    static let sharedInstance = NodeCounter()
-    var count = 0
-    var limit = 6000
-    private init() {}
-}
+
 
 
