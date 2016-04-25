@@ -36,10 +36,7 @@ class ViewController: UIViewController {
     }
     
     func setUp() {
-        assignNodeClasses()
-        
-        validateNodeViews()
-        
+        createAndAssignNodeViews()
         makeInitialNode()
         makeKnobs()
         nodeCount = 0
@@ -50,16 +47,47 @@ class ViewController: UIViewController {
             }
         }
         
+        view.gestureRecognizers?.removeAll()
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(pinched(_:)))
+        view.addGestureRecognizer(pinch)
         
-//        
-//        let pan = UIPanGestureRecognizer(target: self, action: #selector(ViewController.handlePan(_:)))
-//        view.addGestureRecognizer(pan)
-//        
+        
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(ViewController.panned(_:)))
+        view.addGestureRecognizer(pan)
+//
         // TODO - find better way
         settingsButton.removeFromSuperview()
         nodeViews.last?.addSubview(settingsButton)
 
         
+    }
+    
+    func pinched(gesture: UIPinchGestureRecognizer) {
+        let scale: CGFloat = gesture.scale;
+        rootNode?.segmentLength *= scale
+        for view in nodeViews {
+            view.clearPaths()
+        }
+        rootNode?.recursiveChangeLength()
+        for view in nodeViews {
+            view.setNeedsDisplay()
+        }
+        print(rootNode?.segmentLength)
+        gesture.scale = 1
+    }
+    
+    func panned(gesture: UIPanGestureRecognizer) {
+        let trans = gesture.translationInView(view)
+        for view in nodeViews {
+            view.clearPaths()
+        }
+        rootNode?.rootLocation!.x += trans.x
+        rootNode?.rootLocation!.y += trans.y
+        rootNode?.recursiveReposition()
+        for view in nodeViews {
+            view.setNeedsDisplay()
+        }
+        gesture.setTranslation(CGPoint.zero, inView: view)
     }
     
      func makeInitialNode() {
@@ -69,16 +97,11 @@ class ViewController: UIViewController {
         if let rootNode = rootNode {
             arrayOfNode.append(rootNode)
         }
+
         
         
     }
-    
-    func validateNodeViews() {
-        // for debugging, erase later
-        for nodeClass in listofNodeClasses{
-            print (nodeClass.view)
-        }
-    }
+
     
     func regenerate() {
         var newArrayOfNodes = [Node]()
@@ -97,7 +120,7 @@ class ViewController: UIViewController {
         
     }
     
-    func assignNodeClasses() {
+    func createAndAssignNodeViews() {
         if nodeViews.count > 0 {
             for nodeView in nodeViews {
                 nodeView.removeFromSuperview()
@@ -163,24 +186,6 @@ class ViewController: UIViewController {
             view.setNeedsDisplay()
         }
     
-    }
-    
-    
-    func handlePan(sender: UIPanGestureRecognizer) {
-
-        let position :CGPoint =  sender.translationInView(view)
-        TypeANode.angle = position.x / view.bounds.width * CGFloat(M_PI)
-        TypeBNode.angle = position.y / view.bounds.width * CGFloat(M_PI)
-
-        for view in nodeViews {
-            view.clearPaths()
-        }
-        
-
-        rootNode?.recursiveReposition()
-        for view in nodeViews {
-            view.setNeedsDisplay()
-        }
     }
     
     

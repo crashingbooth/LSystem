@@ -109,6 +109,22 @@ extension Node {
             children[i].recursiveReposition()
         }
     }
+    mutating func recursiveChangeLength() {
+        for (i, _) in children.enumerate() {
+            children[i].segmentLength = segmentLength * reductionFactor
+            if let rootLocation = rootLocation {
+                location = rootLocation
+                
+            } else {
+                orientation = calcOrientation()
+                location = calcLocation()
+            }
+            
+            makePaths()
+            children[i].recursiveChangeLength()
+        }
+        
+    }
     
     mutating func spawn() -> [Node] {
     // called by regenerate function in VC
