@@ -72,7 +72,7 @@ class ViewController: UIViewController {
         for view in nodeViews {
             view.setNeedsDisplay()
         }
-        print(rootNode?.segmentLength)
+ 
         gesture.scale = 1
     }
     
@@ -93,7 +93,8 @@ class ViewController: UIViewController {
      func makeInitialNode() {
         arrayOfNode = [Node]()
         let rootLocation = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
-        rootNode = TypeANode(segmentLength: 100 , parent: nil, rootLocation: rootLocation)
+        let rootInit = Settings.initDict[Settings.sharedInstance.startingNode]!
+        rootNode = rootInit(segmentLength: 100 , parent: nil, rootLocation: rootLocation)
         if let rootNode = rootNode {
             arrayOfNode.append(rootNode)
         }
@@ -138,7 +139,7 @@ class ViewController: UIViewController {
     }
     
     func makeKnobs() {
-        let maxKnob = CGFloat(130)
+        let maxKnob = CGFloat(130) > view.bounds.width / 5 ? view.bounds.width / 5 :  CGFloat(130)
         var width = view.bounds.width / CGFloat(2 * nodeTypes - 1 )
         var buffer:CGFloat = 0
         if width > maxKnob {

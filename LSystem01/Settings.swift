@@ -23,6 +23,7 @@ class Settings {
         .typeD : [],
         .typeE : []
     ]
+    var startingNode: NodeType = .typeA
     
     
     
