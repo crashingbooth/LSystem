@@ -20,9 +20,12 @@ let PI = CGFloat(M_PI)
         return Settings.sharedInstance.highestActiveNode > nodeType.rawValue
     }
     var nodeType: NodeType = .typeA
-  
+    var isReachable: Bool {
+        return Settings.sharedInstance.findReachableNodes.contains(nodeType)
+    }
     
     var childNodeViews = [ChildNodeView]()
+    let label = UILabel()
     
     let anglesDict: [Int:[CGFloat]] = [
         1: [0],
@@ -44,7 +47,24 @@ let PI = CGFloat(M_PI)
         midNodeCenter = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
         addNodeCenter = CGPoint(x: bounds.width / 2 + barHeight, y: bounds.height / 2 )
         nodeRadius =  bounds.width / 15
+        
+        setUpLabel()
 
+    }
+    
+    func setUpLabel() {
+        
+        label.removeFromSuperview()
+        addSubview(label)
+        
+        let rect = CGRect(x: 0, y: bounds.height * 5 / 6, width: bounds.width, height: bounds.height / 6)
+        label.frame = rect
+        label.text = isReachable ?  "" :  "Node is Unreachable"
+        label.textColor = UIColor.blackColor().colorWithAlphaComponent(0.7)
+        label.font = Constants.font
+        label.textAlignment = NSTextAlignment.Center
+        label.adjustsFontSizeToFitWidth = true
+        
     }
     
     
@@ -111,7 +131,10 @@ let PI = CGFloat(M_PI)
             setUpExtensions()
         }
         
+        
     }
+    
+    
 
 }
 

@@ -26,6 +26,30 @@ class Settings {
     var startingNode: NodeType = .typeA
     
     
+    var findReachableNodes: Set<NodeType> {
+        var reachable = Set<NodeType>()
+        
+        var queue: [NodeType] = [startingNode]
+        // all nodes must be reachable within 5 generations
+        for _ in 0..<NodeType.allNodeTypes.count {
+            if queue.count == 0 {
+                break
+            }
+            var nextQueue = [NodeType]()
+            for node in queue {
+                if !reachable.contains(node) {
+                    reachable.insert(node)
+                    for child in nodeSubstitutions[node]! {
+                        nextQueue.append(child)
+                    }
+                }
+            }
+            queue = nextQueue
+        }
+        return reachable
+    }
+    
+    
     
     private init() {}
     
@@ -46,7 +70,6 @@ class Settings {
         NodeType.typeD:    UIColor.brownColor().colorWithAlphaComponent(0.5),
         NodeType.typeE:    UIColor.magentaColor().colorWithAlphaComponent(0.5)
         ]
-    
     
     
         

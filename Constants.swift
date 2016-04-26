@@ -28,4 +28,6 @@ class Constants {
          TypeENode.self]
     
     static let cleanUpNeeded = "CleanUpNeeded"
+    
+    static let font = UIFont(name: "Futura-Medium" , size: 17)
 }

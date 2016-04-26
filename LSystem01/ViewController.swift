@@ -139,7 +139,8 @@ class ViewController: UIViewController {
     }
     
     func makeKnobs() {
-        let maxKnob = CGFloat(130) > view.bounds.width / 5 ? view.bounds.width / 5 :  CGFloat(130)
+        let maxKnob = CGFloat(130) > view.bounds.width / 7 ? view.bounds.width / 6 :  CGFloat(130)
+        print("maxKnob: \(maxKnob)")
         var width = view.bounds.width / CGFloat(2 * nodeTypes - 1 )
         var buffer:CGFloat = 0
         if width > maxKnob {
