@@ -90,7 +90,9 @@ extension Node {
     
     mutating func makePaths() {
         if let parent = parent {
-            Self.view.lineLocations.append((parent.location, location))
+            if Self.view.frame.contains(parent.location) || Self.view.frame.contains(location) {
+                Self.view.lineLocations.append((parent.location, location))
+            }
         }
     }
     

@@ -64,14 +64,13 @@ let PI = CGFloat(M_PI)
         label.frame = rect
         
         if !isReachable {
-           label.text = "Node is Unreachable"
+           label.text = "Unreachable"
         } else if isStarter {
-            label.text = "Root node"
+            label.text = "Root Node"
         } else {
              label.text = ""
         }
         
-//        label.text = isReachable ?  "" :  "Node is Unreachable"
         label.textColor = UIColor.blackColor().colorWithAlphaComponent(0.7)
         label.font = Constants.font
         label.textAlignment = NSTextAlignment.Center
@@ -290,7 +289,6 @@ class ChildNodeView: UIView {
     override func drawRect(rect: CGRect) {
         // end node
         constructPath()
-//        UIColor.blackColor().colorWithAlphaComponent(0.2).setFill()
         Settings.colorDict[nodeType]!.setFill()
         nodePath.fill()
         
