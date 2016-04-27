@@ -10,12 +10,11 @@ import UIKit
 
 class OuterSettingsVCProgrammatic: UIViewController {
     var nodeExtensionViews = [NodeExtensionView]()
-    var slider = UISlider()
+    var activeSlider = UISlider()
+    var starterSlider = UISlider()
     let numNodes: Float = 5
     var nodeTypeInFocus: NodeType?
-//    var activeNodes = 5 {
-//        didSet { validateAllNodes() }
-//    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,11 +42,17 @@ class OuterSettingsVCProgrammatic: UIViewController {
         }
         
         
-        view.addSubview(slider)
-        slider.minimumValue = 1
-        slider.maximumValue = 5
-        slider.value = Float(Settings.sharedInstance.highestActiveNode)
-        slider.addTarget(self, action: #selector(sliderChanged(_:)), forControlEvents: .ValueChanged)
+        view.addSubview(activeSlider)
+        activeSlider.minimumValue = 1
+        activeSlider.maximumValue = 5
+        activeSlider.value = Float(Settings.sharedInstance.highestActiveNode)
+        activeSlider.addTarget(self, action: #selector(activeSliderChanged(_:)), forControlEvents: .ValueChanged)
+        
+        view.addSubview(starterSlider)
+        starterSlider.minimumValue = 0
+        starterSlider.maximumValue = 4
+        starterSlider.value = Float(Settings.sharedInstance.startingNode.rawValue)
+        starterSlider.addTarget(self, action: #selector(starterSliderChanged(_:)), forControlEvents: .ValueChanged)
     }
     
     func positionViews() {
@@ -55,6 +60,7 @@ class OuterSettingsVCProgrammatic: UIViewController {
         let sliderSize: CGFloat = 40
         let navOffset = navigationController?.navigationBar.frame.height ?? 0
         
+        activeSlider.transform = CGAffineTransformIdentity
         if view.bounds.width > view.bounds.height {
            // landscape
             let size = (view.bounds.width - padding * 6) / 5
@@ -63,9 +69,13 @@ class OuterSettingsVCProgrammatic: UIViewController {
                 nodeExtensionViews[i].frame = rect
             }
             
-            slider.transform = CGAffineTransformIdentity
-            let sliderRect = CGRect(x: (size / 2) - padding * 2, y: navOffset + 20, width: (size * 4) + padding * 10, height: sliderSize)
-            slider.frame = sliderRect
+            activeSlider.transform = CGAffineTransformIdentity
+            let activeSliderRect = CGRect(x: (size / 2) - padding * 2, y: navOffset + 20, width: (size * 4) + padding * 10, height: sliderSize)
+            activeSlider.frame = activeSliderRect
+            
+            starterSlider.transform = CGAffineTransformIdentity
+            let starterSliderRect = CGRect(x: (size / 2) - padding * 2, y: navOffset + 40 + size, width: (size * CGFloat(Settings.sharedInstance.highestActiveNode - 1)) + (padding * (2 * CGFloat(Settings.sharedInstance.highestActiveNode) + 1)), height: sliderSize)
+            starterSlider.frame = starterSliderRect
             
       
             view.setNeedsDisplay()
@@ -80,13 +90,17 @@ class OuterSettingsVCProgrammatic: UIViewController {
                 let rect = CGRect(x: sliderSize, y: navOffset + padding * CGFloat(i + 1) + size  * CGFloat(i), width: size, height: size)
                 nodeExtensionViews[i].frame = rect
             }
-            slider.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-            let sliderRect = CGRect(x: padding, y: navOffset + (size / 2), width: sliderSize, height: (size * 4) + padding * 8)
-            slider.frame = sliderRect
+            activeSlider.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+            let activeSliderRect = CGRect(x: padding, y: navOffset + (size / 2), width: sliderSize, height: (size * 4) + padding * 8)
+            activeSlider.frame = activeSliderRect
+            
+            starterSlider.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+            let starterSliderRect = CGRect(x: padding + size + 20, y: navOffset + (size / 2), width: sliderSize, height: (size * CGFloat(Settings.sharedInstance.highestActiveNode - 1)) + padding * 8)
+            
+            starterSlider.frame = starterSliderRect
            
             
         }
-//        slider.value = Float(activeNodes - 1)
         
         for nodeView in nodeExtensionViews {
             nodeView.getSizes()
@@ -98,12 +112,23 @@ class OuterSettingsVCProgrammatic: UIViewController {
         positionViews()
     }
     
-    func sliderChanged(sender: UISlider) {
+    func activeSliderChanged(sender: UISlider) {
         
         let roundedValue = round(sender.value)
         Settings.sharedInstance.highestActiveNode = Int(roundedValue)
         
 
+        sender.value = Float(roundedValue)
+        validateAllNodes()
+        
+    }
+    
+    func starterSliderChanged(sender: UISlider) {
+        
+        let roundedValue = round(sender.value)
+        Settings.sharedInstance.startingNode = NodeType(rawValue: Int(roundedValue))!
+        
+        
         sender.value = Float(roundedValue)
         validateAllNodes()
         
@@ -132,7 +157,7 @@ class OuterSettingsVCProgrammatic: UIViewController {
         for (i,nev) in nodeExtensionViews.enumerate() {
             
             nodeExtensionViews[i].validate()
-            
+            starterSlider.maximumValue = Float(Settings.sharedInstance.highestActiveNode - 1)
             nev.setNeedsDisplay()
         }
     }

@@ -42,6 +42,7 @@ class ViewController: UIViewController {
         nodeCount = 0
         for gen in 0..<40{
             print("generation \(gen)")
+            if arrayOfNode.count == 0 { break }
             if nodeCount < 6000 && arrayOfNode[0].segmentLength > 0.5 {
                 regenerate()
             }
@@ -93,10 +94,15 @@ class ViewController: UIViewController {
      func makeInitialNode() {
         arrayOfNode = [Node]()
         let rootLocation = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
+        print("MAKE INITIAL \(Settings.sharedInstance.startingNode)")
         let rootInit = Settings.initDict[Settings.sharedInstance.startingNode]!
         rootNode = rootInit(segmentLength: 100 , parent: nil, rootLocation: rootLocation)
+        print(rootNode)
         if let rootNode = rootNode {
             arrayOfNode.append(rootNode)
+            print("size \(arrayOfNode.count)")
+        } else {
+            print("couldn't unwrap rootNode")
         }
 
         
