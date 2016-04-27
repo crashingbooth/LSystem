@@ -23,6 +23,9 @@ let PI = CGFloat(M_PI)
     var isReachable: Bool {
         return Settings.sharedInstance.findReachableNodes.contains(nodeType)
     }
+    var isStarter: Bool {
+        return Settings.sharedInstance.startingNode == nodeType
+    }
     
     var childNodeViews = [ChildNodeView]()
     let label = UILabel()
@@ -59,7 +62,16 @@ let PI = CGFloat(M_PI)
         
         let rect = CGRect(x: 0, y: bounds.height * 5 / 6, width: bounds.width, height: bounds.height / 6)
         label.frame = rect
-        label.text = isReachable ?  "" :  "Node is Unreachable"
+        
+        if !isReachable {
+           label.text = "Node is Unreachable"
+        } else if isStarter {
+            label.text = "Root node"
+        } else {
+             label.text = ""
+        }
+        
+//        label.text = isReachable ?  "" :  "Node is Unreachable"
         label.textColor = UIColor.blackColor().colorWithAlphaComponent(0.7)
         label.font = Constants.font
         label.textAlignment = NSTextAlignment.Center
@@ -92,13 +104,16 @@ let PI = CGFloat(M_PI)
     
     
     override func drawRect(rect: CGRect) {
-        print("nev drawRect for \(nodeType)")
+     
         
 
         let topNodePath = UIBezierPath(arcCenter: topNodeCenter, radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
         let midNodePath = UIBezierPath(arcCenter: midNodeCenter, radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
         UIColor.blackColor().colorWithAlphaComponent(0.2).setFill()
         topNodePath.fill()
+        if isActive {
+            Settings.colorDict[nodeType]!.setFill()
+        }
         midNodePath.fill()
         
 
@@ -275,7 +290,8 @@ class ChildNodeView: UIView {
     override func drawRect(rect: CGRect) {
         // end node
         constructPath()
-        UIColor.blackColor().colorWithAlphaComponent(0.2).setFill()
+//        UIColor.blackColor().colorWithAlphaComponent(0.2).setFill()
+        Settings.colorDict[nodeType]!.setFill()
         nodePath.fill()
         
 
