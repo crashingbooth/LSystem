@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     
     var nodeCount = 0
     var listofNodeClasses: [Node.Type] {
-        return  Array(Constants.allNodeClasses[0..<Settings.sharedInstance.highestActiveNode])
+        return  Array(Constants.allNodeClasses[0..<Settings.sharedInstance.numOfActiveNodes])
     }
 
     @IBOutlet weak var settingsButton: UIButton!

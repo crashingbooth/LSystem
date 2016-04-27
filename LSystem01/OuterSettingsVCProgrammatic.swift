@@ -45,7 +45,7 @@ class OuterSettingsVCProgrammatic: UIViewController {
         view.addSubview(activeSlider)
         activeSlider.minimumValue = 1
         activeSlider.maximumValue = 5
-        activeSlider.value = Float(Settings.sharedInstance.highestActiveNode)
+        activeSlider.value = Float(Settings.sharedInstance.numOfActiveNodes)
         activeSlider.addTarget(self, action: #selector(activeSliderChanged(_:)), forControlEvents: .ValueChanged)
         
         view.addSubview(starterSlider)
@@ -61,6 +61,9 @@ class OuterSettingsVCProgrammatic: UIViewController {
         let navOffset = navigationController?.navigationBar.frame.height ?? 0
         
         activeSlider.transform = CGAffineTransformIdentity
+        let thumbWidth:CGFloat = 30
+        starterSlider.minimumTrackTintColor = UIColor.lightGrayColor()
+        starterSlider.maximumTrackTintColor = UIColor.lightGrayColor()
         if view.bounds.width > view.bounds.height {
            // landscape
             let size = (view.bounds.width - padding * 6) / 5
@@ -73,8 +76,12 @@ class OuterSettingsVCProgrammatic: UIViewController {
             let activeSliderRect = CGRect(x: (size / 2) - padding * 2, y: navOffset + 20, width: (size * 4) + padding * 10, height: sliderSize)
             activeSlider.frame = activeSliderRect
             
+            
+            
+           
+            let starterSliderLength = (padding + size) * CGFloat(Settings.sharedInstance.numOfActiveNodes - 1) + thumbWidth
             starterSlider.transform = CGAffineTransformIdentity
-            let starterSliderRect = CGRect(x: (size / 2) - padding * 2, y: navOffset + 40 + size, width: (size * CGFloat(Settings.sharedInstance.highestActiveNode - 1)) + (padding * (2 * CGFloat(Settings.sharedInstance.highestActiveNode) + 1)), height: sliderSize)
+            let starterSliderRect = CGRect(x: (size / 2) + padding - (thumbWidth / 2), y: navOffset + 40 + size, width: starterSliderLength, height: sliderSize)
             starterSlider.frame = starterSliderRect
             
       
@@ -94,8 +101,10 @@ class OuterSettingsVCProgrammatic: UIViewController {
             let activeSliderRect = CGRect(x: padding, y: navOffset + (size / 2), width: sliderSize, height: (size * 4) + padding * 8)
             activeSlider.frame = activeSliderRect
             
+            
+            let starterSliderLength = (padding + size) * CGFloat(Settings.sharedInstance.numOfActiveNodes - 1) + thumbWidth
             starterSlider.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-            let starterSliderRect = CGRect(x: padding + size + 20, y: navOffset + (size / 2), width: sliderSize, height: (size * CGFloat(Settings.sharedInstance.highestActiveNode - 1)) + padding * 8)
+            let starterSliderRect = CGRect(x: padding + size + 20, y: navOffset + (size / 2), width: sliderSize, height: starterSliderLength)
             
             starterSlider.frame = starterSliderRect
            
@@ -115,7 +124,7 @@ class OuterSettingsVCProgrammatic: UIViewController {
     func activeSliderChanged(sender: UISlider) {
         
         let roundedValue = round(sender.value)
-        Settings.sharedInstance.highestActiveNode = Int(roundedValue)
+        Settings.sharedInstance.numOfActiveNodes = Int(roundedValue)
         
 
         sender.value = Float(roundedValue)
@@ -140,7 +149,7 @@ class OuterSettingsVCProgrammatic: UIViewController {
         if let source = source {
             nodeTypeInFocus = source.nodeType
             print("in focus \(nodeTypeInFocus)")
-            if nodeTypeInFocus?.rawValue < Settings.sharedInstance.highestActiveNode {
+            if nodeTypeInFocus?.rawValue < Settings.sharedInstance.numOfActiveNodes {
                 performSegueWithIdentifier("toInnerSettings", sender: self)
             } else {
                 nodeTypeInFocus = nil 
@@ -157,7 +166,7 @@ class OuterSettingsVCProgrammatic: UIViewController {
         for (i,nev) in nodeExtensionViews.enumerate() {
             
             nodeExtensionViews[i].validate()
-            starterSlider.maximumValue = Float(Settings.sharedInstance.highestActiveNode - 1)
+            starterSlider.maximumValue = Float(Settings.sharedInstance.numOfActiveNodes - 1)
             nev.setNeedsDisplay()
         }
     }

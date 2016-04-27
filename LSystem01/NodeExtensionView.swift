@@ -17,7 +17,7 @@ let PI = CGFloat(M_PI)
     var addNodeCenter = CGPoint.zero
     var nodeRadius: CGFloat = 0
     var isActive: Bool {
-        return Settings.sharedInstance.highestActiveNode > nodeType.rawValue
+        return Settings.sharedInstance.numOfActiveNodes > nodeType.rawValue
     }
     var nodeType: NodeType = .typeA
     var isReachable: Bool {
@@ -124,7 +124,7 @@ let PI = CGFloat(M_PI)
                     backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
                 nodeExtensions = Set<NodeType>()
             } else {
-                let newNodes = nodeExtensions.filter({$0.rawValue < Settings.sharedInstance.highestActiveNode})
+                let newNodes = nodeExtensions.filter({$0.rawValue < Settings.sharedInstance.numOfActiveNodes})
                 nodeExtensions = Set(newNodes)
             }
              Settings.sharedInstance.nodeSubstitutions[nodeType] = nodeExtensions
@@ -143,7 +143,7 @@ class NodeExtensionSelector: NodeExtensionView, ChildSelectorDelegate{
     var potentialChildren = [ChildNodeView]()
 
     var potentialNodesTypes: [NodeType] {
-        let activeNodes = Set(NodeType.allNodeTypes[0..<Settings.sharedInstance.highestActiveNode])
+        let activeNodes = Set(NodeType.allNodeTypes[0..<Settings.sharedInstance.numOfActiveNodes])
         let currentNodes = Settings.sharedInstance.nodeSubstitutions[nodeType]!
         let pot = activeNodes.subtract(currentNodes)
         return Array(pot)
