@@ -38,6 +38,15 @@ let PI = CGFloat(M_PI)
         5: [-PI / 3, -PI / 6, 0, PI / 6, PI / 3 ]
     ]
     
+    let topNodeOffsetDic: [Int:[CGFloat]] = [
+        // multiple this by nodeRadius
+        1: [0],
+        2: [-0.75, 0.75],
+        3: [-1.5, 0, 1.5],
+        4: [-2.25, -0.75, 0.75, 2.25 ],
+        5: [-3, -1.5, 0, -1.5 ,-3]
+    ]
+    
     func getSizes() {
         if isActive {
              backgroundColor = UIColor.cyanColor().colorWithAlphaComponent(0.2)
@@ -103,13 +112,26 @@ let PI = CGFloat(M_PI)
     
     
     override func drawRect(rect: CGRect) {
-     
-        
-
-        let topNodePath = UIBezierPath(arcCenter: topNodeCenter, radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
+        print("drawRect called for NEV for \(nodeType)")
+    
+        let ancestors = Settings.sharedInstance.getAncestors(nodeType)
+        print ("has \(ancestors.count) ancentors")
+        if let offsets = topNodeOffsetDic[ancestors.count] {
+            for (i,ancestor) in ancestors.enumerate() {
+                let nodeCenter = CGPoint(x: topNodeCenter.x - nodeRadius * offsets[i], y: topNodeCenter.y)
+                let nodePath = UIBezierPath(arcCenter: nodeCenter, radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
+                Settings.colorDict[ancestor]?.setFill()
+                nodePath.fill()
+            }
+        } else {
+            print("made gray")
+            let topNodePath = UIBezierPath(arcCenter: topNodeCenter, radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
+            UIColor.blackColor().colorWithAlphaComponent(0.2).setFill()
+            topNodePath.fill()
+        }
         let midNodePath = UIBezierPath(arcCenter: midNodeCenter, radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
-        UIColor.blackColor().colorWithAlphaComponent(0.2).setFill()
-        topNodePath.fill()
+//        UIColor.blackColor().colorWithAlphaComponent(0.2).setFill()
+//        topNodePath.fill()
         if isActive {
             Settings.colorDict[nodeType]!.setFill()
         }
@@ -145,7 +167,7 @@ let PI = CGFloat(M_PI)
             setUpExtensions()
         }
         
-        
+        setNeedsDisplay()
     }
     
     

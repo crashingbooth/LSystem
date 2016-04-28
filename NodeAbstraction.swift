@@ -12,6 +12,7 @@ import UIKit
 class ViewForNode: UIView {
     var myNode: Node!
     var lineLocations = [(CGPoint, CGPoint)]()
+    var root: CGPoint?
     
     var fillColor: UIColor!
     
@@ -23,6 +24,11 @@ class ViewForNode: UIView {
             CGContextMoveToPoint(context, line.0.x, line.0.y)
             CGContextAddLineToPoint(context, line.1.x, line.1.y)
             CGContextStrokePath(context)
+        }
+        if let root = root {
+            let path = UIBezierPath(arcCenter: root, radius: 3, startAngle: 0, endAngle: 2 * CGFloat(M_PI), clockwise: true)
+            fillColor.setFill()
+            path.fill()
         }
         
     }
@@ -93,6 +99,8 @@ extension Node {
             if Self.view.frame.contains(parent.location) || Self.view.frame.contains(location) {
                 Self.view.lineLocations.append((parent.location, location))
             }
+        } else {
+            Self.view.root = self.rootLocation
         }
     }
     

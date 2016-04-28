@@ -49,6 +49,18 @@ class Settings {
         return reachable
     }
     
+    func getAncestors(nodeType: NodeType) -> Set<NodeType> {
+        var ancestors = Set<NodeType>()
+        for type in NodeType.allNodeTypes {
+            if let subs = Settings.sharedInstance.nodeSubstitutions[type] {
+                if subs.contains(nodeType) {
+                    ancestors.insert(type)
+                }
+            }
+        }
+        return ancestors
+    }
+    
     
     
     private init() {}
