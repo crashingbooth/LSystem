@@ -31,6 +31,7 @@ let PI = CGFloat(M_PI)
     let label = UILabel()
     
     let anglesDict: [Int:[CGFloat]] = [
+        // rotation for childNodes
         1: [0],
         2: [-PI / 6, PI / 6],
         3: [-PI / 4, 0, PI / 4],
@@ -39,6 +40,7 @@ let PI = CGFloat(M_PI)
     ]
     
     let topNodeOffsetDic: [Int:[CGFloat]] = [
+        // to determine R/L offset of anscestor nodes
         // multiple this by nodeRadius
         1: [0],
         2: [-0.75, 0.75],

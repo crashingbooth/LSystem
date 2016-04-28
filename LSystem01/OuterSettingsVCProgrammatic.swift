@@ -26,6 +26,9 @@ class OuterSettingsVCProgrammatic: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         navigationController?.navigationBarHidden = false
+        for view in nodeExtensionViews {
+            view.setNeedsDisplay() // need to redisplay when returning from inner settings
+        }
     }
     
     func createViews() {
