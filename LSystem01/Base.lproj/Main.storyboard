@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,28 +16,10 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wwI-ko-582">
-                                <rect key="frame" x="550" y="30" width="40" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="9TN-Jd-35V"/>
-                                    <constraint firstAttribute="height" constant="40" id="cf6-Xr-vsT"/>
-                                </constraints>
-                                <state key="normal" title="Button" image="cogwheel"/>
-                                <connections>
-                                    <action selector="settingsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="a1W-9z-qv1"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="wwI-ko-582" secondAttribute="trailing" constant="-10" id="QCR-i5-5lN"/>
-                            <constraint firstItem="wwI-ko-582" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="b3J-gp-wkc"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="kad-Po-I4V"/>
                     <connections>
-                        <outlet property="settingsButton" destination="wwI-ko-582" id="UlW-rW-Vox"/>
                         <segue destination="XY9-ow-BPC" kind="show" identifier="toSettings" id="2fY-Cb-rA2"/>
                     </connections>
                 </viewController>
@@ -104,7 +85,4 @@
             <point key="canvasLocation" x="270" y="397"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="cogwheel" width="256" height="256"/>
-    </resources>
 </document>

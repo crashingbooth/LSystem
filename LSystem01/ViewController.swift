@@ -25,10 +25,14 @@ class ViewController: UIViewController {
         return  Array(Constants.allNodeClasses[0..<Settings.sharedInstance.numOfActiveNodes])
     }
 
-    @IBOutlet weak var settingsButton: UIButton!
+    var settingsButton: UIButton?
     
     override func viewDidLoad() {
        super.viewDidLoad()
+        settingsButton = UIButton()
+        settingsButton?.setImage(UIImage(named: "cogwheel"), forState: .Normal)
+        settingsButton?.addTarget(self, action: #selector(pressedSettings(_:)), forControlEvents: .TouchUpInside)
+        
     }
     override func viewWillAppear(animated: Bool) {
         navigationController?.navigationBarHidden = true
@@ -59,10 +63,8 @@ class ViewController: UIViewController {
         
         let pan = UIPanGestureRecognizer(target: self, action: #selector(ViewController.panned(_:)))
         view.addGestureRecognizer(pan)
-//
-        // TODO - find better way
-        settingsButton.removeFromSuperview()
-        nodeViews.last?.addSubview(settingsButton)
+
+        placeSettingsButton()
 
         
     }
@@ -108,9 +110,6 @@ class ViewController: UIViewController {
         } else {
             print("couldn't unwrap rootNode")
         }
-
-        
-        
     }
 
     
@@ -205,8 +204,18 @@ class ViewController: UIViewController {
     
     }
     
+    func placeSettingsButton() {
+        let size: CGFloat = 44
+        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
+        let rect = CGRect(x: view.bounds.width - size - 5, y: statusBarHeight, width: size, height: size)
+        settingsButton?.removeFromSuperview()
+        settingsButton?.frame = rect
+       
+        nodeViews.last?.addSubview(settingsButton!)
+    }
     
-    @IBAction func settingsButton(sender: AnyObject) {
+    
+    func pressedSettings(sender: AnyObject?) {
         print("pressed")
         performSegueWithIdentifier("toSettings", sender: self)
     }
