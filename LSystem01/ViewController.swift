@@ -122,7 +122,7 @@ class ViewController: UIViewController {
                 newArrayOfNodes.append(newNode)
                 nodeCount += 1
             }
-            if nodeCount > 6000 {
+            if nodeCount > 10000 {
                 break
             }
         }
