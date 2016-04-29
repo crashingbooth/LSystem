@@ -16,6 +16,7 @@ let PI = CGFloat(M_PI)
     var midNodeCenter = CGPoint.zero
     var addNodeCenter = CGPoint.zero
     var nodeRadius: CGFloat = 0
+    var hasMovableChildren = false  // override in subclass
     var isActive: Bool {
         return Settings.sharedInstance.numOfActiveNodes > nodeType.rawValue
     }
@@ -98,7 +99,7 @@ let PI = CGFloat(M_PI)
         childNodeViews = [ChildNodeView]()
         if let nodeExtensions = Settings.sharedInstance.nodeSubstitutions[nodeType] {
             for (i, ext) in nodeExtensions.enumerate() {
-                let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, nodeType: ext, parentNodeType: nodeType, isMovable: true)
+                let child = ChildNodeView(frame: bounds, barHeight: barHeight, barWidth: barWidth, nodeRadius: nodeRadius, nodeType: ext, parentNodeType: nodeType, isMovable: hasMovableChildren)
                 addSubview(child)
                 childNodeViews.append(child)
                 if let angles = anglesDict[nodeExtensions.count] {
@@ -133,8 +134,7 @@ let PI = CGFloat(M_PI)
             topNodePath.fill()
         }
         let midNodePath = UIBezierPath(arcCenter: midNodeCenter, radius: nodeRadius, startAngle: 0, endAngle: 2 * PI, clockwise: true)
-//        UIColor.blackColor().colorWithAlphaComponent(0.2).setFill()
-//        topNodePath.fill()
+
         if isActive {
             Settings.colorDict[nodeType]!.setFill()
         }
@@ -180,12 +180,21 @@ let PI = CGFloat(M_PI)
 
 class NodeExtensionSelector: NodeExtensionView, ChildSelectorDelegate{
     var potentialChildren = [ChildNodeView]()
-
     var potentialNodesTypes: [NodeType] {
         let activeNodes = Set(NodeType.allNodeTypes[0..<Settings.sharedInstance.numOfActiveNodes])
         let currentNodes = Settings.sharedInstance.nodeSubstitutions[nodeType]!
         let pot = activeNodes.subtract(currentNodes)
         return Array(pot)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        hasMovableChildren = true
+    }
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     

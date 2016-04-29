@@ -211,7 +211,7 @@ class ViewController: UIViewController {
     func placeSettingsButton() {
         let size: CGFloat = 44
         let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
-        let rect = CGRect(x: view.bounds.width - size - 5, y: statusBarHeight, width: size, height: size)
+        let rect = CGRect(x: view.bounds.width - size - 5, y: statusBarHeight + 5, width: size, height: size)
         settingsButton?.removeFromSuperview()
         settingsButton?.frame = rect
        

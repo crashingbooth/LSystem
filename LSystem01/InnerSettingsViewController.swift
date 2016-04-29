@@ -12,12 +12,14 @@ class InnerSettingsViewController: UIViewController {
     var rootNodeView : NodeExtensionSelector!
     var childSelector: ChildSelector!
     var nodeType: NodeType!
+    var instructionsLabel = UILabel()
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         print("VDL called")
         view.backgroundColor = UIColor.whiteColor()
+        
         createViews()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(InnerSettingsViewController.cleanUpViews), name: Constants.cleanUpNeeded, object: nil)
         // Do any additional setup after loading the view.
@@ -42,6 +44,12 @@ class InnerSettingsViewController: UIViewController {
         childSelector.delegate = rootNodeView
         childSelector.getAndMakeChildViews()
         
+        instructionsLabel.text = "Drag child nodes to and from parent nodes"
+        instructionsLabel.numberOfLines = 2
+        instructionsLabel.textAlignment = NSTextAlignment.Center
+        instructionsLabel.font = Constants.smallFont
+        
+        view.addSubview(instructionsLabel)
         view.addSubview(childSelector)
         view.addSubview(rootNodeView)
     }
@@ -77,7 +85,7 @@ class InnerSettingsViewController: UIViewController {
             childSelector.frame = CGRect(x: 0, y: navOffset + width, width: view.bounds.width, height: view.bounds.height - navOffset - width)
         }
         
-        
+        instructionsLabel.frame = CGRect(x: 0, y: view.bounds.height - 20, width: view.bounds.width, height: 20)
         rootNodeView.getSizes()
         rootNodeView.setUpExtensions()
         childSelector.positionViews()

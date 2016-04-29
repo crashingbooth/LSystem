@@ -142,8 +142,7 @@ class OuterSettingsVCProgrammatic: UIViewController {
             
             starterSlider.frame = starterSliderRect
             instructions.text = instructionsText
-            instructions.frame = CGRect(x: starterSlider.frame.maxX - padding
-    , y: view.bounds.height * 1 / 4 , width: view.bounds.width - starterSlider.frame.maxX, height: view.bounds.height / 3)
+            instructions.frame = CGRect(x: starterSlider.frame.maxX - padding, y: view.bounds.height * 1 / 4 , width: view.bounds.width - starterSlider.frame.maxX, height: view.bounds.height / 3)
             
         }
         
