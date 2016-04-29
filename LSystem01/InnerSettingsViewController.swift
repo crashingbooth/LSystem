@@ -22,6 +22,9 @@ class InnerSettingsViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(InnerSettingsViewController.cleanUpViews), name: Constants.cleanUpNeeded, object: nil)
         // Do any additional setup after loading the view.
     }
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
     
     func cleanUpViews() {
         positionViews()
@@ -74,12 +77,9 @@ class InnerSettingsViewController: UIViewController {
             childSelector.frame = CGRect(x: 0, y: navOffset + width, width: view.bounds.width, height: view.bounds.height - navOffset - width)
         }
         
-       
-    
         
         rootNodeView.getSizes()
         rootNodeView.setUpExtensions()
-        childSelector.backgroundColor = UIColor.magentaColor().colorWithAlphaComponent(0.05)
         childSelector.positionViews()
 
         

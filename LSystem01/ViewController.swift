@@ -43,15 +43,19 @@ class ViewController: UIViewController {
         setUp()
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     func setUp() {
         createAndAssignNodeViews()
         makeInitialNode()
         makeKnobs()
         nodeCount = 0
-        for gen in 0..<40{
+        for gen in 0..<50{
             print("generation \(gen)")
             if arrayOfNode.count == 0 { break }
-            if nodeCount < 6000 && arrayOfNode[0].segmentLength > 0.5 {
+            if nodeCount < 8000 && arrayOfNode[0].segmentLength > 0.5 {
                 regenerate()
             }
         }

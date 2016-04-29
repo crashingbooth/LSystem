@@ -30,4 +30,5 @@ class Constants {
     static let cleanUpNeeded = "CleanUpNeeded"
     
     static let font = UIFont(name: "Futura-Medium" , size: 15)
+    static let smallFont = UIFont(name: "Futura-Medium" , size: 12)
 }

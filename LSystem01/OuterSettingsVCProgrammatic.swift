@@ -14,6 +14,23 @@ class OuterSettingsVCProgrammatic: UIViewController {
     var starterSlider = UISlider()
     let numNodes: Float = 5
     var nodeTypeInFocus: NodeType?
+    var instructions = UILabel()
+    var upperOrLeft: String {
+        if view.bounds.width > view.bounds.height {
+            return "upper"
+        } else {
+            return "left"
+        }
+        
+    }
+    var lowerOrRight: String {
+        if view.bounds.width > view.bounds.height {
+            return "lower"
+        } else {
+            return "right"
+        }
+    }
+    var instructionsText: String?
 
     
     override func viewDidLoad() {
@@ -21,6 +38,10 @@ class OuterSettingsVCProgrammatic: UIViewController {
         createViews()
         positionViews()
         validateAllNodes()
+        instructions.numberOfLines = 6
+        instructions.textAlignment = NSTextAlignment.Center
+        instructions.font = Constants.smallFont
+        view.addSubview(instructions)
         // Do any additional setup after loading the view.
     }
     
@@ -29,6 +50,10 @@ class OuterSettingsVCProgrammatic: UIViewController {
         for view in nodeExtensionViews {
             view.setNeedsDisplay() // need to redisplay when returning from inner settings
         }
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
     
     func createViews() {
@@ -60,6 +85,7 @@ class OuterSettingsVCProgrammatic: UIViewController {
     
     func positionViews() {
         let padding: CGFloat = 5
+        let mainItemSpacing: CGFloat = 20
         let sliderSize: CGFloat = 40
         let navOffset = navigationController?.navigationBar.frame.height ?? 0
         
@@ -69,14 +95,16 @@ class OuterSettingsVCProgrammatic: UIViewController {
         starterSlider.maximumTrackTintColor = UIColor.lightGrayColor()
         if view.bounds.width > view.bounds.height {
            // landscape
+            
+            instructionsText = "∙Adjust \(upperOrLeft) slider to control which nodes are active. \n∙Adjust \(lowerOrRight) slider to select the root node. \n∙Touch node diagram to add or remove child nodes."
             let size = (view.bounds.width - padding * 6) / 5
             for i in 0..<5 {
-                let rect = CGRect(x: padding * CGFloat(i + 1) + size * CGFloat(i), y: sliderSize + navOffset + padding, width: size, height: size)
+                let rect = CGRect(x: padding * CGFloat(i + 1) + size * CGFloat(i), y: sliderSize + navOffset + mainItemSpacing, width: size, height: size)
                 nodeExtensionViews[i].frame = rect
             }
             
             activeSlider.transform = CGAffineTransformIdentity
-            let activeSliderRect = CGRect(x: (size / 2) - padding * 2, y: navOffset + 20, width: (size * 4) + padding * 10, height: sliderSize)
+            let activeSliderRect = CGRect(x: (size / 2) - padding * 2, y: navOffset + mainItemSpacing, width: (size * 4) + padding * 10, height: sliderSize)
             activeSlider.frame = activeSliderRect
             
             
@@ -84,33 +112,38 @@ class OuterSettingsVCProgrammatic: UIViewController {
            
             let starterSliderLength = (padding + size) * CGFloat(Settings.sharedInstance.numOfActiveNodes - 1) + thumbWidth
             starterSlider.transform = CGAffineTransformIdentity
-            let starterSliderRect = CGRect(x: (size / 2) + padding - (thumbWidth / 2), y: navOffset + 40 + size, width: starterSliderLength, height: sliderSize)
+            let starterSliderRect = CGRect(x: (size / 2) + padding - (thumbWidth / 2), y: navOffset + size + mainItemSpacing * 3, width: starterSliderLength, height: sliderSize)
             starterSlider.frame = starterSliderRect
-            
+            instructions.text = instructionsText
+            instructions.frame = CGRect(x: 0, y: starterSlider.frame.maxY - mainItemSpacing, width: view.bounds.width, height: view.bounds.height / 3)
       
             view.setNeedsDisplay()
 
         } else {
             // portrait
-            
+             instructionsText = "∙Adjust \(upperOrLeft) slider to control which nodes are active. \n∙Adjust \(lowerOrRight) slider to select the root node. \n∙Touch node diagram to add or remove child nodes."
+      
+
             
             let navOffset = navOffset + 5
             let size = (view.bounds.height - padding * 6 - navOffset) / 5
             for i in 0..<5 {
-                let rect = CGRect(x: sliderSize, y: navOffset + padding * CGFloat(i + 1) + size  * CGFloat(i), width: size, height: size)
+                let rect = CGRect(x: sliderSize + mainItemSpacing, y: navOffset + padding * CGFloat(i + 1) + size  * CGFloat(i), width: size, height: size)
                 nodeExtensionViews[i].frame = rect
             }
             activeSlider.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-            let activeSliderRect = CGRect(x: padding, y: navOffset + (size / 2), width: sliderSize, height: (size * 4) + padding * 8)
+            let activeSliderRect = CGRect(x: mainItemSpacing, y: navOffset + (size / 2), width: sliderSize, height: (size * 4) + padding * 8)
             activeSlider.frame = activeSliderRect
             
             
             let starterSliderLength = (padding + size) * CGFloat(Settings.sharedInstance.numOfActiveNodes - 1) + thumbWidth
             starterSlider.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-            let starterSliderRect = CGRect(x: padding + size + 20, y: navOffset + (size / 2), width: sliderSize, height: starterSliderLength)
+            let starterSliderRect = CGRect(x:  size + mainItemSpacing * 3, y: navOffset + (size / 2), width: sliderSize, height: starterSliderLength)
             
             starterSlider.frame = starterSliderRect
-           
+            instructions.text = instructionsText
+            instructions.frame = CGRect(x: starterSlider.frame.maxX - padding
+    , y: view.bounds.height * 1 / 4 , width: view.bounds.width - starterSlider.frame.maxX, height: view.bounds.height / 3)
             
         }
         

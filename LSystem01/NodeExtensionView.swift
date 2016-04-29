@@ -51,7 +51,7 @@ let PI = CGFloat(M_PI)
     
     func getSizes() {
         if isActive {
-             backgroundColor = UIColor.cyanColor().colorWithAlphaComponent(0.2)
+             backgroundColor = UIColor.cyanColor().colorWithAlphaComponent(0.05)
         } else {
             backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         }
@@ -61,6 +61,7 @@ let PI = CGFloat(M_PI)
         midNodeCenter = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
         addNodeCenter = CGPoint(x: bounds.width / 2 + barHeight, y: bounds.height / 2 )
         nodeRadius =  bounds.width / 15
+        
         
         setUpLabel()
 
