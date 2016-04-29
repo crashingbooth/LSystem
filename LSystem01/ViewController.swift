@@ -155,28 +155,41 @@ class ViewController: UIViewController {
         
         
         var maxKnob = CGFloat(130) > view.bounds.width / 5 ? view.bounds.width / 5 :  CGFloat(130)
+        let minKnob: CGFloat = 65
         if maxKnob > view.bounds.height / 4 {
             maxKnob = view.bounds.height / 4
         }
+        
+    
         print("maxKnob: \(maxKnob)")
         var width = view.bounds.width / CGFloat(2 * nodeTypes - 1 )
         var buffer:CGFloat = 0
+        var spacerWidth = width
         if width > maxKnob {
             width = maxKnob
+            spacerWidth = maxKnob
             buffer = (view.bounds.width - maxKnob * CGFloat((2 * nodeTypes - 1))) / 2
+        } else if width < minKnob {
+            width = minKnob
+            buffer = 5
+            spacerWidth = (view.bounds.width - CGFloat(nodeTypes) * width - buffer * 2) / CGFloat(nodeTypes - 1)
         }
+        
+        
         if knobs.count > 0 {
             for knob in knobs {
                 knob.removeFromSuperview()
             }
             knobs = [Knob]()
         }
+        var offset: CGFloat = buffer
+        
         for i in 0..<(2 * nodeTypes - 1) {
             if i % 2 == 0 {
-                print (width)
                 let π = Float(M_PI)
-                let rect = CGRect(x: buffer + CGFloat(i) * width, y: view.bounds.height - (width + 20), width: width, height: width)
+                let rect = CGRect(x: offset, y: view.bounds.height - (width + 10), width: width, height: width)
                 let knob = Knob(frame: rect)
+                offset += width
                 
                 knob.continuous = true
                 knob.minimumValue = -2 * π
@@ -188,6 +201,8 @@ class ViewController: UIViewController {
                 
                 knobs.append(knob)
                 view.addSubview(knob)
+            } else {
+                offset += spacerWidth
             }
             
         }
