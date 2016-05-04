@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F14A4501CD9B80F00E6BC4F /* ExplanationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F14A44F1CD9B80F00E6BC4F /* ExplanationVC.swift */; };
 		1F16B8351CC78082003D5BB9 /* ChildSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F16B8341CC78082003D5BB9 /* ChildSelector.swift */; };
 		1F3935341CBF31F500057BB1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3935331CBF31F500057BB1 /* Constants.swift */; };
 		1F3935361CBF336A00057BB1 /* NodeExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3935351CBF336A00057BB1 /* NodeExtensionView.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F14A44F1CD9B80F00E6BC4F /* ExplanationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplanationVC.swift; sourceTree = "<group>"; };
 		1F16B8341CC78082003D5BB9 /* ChildSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildSelector.swift; sourceTree = "<group>"; };
 		1F3935331CBF31F500057BB1 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1F3935351CBF336A00057BB1 /* NodeExtensionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeExtensionView.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				1F63A3AB1CB22BDD006FA3F2 /* AppDelegate.swift */,
 				1F63A3AD1CB22BDD006FA3F2 /* ViewController.swift */,
 				1F690FB91CC32B50007A8471 /* OuterSettingsVCProgrammatic.swift */,
+				1F14A44F1CD9B80F00E6BC4F /* ExplanationVC.swift */,
 				1F690FBB1CC3921A007A8471 /* InnerSettingsViewController.swift */,
 				1F3935351CBF336A00057BB1 /* NodeExtensionView.swift */,
 				1F88B53C1CC22F5B00B20B73 /* Settings.swift */,
@@ -229,6 +232,7 @@
 				1F63A3AE1CB22BDD006FA3F2 /* ViewController.swift in Sources */,
 				1F63A3AC1CB22BDD006FA3F2 /* AppDelegate.swift in Sources */,
 				1F3935361CBF336A00057BB1 /* NodeExtensionView.swift in Sources */,
+				1F14A4501CD9B80F00E6BC4F /* ExplanationVC.swift in Sources */,
 				1F690FBC1CC3921A007A8471 /* InnerSettingsViewController.swift in Sources */,
 				1F6AA6041CB7B1D30002579A /* Knob.swift in Sources */,
 			);

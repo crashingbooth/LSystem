@@ -67,10 +67,10 @@
             </objects>
             <point key="canvasLocation" x="2443" y="402"/>
         </scene>
-        <!--View Controller-->
+        <!--ExplanationVC-->
         <scene sceneID="A9d-9Z-quG">
             <objects>
-                <viewController id="w47-rr-LVC" sceneMemberID="viewController">
+                <viewController id="w47-rr-LVC" customClass="ExplanationVC" customModule="LSystem01" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4rv-5g-z93"/>
                         <viewControllerLayoutGuide type="bottom" id="hPi-yw-4iO"/>

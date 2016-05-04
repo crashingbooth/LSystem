@@ -191,6 +191,7 @@ class OuterSettingsVCProgrammatic: UIViewController {
     }
     
     func hitHelp(sender: UIButton) {
+        print("segue called")
         performSegueWithIdentifier("toHelp", sender: self)
     }
     
