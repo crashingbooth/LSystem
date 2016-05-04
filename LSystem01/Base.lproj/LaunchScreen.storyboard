@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -16,7 +16,38 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playstore-icon" translatesAutoresizingMaskIntoConstraints="NO" id="9TD-Ep-QzF">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.93725490196078431" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jeff Holtzkener 2016" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ov8-LW-k4g">
+                                <rect key="frame" x="151.5" y="261" width="297" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="297" id="UxZ-RJ-HDg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Generative Tree Fractal Explorer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a6U-Ts-MiE">
+                                <rect key="frame" x="151.5" y="227" width="297" height="26"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.93725490196078431" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Ov8-LW-k4g" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="1DV-gP-CWd"/>
+                            <constraint firstItem="9TD-Ep-QzF" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="EED-eP-C3r"/>
+                            <constraint firstItem="Ov8-LW-k4g" firstAttribute="top" secondItem="a6U-Ts-MiE" secondAttribute="bottom" constant="8" symbolic="YES" id="d1P-c3-Law"/>
+                            <constraint firstItem="a6U-Ts-MiE" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="dyL-NS-Qgg"/>
+                            <constraint firstItem="9TD-Ep-QzF" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="nlM-hJ-1hX"/>
+                            <constraint firstItem="9TD-Ep-QzF" firstAttribute="bottom" secondItem="xb3-aO-Qok" secondAttribute="top" id="rQ8-dP-ori"/>
+                            <constraint firstAttribute="trailing" secondItem="9TD-Ep-QzF" secondAttribute="trailing" id="tbW-jv-aaz"/>
+                            <constraint firstItem="a6U-Ts-MiE" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-60" id="wbs-yx-OVA"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -24,4 +55,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="playstore-icon" width="512" height="512"/>
+    </resources>
 </document>

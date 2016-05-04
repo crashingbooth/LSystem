@@ -31,6 +31,7 @@ class OuterSettingsVCProgrammatic: UIViewController {
         }
     }
     var instructionsText: String?
+    var helpButton: UIButton!
 
     
     override func viewDidLoad() {
@@ -69,18 +70,27 @@ class OuterSettingsVCProgrammatic: UIViewController {
             newView.addGestureRecognizer(tap)
         }
         
-        
-        view.addSubview(activeSlider)
         activeSlider.minimumValue = 1
         activeSlider.maximumValue = 5
         activeSlider.value = Float(Settings.sharedInstance.numOfActiveNodes)
         activeSlider.addTarget(self, action: #selector(activeSliderChanged(_:)), forControlEvents: .ValueChanged)
-        
-        view.addSubview(starterSlider)
+        view.addSubview(activeSlider)
+
         starterSlider.minimumValue = 0
         starterSlider.maximumValue = 4
         starterSlider.value = Float(Settings.sharedInstance.startingNode.rawValue)
         starterSlider.addTarget(self, action: #selector(starterSliderChanged(_:)), forControlEvents: .ValueChanged)
+        view.addSubview(starterSlider)
+        
+        helpButton = UIButton()
+        helpButton.setTitle("What is going on?", forState: .Normal)
+        helpButton.titleLabel?.font = Constants.font
+        helpButton.addTarget(self, action: #selector(hitHelp(_:)), forControlEvents: .TouchUpInside)
+      
+        helpButton.setTitleColor(Constants.nodeColors[0], forState: .Normal)
+        
+        helpButton.titleLabel?.textAlignment = NSTextAlignment.Right
+        view.addSubview(helpButton)
     }
     
     func positionViews() {
@@ -89,6 +99,8 @@ class OuterSettingsVCProgrammatic: UIViewController {
         let sliderSize: CGFloat = 40
         let navOffset = navigationController?.navigationBar.frame.height ?? 0
         
+        let textWidth = helpButton.titleLabel!.intrinsicContentSize().width
+        helpButton.frame = CGRect(x: view.bounds.width - textWidth - 10, y: view.bounds.height - 40, width: textWidth, height: 40)
         activeSlider.transform = CGAffineTransformIdentity
         let thumbWidth:CGFloat = 30
         starterSlider.minimumTrackTintColor = UIColor.lightGrayColor()
@@ -176,6 +188,10 @@ class OuterSettingsVCProgrammatic: UIViewController {
         sender.value = Float(roundedValue)
         validateAllNodes()
         
+    }
+    
+    func hitHelp(sender: UIButton) {
+        performSegueWithIdentifier("toHelp", sender: self)
     }
     
     func viewWasTouched(sender: UITapGestureRecognizer) {

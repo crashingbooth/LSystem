@@ -42,6 +42,7 @@
                     </view>
                     <connections>
                         <segue destination="bhP-ya-VSy" kind="show" identifier="toInnerSettings" id="o6p-LG-hpp"/>
+                        <segue destination="w47-rr-LVC" kind="show" identifier="toHelp" id="RMr-aL-xbN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sdk-lA-EB1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -65,6 +66,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wb3-vP-Zdd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2443" y="402"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="A9d-9Z-quG">
+            <objects>
+                <viewController id="w47-rr-LVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4rv-5g-z93"/>
+                        <viewControllerLayoutGuide type="bottom" id="hPi-yw-4iO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TqM-v0-Jzr">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kbq-u8-goO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2443" y="1093"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CYg-5j-oC2">
