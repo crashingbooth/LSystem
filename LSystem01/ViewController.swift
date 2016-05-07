@@ -36,6 +36,9 @@ class ViewController: UIViewController {
     }
     override func viewWillAppear(animated: Bool) {
         navigationController?.navigationBarHidden = true
+        
+        Settings.sharedInstance.setWithNumberedPreset(0)
+        
         setUp()
     }
     
