@@ -37,7 +37,7 @@ class ViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         navigationController?.navigationBarHidden = true
         
-        Settings.sharedInstance.setWithNumberedPreset(0)
+        Settings.sharedInstance.setWithNumberedPreset(4)
         
         setUp()
     }
@@ -242,14 +242,14 @@ class ViewController: UIViewController {
         performSegueWithIdentifier("toSettings", sender: self)
     }
     
-    override func overrideTraitCollectionForChildViewController(childViewController: UIViewController) -> UITraitCollection? {
-        print("called")
-        if view.bounds.width > view.bounds.height {
-            return UITraitCollection(verticalSizeClass: .Compact)
-        } else {
-            return UITraitCollection(verticalSizeClass: .Regular)
-        }
-    }
+//    override func overrideTraitCollectionForChildViewController(childViewController: UIViewController) -> UITraitCollection? {
+//        print("called")
+//        if view.bounds.width > view.bounds.height {
+//            return UITraitCollection(verticalSizeClass: .Compact)
+//        } else {
+//            return UITraitCollection(verticalSizeClass: .Regular)
+//        }
+//    }
     
 
 

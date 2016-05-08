@@ -104,6 +104,38 @@ class Settings {
                 .typeD : [],
                 .typeE : []
                 ], numActive: 2, startSize: 39, angles: [-5.49779,-1.72413])
+        case 1:
+            setUpInitialConditions([
+                .typeA : [.typeB,],
+                .typeB : [.typeC],
+                .typeC : [.typeD],
+                .typeD : [.typeA,.typeB],
+                .typeE : []
+                ], numActive: 4, startSize: 30, angles: [-4.49107456207275, -2.5296905040741,-5.99172878265381,  -0.758378028869629 ])
+        case 2:
+            setUpInitialConditions([
+                .typeA : [.typeA,.typeB,.typeC,.typeD],
+                .typeB : [.typeB],
+                .typeC : [.typeD],
+                .typeD : [.typeB],
+                .typeE : []
+                ], numActive: 4, startSize: 30, angles: [-4.97299146652222,-0.588002681732178,-1.94606733322144,-0.759088516235352])
+        case 3:
+            setUpInitialConditions([
+                .typeA : [.typeA,.typeB,.typeC,],
+                .typeB : [.typeB],
+                .typeC : [.typeB,.typeC],
+                .typeD : [],
+                .typeE : []
+                ], numActive: 3, startSize: 30, angles: [-0.614663124084473, -3.91086339950562 ,-5.81278133392334])
+        case 4:
+            setUpInitialConditions([
+                .typeA : [.typeA,.typeB],
+                .typeB : [.typeB,.typeD],
+                .typeC : [.typeA],
+                .typeD : [.typeC],
+                .typeE : []
+                ] , numActive: 4, startSize: 30, angles: [-0.482876, -6.03573 ,-4.2188 ,-0.129703])
         default:
             break
         }
@@ -133,85 +165,3 @@ class Settings {
         
     
 }
-
-
-//@IBAction func push1(sender: AnyObject) {
-//    Settings.sharedInstance.nodeSubstitutions = [
-//        .typeA : [.typeB, .typeA],
-//        .typeB : [.typeB],
-//        .typeC : [],
-//        .typeD : [],
-//        .typeE : []
-//    ]
-//    TypeANode.angle = -5.49779
-//    TypeBNode.angle = -1.72413
-//    
-//}
-//
-//@IBAction func push2(sender: AnyObject) {
-//    Settings.sharedInstance.numOfActiveNodes = 4
-//    Settings.sharedInstance.nodeSubstitutions = [
-//        .typeA : [.typeB,],
-//        .typeB : [.typeC],
-//        .typeC : [.typeD],
-//        .typeD : [.typeA,.typeB],
-//        .typeE : []
-//    ]
-//    TypeANode.angle = -4.49107456207275
-//    TypeBNode.angle = -2.5296905040741
-//    TypeCNode.angle = -5.99172878265381
-//    TypeDNode.angle = -0.758378028869629
-//    
-//    
-//}
-//@IBAction func push3(sender: AnyObject) {
-//    Settings.sharedInstance.numOfActiveNodes = 4
-//    Settings.sharedInstance.nodeSubstitutions = [
-//        .typeA : [.typeA,.typeB,.typeC,.typeD],
-//        .typeB : [.typeB],
-//        .typeC : [.typeD],
-//        .typeD : [.typeB],
-//        .typeE : []
-//    ]
-//    TypeANode.angle = -4.97299146652222
-//    TypeBNode.angle = -0.588002681732178
-//    TypeCNode.angle = -1.94606733322144
-//    TypeDNode.angle = -0.759088516235352
-//}
-//
-//@IBAction func push4(sender: AnyObject) {
-//    Settings.sharedInstance.numOfActiveNodes = 3
-//    Settings.sharedInstance.nodeSubstitutions = [
-//        .typeA : [.typeA,.typeB,.typeC,],
-//        .typeB : [.typeB],
-//        .typeC : [.typeB,.typeC],
-//        .typeD : [],
-//        .typeE : []
-//    ]
-//    TypeANode.angle = -0.614663124084473
-//    TypeBNode.angle = -3.91086339950562
-//    TypeCNode.angle = -5.81278133392334
-//    
-//    
-//    
-//}
-//
-//@IBAction func push5(sender: AnyObject) {
-//    Settings.sharedInstance.numOfActiveNodes = 4
-//    Settings.sharedInstance.nodeSubstitutions = [
-//        .typeA : [.typeA,.typeB],
-//        .typeB : [.typeB,.typeD],
-//        .typeC : [.typeA],
-//        .typeD : [.typeC],
-//        .typeE : []
-//    ]
-//    TypeANode.angle = -0.482876
-//    TypeBNode.angle = -6.03573
-//    TypeCNode.angle = -4.2188
-//    TypeDNode.angle = -0.129703
-//    
-//    
-//    
-//    
-//    
-//}
