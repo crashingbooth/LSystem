@@ -103,7 +103,7 @@ class Settings {
                 .typeC : [],
                 .typeD : [],
                 .typeE : []
-                ], numActive: 2, startSize: 39, angles: [-5.49779,-1.72413])
+                ], numActive: 2, startSize: 40, angles: [-5.49779,-1.72413])
         case 1:
             setUpInitialConditions([
                 .typeA : [.typeB,],
@@ -111,7 +111,7 @@ class Settings {
                 .typeC : [.typeD],
                 .typeD : [.typeA,.typeB],
                 .typeE : []
-                ], numActive: 4, startSize: 30, angles: [-4.49107456207275, -2.5296905040741,-5.99172878265381,  -0.758378028869629 ])
+                ], numActive: 4, startSize: 45, angles: [-4.49107456207275, -2.5296905040741,-5.99172878265381,  -0.758378028869629 ])
         case 2:
             setUpInitialConditions([
                 .typeA : [.typeA,.typeB,.typeC,.typeD],
@@ -135,7 +135,7 @@ class Settings {
                 .typeC : [.typeA],
                 .typeD : [.typeC],
                 .typeE : []
-                ] , numActive: 4, startSize: 30, angles: [-0.482876, -6.03573 ,-4.2188 ,-0.129703])
+                ] , numActive: 4, startSize: 16, angles: [-0.482876, -6.03573 ,-4.2188 ,-0.129703])
         default:
             break
         }

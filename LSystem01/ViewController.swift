@@ -32,12 +32,12 @@ class ViewController: UIViewController {
         settingsButton = UIButton()
         settingsButton?.setImage(UIImage(named: "cogwheel"), forState: .Normal)
         settingsButton?.addTarget(self, action: #selector(pressedSettings(_:)), forControlEvents: .TouchUpInside)
-        
+        Settings.sharedInstance.setWithNumberedPreset(Int(arc4random_uniform(UInt32(5))))
     }
     override func viewWillAppear(animated: Bool) {
         navigationController?.navigationBarHidden = true
+    
         
-        Settings.sharedInstance.setWithNumberedPreset(4)
         
         setUp()
     }
@@ -86,7 +86,7 @@ class ViewController: UIViewController {
         for view in nodeViews {
             view.setNeedsDisplay()
         }
- 
+        
         gesture.scale = 1
     }
     
@@ -109,7 +109,7 @@ class ViewController: UIViewController {
         let rootLocation = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
         print("MAKE INITIAL \(Settings.sharedInstance.startingNode)")
         let rootInit = Settings.initDict[Settings.sharedInstance.startingNode]!
-        rootNode = rootInit(segmentLength: 100 , parent: nil, rootLocation: rootLocation)
+        rootNode = rootInit(segmentLength: getInitialSegmentLength(), parent: nil, rootLocation: rootLocation)
         print(rootNode)
         if let rootNode = rootNode {
             arrayOfNode.append(rootNode)
@@ -117,6 +117,14 @@ class ViewController: UIViewController {
         } else {
             print("couldn't unwrap rootNode")
         }
+    }
+    
+    func getInitialSegmentLength() -> CGFloat {
+        // use value from settings modified by screen size
+        let initial = Settings.sharedInstance.initialLengthRatio
+        let smallScreenDimension = view.bounds.width < view.bounds.height ? view.bounds.width : view.bounds.height
+        print(smallScreenDimension)
+        return initial * (smallScreenDimension / 180)
     }
 
     
@@ -242,15 +250,7 @@ class ViewController: UIViewController {
         performSegueWithIdentifier("toSettings", sender: self)
     }
     
-//    override func overrideTraitCollectionForChildViewController(childViewController: UIViewController) -> UITraitCollection? {
-//        print("called")
-//        if view.bounds.width > view.bounds.height {
-//            return UITraitCollection(verticalSizeClass: .Compact)
-//        } else {
-//            return UITraitCollection(verticalSizeClass: .Regular)
-//        }
-//    }
-    
+
 
 
 
