@@ -58,7 +58,7 @@ class ViewController: UIViewController {
         for gen in 0..<50{
             print("generation \(gen)")
             if arrayOfNode.count == 0 { break }
-            if nodeCount < 8000 && arrayOfNode[0].segmentLength > 0.5 {
+            if nodeCount < Settings.sharedInstance.maxNumberOfNodes && arrayOfNode[0].segmentLength > 0.5 {
                 regenerate()
             }
         }
@@ -77,6 +77,7 @@ class ViewController: UIViewController {
     }
     
     func pinched(gesture: UIPinchGestureRecognizer) {
+        // change magnification by changing original segment length
         let scale: CGFloat = gesture.scale;
         rootNode?.segmentLength *= scale
         for view in nodeViews {
@@ -136,7 +137,7 @@ class ViewController: UIViewController {
                 newArrayOfNodes.append(newNode)
                 nodeCount += 1
             }
-            if nodeCount > 10000 {
+            if nodeCount > Settings.sharedInstance.maxNumberOfNodes + 1000 {
                 break
             }
         }

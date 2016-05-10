@@ -15,6 +15,8 @@ class OuterSettingsVCProgrammatic: UIViewController {
     let numNodes: Float = 5
     var nodeTypeInFocus: NodeType?
     var instructions = UILabel()
+    var maxNodesExplanation = UILabel()
+    var maxNodesPicker = UIPickerView()
     var upperOrLeft: String {
         if view.bounds.width > view.bounds.height {
             return "upper"
@@ -39,9 +41,10 @@ class OuterSettingsVCProgrammatic: UIViewController {
         createViews()
         positionViews()
         validateAllNodes()
-        instructions.numberOfLines = 6
+        instructions.numberOfLines = 8
         instructions.textAlignment = NSTextAlignment.Center
         instructions.font = Constants.smallFont
+        
         view.addSubview(instructions)
         // Do any additional setup after loading the view.
     }
@@ -86,11 +89,11 @@ class OuterSettingsVCProgrammatic: UIViewController {
         helpButton.setTitle("What is going on?", forState: .Normal)
         helpButton.titleLabel?.font = Constants.font
         helpButton.addTarget(self, action: #selector(hitHelp(_:)), forControlEvents: .TouchUpInside)
-      
         helpButton.setTitleColor(Constants.nodeColors[0], forState: .Normal)
-        
         helpButton.titleLabel?.textAlignment = NSTextAlignment.Right
         view.addSubview(helpButton)
+        
+       
     }
     
     func positionViews() {
