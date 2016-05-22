@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		1F14A4501CD9B80F00E6BC4F /* ExplanationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F14A44F1CD9B80F00E6BC4F /* ExplanationVC.swift */; };
 		1F16B8351CC78082003D5BB9 /* ChildSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F16B8341CC78082003D5BB9 /* ChildSelector.swift */; };
+		1F27220D1CF1AED2006B46BF /* button-8.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1F27220C1CF1AED2006B46BF /* button-8.wav */; };
+		1F27220F1CF1AF1D006B46BF /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F27220E1CF1AF1D006B46BF /* Sounds.swift */; };
+		1F2722111CF1B0BE006B46BF /* button-8_short.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1F2722101CF1B0BE006B46BF /* button-8_short.wav */; };
 		1F3935341CBF31F500057BB1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3935331CBF31F500057BB1 /* Constants.swift */; };
 		1F3935361CBF336A00057BB1 /* NodeExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3935351CBF336A00057BB1 /* NodeExtensionView.swift */; };
 		1F63A3AC1CB22BDD006FA3F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F63A3AB1CB22BDD006FA3F2 /* AppDelegate.swift */; };
@@ -37,6 +40,9 @@
 /* Begin PBXFileReference section */
 		1F14A44F1CD9B80F00E6BC4F /* ExplanationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplanationVC.swift; sourceTree = "<group>"; };
 		1F16B8341CC78082003D5BB9 /* ChildSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildSelector.swift; sourceTree = "<group>"; };
+		1F27220C1CF1AED2006B46BF /* button-8.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "button-8.wav"; sourceTree = "<group>"; };
+		1F27220E1CF1AF1D006B46BF /* Sounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
+		1F2722101CF1B0BE006B46BF /* button-8_short.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "button-8_short.wav"; sourceTree = "<group>"; };
 		1F3935331CBF31F500057BB1 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1F3935351CBF336A00057BB1 /* NodeExtensionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeExtensionView.swift; sourceTree = "<group>"; };
 		1F63A3A81CB22BDC006FA3F2 /* LSystem01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LSystem01.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,8 +104,10 @@
 		1F63A3AA1CB22BDC006FA3F2 /* LSystem01 */ = {
 			isa = PBXGroup;
 			children = (
+				1F27220C1CF1AED2006B46BF /* button-8.wav */,
 				1F63A3AB1CB22BDD006FA3F2 /* AppDelegate.swift */,
 				1F63A3AD1CB22BDD006FA3F2 /* ViewController.swift */,
+				1F2722101CF1B0BE006B46BF /* button-8_short.wav */,
 				1F690FB91CC32B50007A8471 /* OuterSettingsVCProgrammatic.swift */,
 				1F14A44F1CD9B80F00E6BC4F /* ExplanationVC.swift */,
 				1F690FBB1CC3921A007A8471 /* InnerSettingsViewController.swift */,
@@ -110,6 +118,7 @@
 				1F63A3B21CB22BDD006FA3F2 /* Assets.xcassets */,
 				1F63A3B41CB22BDD006FA3F2 /* LaunchScreen.storyboard */,
 				1F63A3B71CB22BDD006FA3F2 /* Info.plist */,
+				1F27220E1CF1AF1D006B46BF /* Sounds.swift */,
 			);
 			path = LSystem01;
 			sourceTree = "<group>";
@@ -205,6 +214,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F63A3B61CB22BDD006FA3F2 /* LaunchScreen.storyboard in Resources */,
+				1F27220D1CF1AED2006B46BF /* button-8.wav in Resources */,
+				1F2722111CF1B0BE006B46BF /* button-8_short.wav in Resources */,
 				1F63A3B31CB22BDD006FA3F2 /* Assets.xcassets in Resources */,
 				1F63A3B11CB22BDD006FA3F2 /* Main.storyboard in Resources */,
 			);
@@ -227,6 +238,7 @@
 				1F3935341CBF31F500057BB1 /* Constants.swift in Sources */,
 				1F63A3CE1CB3B53E006FA3F2 /* NodeAbstraction.swift in Sources */,
 				1F88B53D1CC22F5B00B20B73 /* Settings.swift in Sources */,
+				1F27220F1CF1AF1D006B46BF /* Sounds.swift in Sources */,
 				1F16B8351CC78082003D5BB9 /* ChildSelector.swift in Sources */,
 				1F690FBA1CC32B50007A8471 /* OuterSettingsVCProgrammatic.swift in Sources */,
 				1F63A3AE1CB22BDD006FA3F2 /* ViewController.swift in Sources */,

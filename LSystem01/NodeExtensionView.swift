@@ -258,7 +258,7 @@ class ChildNodeView: UIView {
        
         if isMovable {
             let touch = UILongPressGestureRecognizer(target: self, action: #selector(tapped(_:)))
-            touch.minimumPressDuration = 0.1
+            touch.minimumPressDuration = 0.03
             addGestureRecognizer(touch)
             userInteractionEnabled = true
         }
@@ -272,6 +272,7 @@ class ChildNodeView: UIView {
         if edgePath.containsPoint(sender.locationInView(self)) || nodePath.containsPoint(sender.locationInView(self)) {
                 print("touch inside")
             isSelected = true
+            Sounds.sharedInstance.playSetSound()
             
         }
             
@@ -301,6 +302,7 @@ class ChildNodeView: UIView {
                         Settings.sharedInstance.nodeSubstitutions[parentNodeType]!.insert(nodeType)
                     }
                 }
+                Sounds.sharedInstance.playSetSound()
                 print(Settings.sharedInstance.nodeSubstitutions[parentNodeType]!)
                 NSNotificationCenter.defaultCenter().postNotificationName(Constants.cleanUpNeeded, object: nil)
             }
