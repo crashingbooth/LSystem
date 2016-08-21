@@ -148,7 +148,7 @@ class Settings {
         print(device)
         switch (device) {
         case "iPhone 4s":
-            max = 4000
+            max = 3500
         case "Simulator":
             max = 4000
 
@@ -157,7 +157,7 @@ class Settings {
         case "iPhone 5s":
             max = 6000
         default:
-            max = 5000
+            max = 7000
         }
         maxNumberOfNodes = max
         print (maxNumberOfNodes)
